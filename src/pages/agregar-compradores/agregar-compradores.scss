@@ -1,0 +1,47 @@
+page-agregar-compradores {
+    .cabecera{
+        text-align: center;
+        border-radius: 10px 10px 10px 10px;
+        font-size: 15px;
+        padding: 2px 0px;
+        margin: 15px 2px;
+        background-color: #44774d;
+        color: #fff;
+    }
+    .formulario{
+        padding-top: 0px;
+        margin: -0px -10px;
+        font-size: 15px;
+    }
+    .textoLabel{
+        font-size: 13px;
+    }
+    sup{
+        color: red;
+    }
+    .generales{
+
+    }
+    .contacto{
+        display: none;
+    }
+    .busca{
+        display: none;
+    }
+    .compradores{
+        display: none;
+    }
+    .financiera{
+        display: none;
+    }
+    .inmueble{
+        display: none;
+    }
+    .enlista{
+        display: none;
+    }
+    .botones{
+        display: flex;
+        flex-direction: row;
+    }
+}

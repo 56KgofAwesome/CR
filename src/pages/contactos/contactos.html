@@ -1,0 +1,161 @@
+<ion-header>
+
+  <ion-navbar color="header">
+    <div class="header">
+      <ion-searchbar class="buscador" (keyup)="buscar($event)">
+      </ion-searchbar>
+      <ion-icon class="agregar" name="add" (click)="agregarContacto()"></ion-icon>
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<!-- Si no lo vas a usar, borralo -->
+<!-- Acomoda tu html x2 -->
+<!-- Si todos los h2 van a tener font-size de 10, metelo en css -->
+
+<!-- 
+[(ngModel)]="myInput"
+[showCancelButton]="shouldShowCancel"
+(ionInput)="onInput($event)"
+(ionCancel)="onCancel($event)"
+(keyup)="buscar($event)"
+(search)="onSearch($event)"
+-->
+
+<ion-content class="fondo">
+  <ion-refresher (ionRefresh)="refrescar($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+
+
+<div [(ngSwitch)]="tipo">
+  <ion-list *ngSwitchCase="'compradores'" id="myUL">
+
+    <ion-item-sliding  *ngFor="let contacto of contactos" class="contactos">
+      <ion-item class="fondo" (click)="verContacto(contacto.folio, 'c')">
+        <ion-avatar item-start>
+          <img src="assets/imgs/usuario.png">
+        </ion-avatar>
+        <h2 style="font-size: 10px;">{{contacto.fullname}}</h2>
+        <h2 style="font-size: 10px;" *ngIf="contacto.email != 0">{{contacto.email}}</h2>
+        <h2 style="font-size: 10px;" *ngIf="contacto.email == 0">No Disponible</h2>
+        <h2 style="font-size: 8px;">folio: {{contacto.folio}} - 
+          <span *ngIf="contacto.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{contacto.lastcomment}} días</span>
+          <span *ngIf="contacto.lastcomment >= 3 && contacto.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{contacto.lastcomment}} días</span>
+          <span *ngIf="contacto.lastcomment >= 0 && contacto.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{contacto.lastcomment}} días</span>
+        </h2>
+        <ion-avatar item-end>
+          <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>
+        </ion-avatar>
+      </ion-item>
+      <ion-item-options class="fondo" side="right">
+        <button *ngIf="contacto.cellphone != 0" ion-button color="secondary" (click)="llamar(contacto.cellphone)">
+          <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>
+        </button>
+        <button ion-button color="botones" (click)="verContacto(contacto.folio, 'c')">
+          <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'referidos'" id="myUL">
+
+    <ion-item-sliding  *ngFor="let referido of referidos" class="contactos fondo">
+      <ion-item class="fondo" (click)="verContacto(referido.folio, 'r')">
+        <ion-avatar item-start>
+          <img src="assets/imgs/usuario.png">
+        </ion-avatar>
+        <h2 style="font-size: 10px;">{{referido.fullname}}</h2>
+        <h2 style="font-size: 10px;" *ngIf="referido.email != 0">{{referido.email}}</h2>
+        <h2 style="font-size: 10px;" *ngIf="referido.email == 0">No Disponible</h2>
+        <h2 style="font-size: 8px;">folio: {{referido.folio}} - 
+          <span *ngIf="referido.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{referido.lastcomment}} días</span>
+          <span *ngIf="referido.lastcomment >= 3 && referido.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{referido.lastcomment}} días</span>
+          <span *ngIf="referido.lastcomment >= 0 && referido.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{referido.lastcomment}} días</span>
+        </h2>
+        <ion-avatar item-end>
+          <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>
+        </ion-avatar>
+      </ion-item>
+      <ion-item-options class="fondo" side="right">
+        <button *ngIf="referido.cellphone != 0" ion-button color="secondary" (click)="llamar(referido.cellphone)">
+          <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>
+        </button>
+        <button ion-button color="botones" (click)="verContacto(referido.folio, 'r')">
+          <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    
+  </ion-list>
+
+  <ion-list *ngSwitchCase="'potenciales'" id="myUL">
+
+    <ion-item-sliding  *ngFor="let potencial of potenciales" class="contactos fondo">
+      <ion-item class="fondo" (click)="verContacto(potencial.folio, 'p')">
+        <ion-avatar item-start>
+          <img src="assets/imgs/usuario.png">
+        </ion-avatar>
+        <h2 style="font-size: 10px;">{{potencial.fullname}}</h2>
+        <h2 style="font-size: 10px;" *ngIf="potencial.email != 0">{{potencial.email}}</h2>
+        <h2 style="font-size: 10px;" *ngIf="potencial.email == 0">No Disponible</h2>
+        <h2 style="font-size: 8px;">folio: {{potencial.folio}} - 
+          <span *ngIf="potencial.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{potencial.lastcomment}} días</span>
+          <span *ngIf="potencial.lastcomment >= 3 && potencial.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{potencial.lastcomment}} días</span>
+          <span *ngIf="potencial.lastcomment >= 0 && potencial.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{potencial.lastcomment}} días</span>
+        </h2>
+        <ion-avatar item-end>
+          <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>
+        </ion-avatar>
+      </ion-item>
+      <ion-item-options class="fondo" side="right">
+        <button *ngIf="potencial.cellphone != 0" ion-button color="secondary" (click)="llamar(potencial.cellphone)">
+          <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>
+        </button>
+        <button ion-button color="botones" (click)="verContacto(potencial.folio, 'r')">
+          <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    
+  </ion-list>
+</div>
+
+</ion-content>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="cerrarModal($event)">&times;</span>
+    <ion-list radio-group [(ngModel)]="agrC">
+      <ion-item>
+        <ion-label>Agregar Visita</ion-label>
+        <ion-radio (ionSelect)="agregarTipo()" value="1"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Agregar Compradores</ion-label>
+        <ion-radio (ionSelect)="agregarTipo()" value="2"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </div>
+</div>
+
+
+<ion-footer>
+  <ion-segment [(ngModel)]="tipo">
+    <ion-segment-button value="referidos">
+      Visitas
+    </ion-segment-button>
+    <ion-segment-button value="compradores">
+      Prospectos
+    </ion-segment-button>
+    <!--<ion-segment-button value="potenciales">
+      Potenciales
+    </ion-segment-button>-->
+  </ion-segment>
+</ion-footer>
+
+

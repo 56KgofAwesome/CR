@@ -1,0 +1,152 @@
+<ion-header>
+  <ion-navbar color="header">
+
+    <ion-title>Agendar tarea</ion-title>
+
+    <ion-buttons right>
+      <button *ngIf="!steps" ion-button icon-only (click)="close()">
+        <ion-icon color="whiteImmo" name="ios-close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+
+
+  <ion-item no-padding>
+    <h2>Agendar actividad</h2>
+    <p text-wrap>Desde aqui podras agendar una actividad con tus contactos</p>
+  </ion-item>
+  <br><br>
+
+
+  <ion-list class="slideTest" margin>
+    <form class="iform">
+      <ion-item>
+        <h2 *ngIf="client">{{nameClient}}</h2>
+        <h2 *ngIf="!client">Contacto <sup> *</sup></h2>
+
+        <button color="twitter" *ngIf="!client" ion-button item-end (click)="goCliente()"> Seleccionar</button>
+        <button color="twitter" *ngIf="client" ion-button item-end (click)="goCliente()"> Cambiar</button>
+
+      </ion-item>
+
+
+   
+          <ion-item>
+          
+            <ion-label>Asunto <sup> *</sup></ion-label>
+            <ion-select [(ngModel)]="event.subject" name="event.subject">
+              <ion-option value="1">Cita</ion-option>
+              <ion-option value="2">Llamada</ion-option>
+              <ion-option value="3">Guardia</ion-option>
+              <ion-option value="4">Vista de la Propiedad</ion-option>
+              <ion-option value="5">Inspección Domiciliaria</ion-option>
+              <ion-option value="7">Seguimiento</ion-option>
+              <ion-option value="6">Otros</ion-option>
+            </ion-select>
+          
+          </ion-item>
+
+            <ion-item>            
+              <ion-label>Sincronizar con el calendario del telefono </ion-label>
+              <ion-checkbox  [(ngModel)]="phoneCalendar" name="phoneCalendar"></ion-checkbox>            
+            </ion-item>
+
+
+
+
+
+
+      <ion-row>
+        <ion-col col-12>   
+            <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Fecha inicio <sup> *</sup></p>         
+        </ion-col>
+
+        <ion-col col-6 no-padding-top>
+          <ion-item>
+            <ion-label>Dia</ion-label>
+            <ion-datetime [min]="date" [monthShortNames]="monthName" [monthNames]="monthName"  max="2030-12-31" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"
+              [(ngModel)]="event.startDate" name="event.startDate" value="event.startDate" ></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6 no-padding>
+
+
+          <ion-item no-padding-left>
+            <ion-label>Hora</ion-label>
+            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.startTime" name="event.startTime"></ion-datetime>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col col-12>
+          <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Fecha Fin <sup> *</sup></p>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label>Dia </ion-label>
+            <ion-datetime [min]="event.startDate" [monthShortNames]="monthName" [monthNames]="monthName"  max="2030-12-31" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"
+              [(ngModel)]="event.endDate" name="event.endDate">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+
+
+          <ion-item >
+            <ion-label>Hora</ion-label>
+            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.endTime" name="event.endTime">
+            </ion-datetime>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col col-12>
+          <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Recordatorio <sup> *</sup></p>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item>
+            <ion-label>Dia</ion-label>
+            <ion-datetime [max]="event.startDate" [monthShortNames]="monthName" [monthNames]="monthName"  [min]="date" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"
+              [(ngModel)]="event.reDate" name="event.endDate">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+
+
+          <ion-item >
+            <ion-label>Hora</ion-label>
+            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.reTime" name="event.reTime">
+            </ion-datetime>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+
+
+
+
+      <ion-item>
+        <ion-label >Descripcion <sup> *</sup></ion-label>
+        <ion-textarea type="text" [(ngModel)]="event.descripcion" name="event.descripcion"></ion-textarea>
+      </ion-item>
+
+
+      <ion-item>
+        <button color="green" ion-button (click)="save()" full>Guardar</button>
+      </ion-item>
+    </form>
+
+  </ion-list>
+</ion-content>

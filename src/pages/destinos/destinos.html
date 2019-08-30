@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar color="header">
+    <ion-title>Destinos</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content id="result" class="fondo">
+  <div style="text-align: center;" id="destinos" class="ocultar">
+    <div *ngIf="length != 0">
+      <ion-card class="banner" *ngFor="let destino of destinos">
+        <img src="{{destino.smallfile}}" (click)="irApagina(destino.stateid)">
+        <div class="texto-encima" id="{{destino.stateid}}">
+          <h1 style="color: #fff; text-align: center; margin-top: 10px; opacity: 1!important;">{{destino.state}} <br/> <p style="font-size: 13px; color: #fff;">{{destino.units}} Desarrollos</p></h1>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+    
+
+</ion-content>
+
+

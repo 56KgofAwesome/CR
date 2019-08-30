@@ -1,0 +1,57 @@
+page-sharing {
+
+
+    ion-content {
+        background-size: cover;
+        background-position-x: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .contenedor{
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+        box-shadow: -3px 3px 17px 0px rgba(0,0,0,0.75);
+    }
+
+    .targetas{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .o_row{
+        flex-direction: row;
+    }
+    ion-card-header{
+        padding: 0px;
+    }
+    ion-card-header img{
+        height: 100%;
+    }
+    .imagen{
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        height: auto;
+        max-height: 400px;
+    }
+    .texto-encima{
+        position: absolute;
+        top:10%;
+        left: 3%;
+        padding: 2px 4px;
+        border-radius: 5px 5px 5px 5px;
+    }
+    .aparecer{
+        display: block;
+    }
+    .ocultar{
+        display: none;
+    }
+
+
+}

@@ -1,0 +1,56 @@
+<ion-header>
+
+  <ion-navbar color="header"> 
+    <ion-title>resultados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+
+<ion-content style="background-color: #eee;">
+  <div class="ocultar" id="resultados">
+    <div *ngIf="tipo == 'propiedad'">
+      <ion-card style="margin: 20px 0px;" class="contenedor" *ngFor="let propiedad of resultados" (click)="irAPropiedad(propiedad.folio)">
+        <ion-card-header style="padding: 0px;">
+          <div class="imagen">
+            <img src="{{propiedad.largephoto}}">
+            <div class="texto-encima">
+              
+              <!-- Y SI LA API CAMBIA COMO REGRESA LOS DATOS ?  -->
+              <p style="color: #fff;" *ngIf="propiedad.prices != '$0.00 '">{{propiedad.prices}}</p>
+            </div>
+          </div>
+
+        </ion-card-header>
+        <ion-card-content>
+          <p style="font-size: 15px;"> <strong>{{propiedad.alt}}</strong></p>
+          <p>{{propiedad.address}}</p>
+          <p>{{propiedad.toperation}}</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div *ngIf="tipo == 'desarrollo'">
+      <ion-card style="margin: 20px 0px;" class="contenedor" *ngFor="let propiedad of resultados" (click)="irADesarrollo(propiedad.folio)">
+        <ion-card-header style="padding: 0px;">
+          <div class="imagen">
+            <img src="{{propiedad.image.smallphoto}}">
+            <div class="texto-encima">
+              <p style="color: #fff;" *ngIf="propiedad.priceFrom != '$0.00 '">desde: {{propiedad.priceFrom}}</p>
+              <p style="color: #fff;" *ngIf="propiedad.priceFrom == '$0.00 '">No disponible</p>
+            </div>
+          </div>
+
+        </ion-card-header>
+        <ion-card-content>
+          <p style="font-size: 15px;"> <strong>{{propiedad.develomentNameSpa}}</strong></p>
+          <p>{{propiedad.address}}</p>
+          <p>Folio: {{propiedad.folio}}</p>
+        </ion-card-content>
+      </ion-card>    
+    </div>
+
+
+  </div>
+
+  </ion-content>

@@ -1,0 +1,36 @@
+page-filtro-resultados {
+    .contenedor{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .o_row{
+        flex-direction: row;
+    }
+    ion-card-header{
+        padding: 0px;
+    }
+    ion-card-header img{
+        height: 100%;
+    }
+    .imagen{
+        position: relative;
+        display: inline-block;
+        text-align: center;
+        height: 200px;
+    }
+    .texto-encima{
+        background-color: #004fa2;
+        position: absolute;
+        top: 165px;
+        left: 8px;
+        padding: 2px 4px;
+        border-radius: 5px 5px 5px 5px;
+    }
+    .aparecer{
+        display: block;
+    }
+    .ocultar{
+        display: none;
+    }
+}

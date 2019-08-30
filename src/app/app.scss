@@ -1,0 +1,25 @@
+.button{
+    border-radius: 4px;
+}
+
+
+.fondo{
+  background-color: #fefefe;
+}
+
+
+
+
+@import "../assets/font/fontawesome.scss";
+@import "../assets/font/solid.scss";
+@import "../assets/font/brands.scss";
+
+
+.user {
+    @extend %fa-icon;
+    @extend .fas;
+  
+    &:before {
+      content: fa-content($fa-var-user);
+    }
+  }

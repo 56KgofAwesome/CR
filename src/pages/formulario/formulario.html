@@ -1,0 +1,188 @@
+<ion-header no-border>
+
+  <ion-navbar color="header"> 
+    <ion-title>Filtros</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="fondo">
+  <div id="Fpropiedades" class="invisible">
+    <form (ngSubmit)="logForm('propiedad')">
+        <!--<ion-item class="formulario">
+          <ion-label>tipo de operacion</ion-label>
+          <ion-select name="operacion" [(ngModel)]="datos.operacion">
+            <ion-option value="1">Venta</ion-option>
+            <ion-option value="2">Renta</ion-option>
+            <ion-option value="3">Renta vacacional</ion-option>
+          </ion-select>
+        </ion-item>-->
+        <ion-item class="formulario fondo">
+          <ion-label>Tipo de propiedad</ion-label>
+          <ion-select name="propiedad" [(ngModel)]="datos.propiedad">
+            <ion-option value="1">Casa</ion-option>
+            <ion-option value="2">Departamento</ion-option>
+            <ion-option value="3">Local comercial</ion-option>
+            <ion-option value="4">Terreno</ion-option>
+            <ion-option value="5">Oficina</ion-option>
+            <ion-option value="6">Conjunto</ion-option>
+            <ion-option value="7">Rancho</ion-option>
+            <ion-option value="8">Membresia</ion-option>
+            <ion-option value="9">Hotel</ion-option>
+            <ion-option value="10">Marina</ion-option>
+            <ion-option value="11">Inversiones</ion-option>
+            <ion-option value="12">Bodega</ion-option>
+            <ion-option value="13">Edificio</ion-option>
+          </ion-select>
+        </ion-item>   
+        <ion-item class="fondo" *ngIf="$_SESSION">
+          <ion-label style="margin: 0px;">precio desde ${{formatoLower}} - {{formatoUpper}}</ion-label><ion-badge>${{formatoLower}} - ${{formatoUpper}}</ion-badge>
+          <ion-range style="padding: 0px 5px;" name="rangos" min="0" max="50000000" dualKnobs="true" pin="false" (ionChange)="setPrecioVista()" [(ngModel)]="datos" color="danger">
+          <ion-label range-left name="minimo" value="0">$0</ion-label>
+          <ion-label range-right name="maximo" value="50000000"></ion-label>
+          </ion-range>
+        </ion-item>
+        <ion-item class="fondo">
+          <ion-label>Metros cuadrados de construcción</ion-label>
+          <ion-label style="margin: 0px;">desde {{metros.lower}} m<SUP>2</SUP> - {{metros.upper}} m<SUP>2</SUP> </ion-label>
+          <ion-range style="padding: 0px 5px;" name="rangos" min="0" max="10000" dualKnobs="true" pin="false" (ionChange)="setMetrosVista()" [(ngModel)]="metros" color="danger">
+          <ion-label range-left name="minimo" value="0">0 m<SUP>2</SUP></ion-label>
+          <ion-label range-right name="maximo" value="10000">10000 m<SUP>2</SUP></ion-label>
+          </ion-range>
+        </ion-item>
+        <div id="avanzado" class="invisible">
+          <ion-item class="fondo">
+              <ion-label class="textoLabel" floating>Folio</ion-label>
+            <ion-input name="folio" [(ngModel)]="datos.folios" type="number"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label>Estacionamientos</ion-label>
+            <ion-select name="parking" [(ngModel)]="datos.parking">
+              <ion-option value="0">0</ion-option>
+              <ion-option value="1">1</ion-option>
+              <ion-option value="2">2</ion-option>
+              <ion-option value="3">3</ion-option>
+              <ion-option value="4">4</ion-option>
+              <ion-option value="5">5</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label>Recámaras</ion-label>
+            <ion-select name="recamaras" [(ngModel)]="datos.recamaras">
+              <ion-option value="0">0+</ion-option>
+              <ion-option value="1">1+</ion-option>
+              <ion-option value="2">2+</ion-option>
+              <ion-option value="3">3+</ion-option>
+              <ion-option value="4">4+</ion-option>
+              <ion-option value="5">5+</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label>Baños</ion-label>
+            <ion-select name="banos" [(ngModel)]="datos.banos">
+              <ion-option value="0">0+</ion-option>
+              <ion-option value="1">1+</ion-option>
+              <ion-option value="2">2+</ion-option>
+              <ion-option value="3">3+</ion-option>
+              <ion-option value="4">4+</ion-option>
+              <ion-option value="5">5+</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="fondo">
+            <ion-label>Metros cuadrados de terreno</ion-label>
+            <ion-label style="margin: 0px;">desde {{metroslot.lower}} m<SUP>2</SUP> - {{metroslot.upper}} m<SUP>2</SUP> </ion-label>
+            <ion-range style="padding: 0px 5px;" name="rangos" min="0" max="10000" dualKnobs="true" pin="false" (ionChange)="setMetroslotVista()" [(ngModel)]="metroslot" color="danger">
+            <ion-label range-left name="minimo" value="0">0 m<SUP>2</SUP></ion-label>
+            <ion-label range-right name="maximo" value="10000">10000 m<SUP>2</SUP></ion-label>
+            </ion-range>
+          </ion-item>
+        </div>
+        <div class="botones">
+          <button style="margin: 0px 5px" color="botones" ion-button type="submit" style="margin: 5px 2px;" block>buscar</button>
+        </div>
+      </form>
+      <button style="margin: 0px 5px" color="botones" ion-button style="margin: 5px 2px;" (click)="avanzado()" block>Avanzado</button>
+    </div>
+
+
+
+
+    <div id="Fdesarrollos" class="invisible">
+      <form (ngSubmit)="logForm('desarrollo')">
+          <!--<ion-item class="formulario">
+              <ion-label>tipo de operacion</ion-label>
+              <ion-select name="operacion" [(ngModel)]="datos.operacion">
+                <ion-option value="1">Venta</ion-option>
+                <ion-option value="2">Preventa</ion-option>
+              </ion-select>
+            </ion-item>-->
+            <ion-item class="formulario fondo">
+              <ion-label>Tipo de desarrollo</ion-label>
+              <ion-select name="desarrollo" [(ngModel)]="datos.desarrollo">
+                <ion-option value="0">Corporativo</ion-option>
+                <ion-option value="0">Comercial</ion-option>
+                <ion-option value="0">Residencial</ion-option>
+                <ion-option value="0">Industrial</ion-option>
+                <ion-option value="0">Mixto</ion-option>
+                <ion-option value="0">Multi-Familiar</ion-option>
+                <ion-option value="0">Condominal</ion-option>
+                <ion-option value="0">Villas</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item class="fondo" *ngIf="$_SESSION">
+              <ion-label style="margin: 0px;">precio desde ${{formatoLower}} - ${{formatoUpper}}</ion-label>
+              <ion-range style="padding: 0px 5px;" name="rangos" min="0" max="50000000" dualKnobs="true" pin="true" (ionChange)="setPrecioVista()" [(ngModel)]="datos" color="danger">
+              <ion-label range-left name="minimo" value="0">$0</ion-label>
+              <ion-label range-right name="maximo" value="50000000">50,000,000</ion-label>
+              </ion-range>
+            </ion-item>
+            <ion-item class="fondo">
+              <ion-label class="textoLabel" floating>Folio</ion-label>
+              <ion-input name="folio" type="number"></ion-input>
+            </ion-item>
+          <div id="avanzado2" class="invisible">
+                <ion-item class="formulario fondo">
+                  <ion-label>Recámaras</ion-label>
+                  <ion-select name="recamaras">
+                    <ion-option value="1">1+</ion-option>
+                    <ion-option value="2">2+</ion-option>
+                    <ion-option value="3">3+</ion-option>
+                    <ion-option value="4">4+</ion-option>
+                    <ion-option value="5">5+</ion-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item class="formulario fondo">
+                  <ion-label>Estacionamientos</ion-label>
+                  <ion-select name="parking" [(ngModel)]="datos.parking">
+                    <ion-option value="0">0</ion-option>
+                    <ion-option value="1">1</ion-option>
+                    <ion-option value="2">2</ion-option>
+                    <ion-option value="3">3</ion-option>
+                    <ion-option value="4">4</ion-option>
+                    <ion-option value="5">5</ion-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item class="formulario fondo">
+                  <ion-label>Baños</ion-label>
+                  <ion-select name="banos" [(ngModel)]="datos.banos">
+                    <ion-option value="1">1+</ion-option>
+                    <ion-option value="2">2+</ion-option>
+                    <ion-option value="3">3+</ion-option>
+                    <ion-option value="4">4+</ion-option>
+                    <ion-option value="5">5+</ion-option>
+                  </ion-select>
+                </ion-item>
+          </div>
+          <div class="botones">
+            <button color="botones" style="margin: 0px 5px" style="margin: 5px 2px;" ion-button type="submit" block>buscar</button>
+          </div>
+          
+        </form>
+        <button color="botones" style="margin: 0px 5px" style="margin: 5px 2px;" ion-button (click)="avanzado2()" block>Avanzado</button>
+      </div>
+    
+</ion-content>
+
+
+  

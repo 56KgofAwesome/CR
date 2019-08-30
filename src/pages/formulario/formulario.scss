@@ -1,0 +1,21 @@
+page-formulario {
+    
+    .visible{
+        display: block;
+    }
+    .invisible{
+        display: none;
+    }
+    .formulario{
+        padding-top: 5px;
+        margin: 10px 0px;
+    }
+    .botones{
+        display: flex;
+        flex-direction: row;
+    }
+    .alert-wrapper{
+        border-radius: 30px 30px 30px 30px!important;
+        background-color: #000!important;
+    }
+}

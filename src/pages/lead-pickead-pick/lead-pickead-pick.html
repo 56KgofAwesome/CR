@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar color="header" >
+		<ion-buttons left>
+			<button ion-button icon-only menuToggle>
+				<ion-icon   name="menu"></ion-icon>
+			</button>
+		</ion-buttons>
+    <ion-searchbar (ionInput)="getItems($event)" placeholder="Nombre, correo"></ion-searchbar>
+    
+    <ion-buttons right  (click)="deleteFiltre()">
+        <button ion-button icon-only>
+          <ion-icon  color="redImmo" name="ios-trash"></ion-icon>
+        </button>
+    </ion-buttons>
+
+
+  </ion-navbar>
+</ion-header>
+
+
+
+
+<ion-content class="card-background-page" padding>
+   
+      
+
+
+  <ion-list class="ilist">
+
+
+    <ion-item *ngFor="let item of items">
+      <ion-item   (click)="view(item.fullname, item.visitid)">
+
+        <ion-avatar class="corange" item-start>
+          <h1>{{item.first}}</h1>
+        </ion-avatar>
+        
+        <h2 >{{item.fullname}}</h2> 
+        <h3  >{{item.email}}</h3>
+        
+        <h3 >{{item.cellphone}}</h3>
+        <h3 >Folio: {{item.visitid}}</h3>
+      
+      </ion-item>
+
+    </ion-item>
+  </ion-list>  
+ 
+
+</ion-content>

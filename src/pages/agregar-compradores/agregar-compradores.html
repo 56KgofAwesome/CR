@@ -1,0 +1,508 @@
+<!--
+  Generated template for the AgregarCompradoresPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="header">
+    <ion-title>Agregar Comprador</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="fondo">
+<!-- Acomoda tu html -->
+
+      <!--<form (ngSubmit)="submit()" [formGroup]="datos">-->
+          <h1 class="cabecera" color="dark" >DATOS GENERALES</h1>
+      <div id="generales" padding class="generales">
+        <form (ngSubmit)="formularioGeneral()" [formGroup]="fGeneral">
+
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" floating>Nombre <sup>*</sup></ion-label>
+              <ion-input [(ngModel)]="datosGenerales.nombre" type="text" formControlName="nombre"></ion-input>
+            </ion-item>
+            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get('nombre').errors && error">
+              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
+              <p color="danger" ion-text *ngIf="fGeneral.get('nombre').hasError('required')">Este campo es necesario</p>
+            </ion-item>
+            <!--<ion-item class="ErrorMensaje" *ngIf="flagN">
+              <p color="danger" ion-text>Este campo es necesario</p>
+            </ion-item>-->
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" floating>Apellido paterno <sup>*</sup></ion-label>
+              <ion-input [(ngModel)]="datosGenerales.ap_paterno" type="text" formControlName="apellidoP" name="celular"></ion-input>
+            </ion-item>
+            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get('apellidoP').errors && error">
+              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
+              <p color="danger" ion-text *ngIf="fGeneral.get('apellidoP').hasError('required')">Este campo es necesario</p>
+            </ion-item>
+            <!--<ion-item class="ErrorMensaje" *ngIf="flagA">
+              <p color="danger" ion-text>Este campo es necesario</p>
+            </ion-item>-->
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" floating>Apellido Materno</ion-label>
+              <ion-input [(ngModel)]="datosGenerales.ap_materno" type="text" formControlName="apellidoM" name="ap_materno"></ion-input>
+            </ion-item>
+
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" floating>E-mail principal<sup>*</sup></ion-label>
+              <ion-input [(ngModel)]="datosGenerales.email" type="email" formControlName="email1" name="email1"></ion-input>
+            </ion-item>
+            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get('email1').errors && error">
+              <p color="danger" ion-text *ngIf="fGeneral.get('email1').hasError('required')">Este campo es necesario</p>
+              <p color="danger" ion-text *ngIf="fGeneral.get('email1').hasError('email') && flag">Este no es un correo valido</p>
+            </ion-item>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" floating>E-mail secundario</ion-label>
+              <ion-input [(ngModel)]="datosGenerales.email2" type="email" formControlName="email2" name="email2"></ion-input>
+            </ion-item>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" floating>RFC</ion-label>
+              <ion-input [(ngModel)]="datosGenerales.rfc" type="text" formControlName="rfc" name="rfc"></ion-input>
+            </ion-item>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" floating>Fecha de nacimiento</ion-label>
+              <ion-input [(ngModel)]="datosGenerales.nacimiento" type="text" formControlName="nac" name="nac"></ion-input>
+            </ion-item>
+          <div class="botones">
+            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>
+          </div>
+      </form>
+    </div>
+
+      <h1 class="cabecera" color="dark" >MEDIO DE CONTACTO</h1>
+      <div padding id="contacto" class="contacto">
+        <form (ngSubmit)="formularioContacto()" [formGroup]="fContacto">
+
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel">Medio de contacto <sup>*</sup></ion-label>
+              <ion-select [(ngModel)]="datosGenerales.contacto" name="propiedad" (ionChange)="validarDetalle()" formControlName="medioC" (ionChange)="actualizarDetalle()">
+                <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>
+              </ion-select>
+            </ion-item> 
+            <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get('medioC').errors && error">
+              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
+              <p color="danger" ion-text *ngIf="fContacto.get('medioC').hasError('required')">Este campo es necesario</p>
+            </ion-item>
+            <ion-item *ngIf="subMediosDeContactos != null" class="formulario fondo">
+              <ion-label class="textoLabel">Detalle</ion-label>
+              <ion-select [(ngModel)]="datosGenerales.subcontacto" name="propiedad" formControlName="detalle">
+                <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>
+              </ion-select>
+            </ion-item> 
+
+            <div *ngIf="media_extra == 3 || media_extra == 7">
+              <ion-item class="formulario fondo">
+                <ion-label class="textoLabel" floating>Nombre del broker <sup>*</sup></ion-label>
+                <ion-input [(ngModel)]="datosGenerales.referred" type="text" formControlName="Nbroker" name="Nbroker"></ion-input>
+              </ion-item>
+              <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get('Nbroker').errors && error">
+                <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
+                <p color="danger" ion-text *ngIf="fContacto.get('Nbroker').hasError('required')">Este campo es necesario</p>
+              </ion-item>
+              <ion-item class="formulario fondo">
+                <ion-label class="textoLabel" floating>E-mail broker</ion-label>
+                <ion-input [(ngModel)]="datosGenerales.referral_email" type="text" formControlName="Ebroker" name="Ebroker"></ion-input>
+              </ion-item>
+              <ion-item class="formulario fondo">
+                <ion-label class="textoLabel" floating>Telefono broker</ion-label>
+                <ion-input [(ngModel)]="datosGenerales.referral_phone" type="text" formControlName="Tbroker" name="Tbroker"></ion-input>
+              </ion-item>
+              <ion-item class="formulario fondo">
+                <ion-label class="textoLabel" floating>Agencia broker</ion-label>
+                <ion-input [(ngModel)]="datosGenerales.referral_agency" type="text" formControlName="Abroker" name="Abroker"></ion-input>
+              </ion-item>
+            </div>
+            <div *ngIf="media_extra == 6">
+              <ion-item class="formulario fondo">
+                <ion-label class="textoLabel" floating>Otro <sup>*</sup></ion-label>
+                <ion-input [(ngModel)]="datosGenerales.otro_camp" type="text" formControlName="otro"  name="otro"></ion-input>
+              </ion-item>
+              <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get('otro').errors && error">
+                <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
+                <p color="danger" ion-text *ngIf="fContacto.get('otro').hasError('required')">Este campo es necesario</p>
+              </ion-item>
+            </div>
+
+            <ion-item class="fondo">
+              <ion-label style="font-size: 13px" floating>Comentarios <sup>*</sup></ion-label>
+              <ion-textarea [(ngModel)]="datosGenerales.comentarios" formControlName="comentarios" style="height: 60px;" name="comentario" type="text"></ion-textarea>
+            </ion-item>
+            <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get('comentarios').errors && error">
+              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
+              <p color="danger" ion-text *ngIf="fContacto.get('comentarios').hasError('required')">Este campo es necesario</p>
+            </ion-item>
+          
+          <div class="botones">
+            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>
+          </div>
+      </form>
+      <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar('contact')" >Regresar</button>
+    </div>
+
+
+
+      <h1 class="cabecera">CLIENTE BUSCA</h1>
+      <div id="busca" padding class="busca">
+        <form (ngSubmit)="formularioBusca()" novalidate>
+          <ion-label>
+            Operacion <sup>*</sup>
+          </ion-label>
+          <div>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel">Comprar</ion-label>
+              <ion-checkbox [(ngModel)]="datosGenerales.busca_c" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>
+            </ion-item>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel">Rentar</ion-label>
+              <ion-checkbox [(ngModel)]="datosGenerales.busca_r" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>
+            </ion-item>
+            <div id="operacionMensaje">
+            </div>
+            <ion-label>Otro</ion-label>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel">Listar Venta</ion-label>
+              <ion-checkbox [(ngModel)]="datosGenerales.listar_v" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>
+            </ion-item>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel">Listar Renta</ion-label>
+              <ion-checkbox [(ngModel)]="datosGenerales.listar_r" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>
+            </ion-item>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel">Exclusiva</ion-label>
+              <ion-checkbox [(ngModel)]="datosGenerales.exclusiva" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>
+            </ion-item>
+          </div>
+          <ion-item class="fondo">
+            <ion-label>Tipo</ion-label>
+            <ion-select [(ngModel)]="datosGenerales.tipo_busca" [ngModelOptions]="{standalone: true}">
+              <ion-option value="C" >Casa</ion-option>
+              <ion-option value="D" >Depto</ion-option>
+              <ion-option value="T" >Terreno</ion-option>
+              <ion-option value="L" >Oficina</ion-option>
+              <ion-option value="B" >Bodega</ion-option>
+              <ion-option value="P" >Desarrollo</ion-option>
+              <ion-option value="O" >Otro</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="fondo" *ngIf="datosGenerales.tipo_busca == 'O'">
+            <ion-label>Otro</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.nota_busca" [ngModelOptions]="{standalone: true}" type="text"></ion-input>
+          </ion-item>
+          <ion-item class="fondo">
+            <ion-label>Monto Inversión</ion-label>
+            <ion-select [(ngModel)]="datosGenerales.presupuesto" [ngModelOptions]="{standalone: true}">
+              <ion-option value="1">100,000 USD - 200,000 USD</ion-option>
+              <ion-option value="2">200,000 USD - 300,000 USD</ion-option>
+              <ion-option value="3">300,000 USD - 500,000 USD</ion-option>
+              <ion-option value="15">350,000 USD - 500,000 USD</ion-option>
+              <ion-option value="4">500,000 USD - 800,000 USD</ion-option>
+              <ion-option value="16">500,000 USD - 750,000 USD</ion-option>
+              <ion-option value="5">800,000 USD - 1 Million USD</ion-option>
+              <ion-option value="6">1 Million USD and Plus</ion-option>
+              <ion-option value="7">Otro - Other</ion-option>
+              <ion-option value="8">Menos de 500,000 MXN</ion-option>
+              <ion-option value="9">500,000 MXN - 1,000,000 MXN </ion-option>
+              <ion-option value="10">1,000,000 MXN - 1,500,000 MXN </ion-option>
+              <ion-option value="11">1,500,000 MXN - 2,000,000 MXN </ion-option>
+              <ion-option value="12">2,000,000 MXN - 2,500,000 MXN </ion-option>
+              <ion-option value="13">3,000,000 MXN - 3,500,000 MXN </ion-option>
+              <ion-option value="17">4,000,000 MXN - 4,500,000 MXN </ion-option>
+              <ion-option value="18">5,000,000 MXN - 5,500,000 MXN </ion-option>
+              <ion-option value="19">6,000,000 MXN - 6,500,000 MXN </ion-option>
+              <ion-option value="20">10 Millones MXN y Más </ion-option>
+              <ion-option value="14">Otro - Other </ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="fondo">
+            <ion-label floating>Otro presupuesto</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.otro_presupuesto" type="text" [ngModelOptions]="{standalone: true}"></ion-input>
+          </ion-item>
+          <ion-item class="fondo">
+            <ion-label floating>Enganche</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.enganche" [ngModelOptions]="{standalone: true}" type="number"></ion-input>
+          </ion-item>
+
+            <div class="botones">
+              <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>
+            </div>
+        </form>
+        <button style="margin: 0px 5px" color="botones" ion-button type="submit" block (click)="regresar('busca')" >Regresar</button>
+      </div>
+
+      <h1 class="cabecera">INFORMACION DEL CONTACTO</h1>
+      <div id="compradores" padding class="compradores">
+        <form (ngSubmit)="formularioCompradores()" [formGroup]="fDelContacto">
+          <ion-item class="formulario fondo">
+            <ion-label floating>Direccion principal</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.direccion" type="text" formControlName="fdcDir1"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo"> 
+            <ion-label floating>Segunda direccion</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.direccion2" type="text" formControlName="fdcDir2"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Codigo postal</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.codigo_p" type="text" formControlName="fdcPostal"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Pais</ion-label>
+            <ion-select [(ngModel)]="datosGenerales.country" (ionChange)="actualizarEstado()" formControlName="fdcPais">
+              <ion-option *ngFor="let pais of listaDePaises" value="{{pais.countryid}}">{{pais.country}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="fondo">
+            <ion-label floating>Estado</ion-label>
+            <ion-select [(ngModel)]="datosGenerales.state" [ngModelOptions]="{standalone: true}" >
+              <ion-option *ngFor="let estado of listaDeEstados" value="{{estado.stateid}}">{{estado.state}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>ciudad</ion-label>
+            <ion-select [(ngModel)]="datosGenerales.ciudad" (ionChange)="actualizarCiudades()" formControlName="fdcCiudad">
+              <ion-option *ngFor="let ciudad of listaDeCiudades" value="{{ciudad.city}}">{{ciudad.city}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Nacionalidad</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.nacionalidad" type="text" formControlName="fdcNacionalidad"></ion-input>
+          </ion-item>
+          <ion-item class="fondo" *ngIf="fDelContacto.get('fdcNacionalidad').errors && error">
+            <p color="danger" *ngIf="fDelContacto.get('fdcNacionalidad').hasError('required')">Este campo es necesario</p>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Idioma</ion-label>
+            <ion-select [(ngModel)]="datosGenerales.idioma" formControlName="fdcIdioma">
+              <ion-option *ngFor="let lenguaje of listaDeLenguajes" value="{{lenguaje.languageid}}">{{lenguaje.language}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Telefono de casa</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.tel" type="text" formControlName="fdcTelC"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Telefono de oficina</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.oficina_tel" type="text" formControlName="fdcTelO"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Fax</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.fax_tel" type="text" formControlName="fdcFax"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Celular con lada</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.cel_tel" type="text" formControlName="fdcCelL"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Nextel</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.nextel_tel" type="text" formControlName="fdcNextel"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>No. Fam</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.num_familia" type="number" formControlName="fdcNoFam"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>profesión</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.profecion" type="text" formControlName="fdcProf"></ion-input>
+          </ion-item>
+          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.status_civil" [ngModelOptions]="{standalone: true}" >
+            <ion-label>Estado civil</ion-label>
+              <ion-item class="formulario fondo">
+                <ion-label class="textoLabel">Soltero(a)</ion-label>
+                <ion-checkbox value="1" checked></ion-checkbox>
+              </ion-item>
+              <ion-item class="formulario fondo">
+                <ion-label class="textoLabel">Casado(a)</ion-label>
+                <ion-checkbox value="0" ></ion-checkbox>
+              </ion-item>
+            </ion-list>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Empresa</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.empresa" type="text" formControlName="fdcEmpresa"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label floating>Website</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.sitio_web" type="text" formControlName="fdcWeb"></ion-input>
+          </ion-item>
+          <ion-item class="formulario fondo">
+            <ion-label stacked>¿Cuántas veces ha visitado este destino turístico?</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.num_visitas" formControlName="fdcComentarios"></ion-input>
+          </ion-item>
+          <div class="botones">
+            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>
+          </div>
+        </form>
+        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar('compradores')" >Regresar</button>
+      </div>
+
+      <h1 class="cabecera">INFORMACION FINANCIERA</h1>
+      <div id="financiera" padding class="financiera">
+        <form (ngSubmit)="formularioFinanciera()">
+          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.ingreso_anual" [ngModelOptions]="{standalone: true}" >
+              <ion-label>Ingreso anual</ion-label>
+              <ion-item class="fondo">
+                <ion-label>50-100,000</ion-label>
+                <ion-radio value="50-100,000"></ion-radio>
+              </ion-item>
+    
+              <ion-item class="fondo">
+                <ion-label>100-250,000</ion-label>
+                <ion-radio value="100-250,000"></ion-radio>
+              </ion-item>
+    
+              <ion-item class="fondo">
+                <ion-label>+250,000</ion-label>
+                <ion-radio value="+250,000"></ion-radio>
+              </ion-item>
+    
+              <ion-item class="fondo">
+                <ion-label>+1,000,000</ion-label>
+                <ion-radio value="+1,000,000"></ion-radio>
+              </ion-item>
+    
+              <ion-item class="fondo">
+                <ion-label >+5,000,000</ion-label>
+                <ion-radio value="+5,000,000"></ion-radio>
+              </ion-item>
+    
+              <ion-item class="fondo">
+                <ion-label >+10,000,000</ion-label>
+                <ion-radio value="+10,000,000"></ion-radio>
+              </ion-item>
+    
+              <ion-item class="fondo">
+                <ion-label >+15,000,000</ion-label>
+                <ion-radio value="+15,000,000"></ion-radio>
+              </ion-item>
+    
+              <ion-item class="fondo">
+                <ion-label >+20,000,000</ion-label>
+                <ion-radio value="+20,000,000"></ion-radio>
+              </ion-item>
+    
+              <ion-item class="fondo">
+                <ion-label >+30,000,000</ion-label>
+                <ion-radio value="+30,000,000"></ion-radio>
+              </ion-item>
+          </ion-list>
+
+          <div class="botones">
+            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>
+          </div>
+        </form>
+        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar('financiera')" >Regresar</button>
+      </div>
+
+      <h1 class="cabecera">USO DEL INMUEBLE</h1>
+      <div id="inmueble" class="inmueble">
+        <form (ngSubmit)="formularioInmueble()">
+          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.uso_propiedad" [ngModelOptions]="{standalone: true}">
+            <ion-label>Uso de la propiedad</ion-label>
+
+            <ion-item class="fondo">
+              <ion-label >Vivir</ion-label>
+              <ion-radio value="V"></ion-radio>
+            </ion-item>
+
+            <ion-item class="fondo">
+              <ion-label >Inversión</ion-label>
+              <ion-radio value="I"></ion-radio>
+            </ion-item>
+
+            <ion-item class="fondo">
+              <ion-label >Rentarla</ion-label>
+              <ion-radio value="R"></ion-radio>
+            </ion-item>
+          </ion-list>
+
+          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.forma_pago" [ngModelOptions]="{standalone: true}">
+            <ion-label>Forma de pago</ion-label>
+
+            <ion-item class="fondo">
+              <ion-label>Contado</ion-label>
+              <ion-radio value="C"></ion-radio>
+            </ion-item>
+
+            <ion-item class="fondo">
+              <ion-label>Crédito bancario</ion-label>
+              <ion-radio value="E"></ion-radio>
+            </ion-item>
+
+            <ion-item class="fondo">
+              <ion-label>Crédito hipotecario</ion-label>
+              <ion-radio value="F"></ion-radio>
+            </ion-item>
+
+            <ion-item class="fondo">
+              <ion-label>Otro</ion-label>
+              <ion-radio value="O"></ion-radio>
+            </ion-item>
+          </ion-list>
+
+          <ion-item class="fondo">
+            <ion-label floating>Hotel</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.num_hotel" [ngModelOptions]="{standalone: true}"></ion-input>
+          </ion-item>
+
+          <ion-item class="fondo">
+            <ion-label floating>No Hab</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.cuarto_hotel" [ngModelOptions]="{standalone: true}"></ion-input>
+          </ion-item>
+
+          <ion-item class="fondo">
+            <ion-label floating>Salida</ion-label>
+            <ion-input [(ngModel)]="datosGenerales.salida" [ngModelOptions]="{standalone: true}"></ion-input>
+          </ion-item>          
+
+          <ion-item class="fondo">
+            <ion-textarea [(ngModel)]="datosGenerales.coment_financiera" placeholder="Comentarios" [ngModelOptions]="{standalone: true}"></ion-textarea>
+          </ion-item>
+
+          <ion-item class="fondo">
+            <ion-label stacked>¿Le interesaría recibir información acerca de oportunidades de inversión en bienes raíces?</ion-label>
+            <ion-select [(ngModel)]="datosGenerales.de_acuerdo_info" [ngModelOptions]="{standalone: true}">
+              <ion-option value="0" slected="true">No</ion-option>
+              <ion-option value="1">Si</ion-option>
+            </ion-select>
+          </ion-item>
+
+          <div class="botones">
+            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>
+          </div>
+        </form>
+        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar('inmueble')" >Regresar</button>
+      </div>
+
+
+
+      <h1 class="cabecera">AGENTE QUE ENLISTA</h1>
+      <div id="enlista" padding class="enlista">
+        <form (ngSubmit)="agregarContacto()" [formGroup]="fAgente">
+
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel">Officina <sup>*</sup></ion-label>
+              <ion-select [(ngModel)]="datosGenerales.office" (ionChange)="actualizarAsesor()" name="propiedad" formControlName="officinaA">
+                <ion-option *ngFor="let oficina of listaDeOficinas" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>
+              </ion-select>
+            </ion-item> 
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel">Asesor <sup>*</sup></ion-label>
+              <ion-select [(ngModel)]="datosGenerales.user" name="propiedad" formControlName="asesorA">
+                <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>
+              </ion-select>
+            </ion-item> 
+            <div class="botones">
+              <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Agregar</button>
+            </div>
+        </form>
+        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar('enlista')" >Regresar</button>
+      </div>
+
+        <!--</form>-->
+
+
+
+</ion-content>

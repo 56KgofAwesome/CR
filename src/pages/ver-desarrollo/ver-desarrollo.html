@@ -1,0 +1,212 @@
+
+<ion-header shadow no-border [class.opaque]="showToolbar">
+
+    <ion-navbar color="header">
+      <ion-title [hidden]="!showToolbar">Desarrollo</ion-title>
+    </ion-navbar>
+    
+  </ion-header>
+  
+  
+  <ion-content fullscreen class="fondo">
+      <!--<div class="slider">-->
+        <ion-card style="margin: 0px 0px 15px 0px !important; width: 100%;">
+          <ion-card-header style="padding: 0px 0px 5px 0px">
+            <ion-slides style="max-height: 190px;" loop="true" slidesPerView="1">
+  
+              <ion-slide style="max-height: 190px; width: 100%;" *ngFor="let slide of slider">
+                <img style="height: auto;" src="{{slide.largefile}}" imageViewer />
+              </ion-slide>
+            </ion-slides>
+          </ion-card-header>
+      <!--</div>-->
+      
+          <ion-card-content style="padding-top: 10px;">
+          <!--<ion-card-header>-->
+            <h6 style="margin: auto; text-align: center; margin-bottom: 5px;">{{datos.develomentNameSpa}}</h6>
+          <!--</ion-card-header>-->
+          
+            <div>
+              <div class="description">
+                  <p style="margin-bottom: 10px">Descripción</p>
+                  <p class="texto">{{datos.descriptionEs}}</p><br><br>
+              </div>
+              <div>
+                <p style="font-size: 11px"></p>
+              </div>
+              <ion-list>
+                <ion-item class="lista">
+                    <ion-icon ios="ios-attach" md="md-attach" item-start style="font-size: 20px;"></ion-icon>
+                    <p class="texto">Folio: {{datos.folio}}</p>
+                </ion-item>
+                <ion-item *ngIf="datos.priceFrom != 0 && $_SESSION" class="lista">
+                    <ion-icon ios="ios-pricetag-outline" md="ios-pricetag-outline" item-start style="font-size: 20px"></ion-icon>
+                    <p class="texto">Desde: {{datos.priceFrom}}</p>
+                </ion-item>
+                <ion-item class="lista" text-wrap>
+                    <ion-icon ios="ios-pin-outline" md="ios-pin-outline" item-start style="font-size: 20px"></ion-icon>
+                    <p class="texto">{{datos.location}} <br/> {{datos.address}}</p>
+                </ion-item>
+                <ion-item *ngIf="datos.bathTo != 0" class="lista">
+                    <ion-icon ios="ios-bookmark-outline" md="md-bookmark" item-start style="font-size: 20px"></ion-icon>
+                    <p class="texto">Desde: {{datos.m2cFrom}} m<SUP>2</SUP> - Hasta: {{datos.m2cTo}} m<SUP>2</SUP></p>
+                </ion-item>
+                <ion-item *ngIf="datos.bedTo != 0" class="lista">
+                    <ion-icon ios="ios-checkmark-outline" md="md-checkmark" item-start style="font-size: 20px"></ion-icon>
+                    <p class="texto">Cuartos: desde {{datos.bedFrom}} - Hasta {{datos.bedTo}}</p>
+                </ion-item>
+                <ion-item *ngIf="datos.bathTo != 0" class="lista">
+                    <ion-icon ios="ios-checkmark-outline" md="md-checkmark" item-start style="font-size: 20px"></ion-icon>
+                    <p class="texto">Baños: DESDE {{datos.bathFrom}} - Hasta {{datos.bathTo}}</p>
+                </ion-item>
+                <ion-item *ngIf="datos.parking != 0" class="lista">
+                    <ion-icon ios="ios-car-outline" md="ios-car-outline" item-start style="font-size: 20px;"></ion-icon>
+                    <p class="texto">Estacionamientos: {{datos.parking}}</p>
+                </ion-item>
+                <ion-item *ngIf="datos.parking == 0" class="lista">
+                    <ion-icon ios="ios-car-outline" md="ios-car-outline" item-start style="font-size: 20px;"></ion-icon>
+                    <p class="texto">Eestacionamientos: No disponible</p>
+                </ion-item>
+                <ion-item class="lista">
+                    <ion-icon ios="ios-home-outline" md="ios-home-outline" item-start style="font-size: 20px;"></ion-icon>
+                    <p class="texto">Unidades totales: {{datos.units}}</p>
+                </ion-item>
+                <ion-item class="lista">
+                    <ion-icon ios="ios-home-outline" md="ios-home-outline" item-start style="font-size: 20px;"></ion-icon>
+                    <p class="texto">Unidades vendidas: {{datos.soldUnits}}</p>
+                </ion-item>
+                <ion-item *ngIf="datos.unitsAviable > 0" class="lista">
+                    <ion-icon ios="ios-home-outline" md="ios-home-outline" item-start style="font-size: 20px;"></ion-icon>
+                    <p class="texto">Unidades disponibles: {{datos.unitsAviable}}</p>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-card-content>
+        </ion-card>
+        <div>
+
+            <div *ngIf="mapView == true" style="width: 100%;   height: 180px;" id="mapa">
+
+              </div>
+
+        </div>
+
+
+
+        <div class="contenedor">
+  
+          <div>
+              <ion-card *ngIf="servicios != null || amenidades != null" style="margin: 0px 0px 15px 0px !important; width: 100%;">
+                  <div padding>
+                      <ion-segment [(ngModel)]="tipo">
+                        <ion-segment-button *ngIf="servicios != undefined" value="servicios">
+                          Servicios
+                        </ion-segment-button>
+                        <ion-segment-button *ngIf="amenidades != undefined" value="amenidades">
+                          Amenidades
+                        </ion-segment-button>
+                      </ion-segment>
+                    </div>
+  
+                    <div [ngSwitch]="tipo">
+                        <ion-list *ngSwitchCase="'servicios'">
+                          <ion-item>
+                              <div class="caracteristicas">
+                                <div *ngFor="let servicio of servicios" class="caracteristica">
+                                    <p class="texto"><ion-icon ios="ios-checkmark-outline" md="ios-checkmark-outline"></ion-icon>  {{servicio}}</p>
+                                </div>
+                              </div>
+                          </ion-item>
+                        </ion-list>
+                      
+                        <ion-list *ngSwitchCase="'amenidades'">
+                          <ion-item>
+                              <div class="caracteristicas">
+                                <div *ngFor="let amenidad of amenidades" class="caracteristica">
+                                    <p class="texto"><ion-icon ios="ios-checkmark-outline" md="ios-checkmark-outline"></ion-icon>  {{amenidad}}</p>
+                                </div>
+                              </div>
+                          </ion-item>
+                        </ion-list>
+                      </div>
+              </ion-card>
+                
+              <ion-card class="o_row" style="margin: 0px 0px 0px 0px !important; width: 100%;">
+                
+                  <ion-avatar item-start style="width: 55px; height: 55px; margin: 10px 8px 0px 8px">
+                    <img src="assets/imgs/user.png" style="margin-right: 20px;">
+                  </ion-avatar>                
+                
+                <div style="width: 80%; padding-top: 10px; margin-left: 5px;">
+                  <p style="font-size: 10px;">{{agenteNombre}}</p>
+                  <p style="font-size: 10px;">{{agenteMail}}</p>
+                </div>
+                <div class="o_row1">
+                  <div (click)="llamar(agente.cellphone)" style="margin-right: 20px; margin-top: 15px;">
+                    <ion-icon style="font-size: 25px;" name="call"></ion-icon>
+                  </div>
+                  <div (click)="mensajear()" style="margin-right: 20px; margin-top: 15px;">
+                    <ion-icon style="font-size: 25px;" name="mail"></ion-icon>
+                  </div>
+                  <div (click)="sharingwhats()" style="margin-right: 20px; margin-top: 15px;">
+                      <ion-icon style="font-size: 25px" name="logo-whatsapp"></ion-icon>
+                  </div>
+                </div>
+              </ion-card>
+          </div>
+  
+  
+  
+      </div>
+      <ion-fab right top>
+          <button ion-fab mini color="tabs"><ion-icon name="md-share"></ion-icon></button>
+          <ion-fab-list side="down">
+            <button ion-fab mini (click)="compartir('facebook', datos.folio)"><ion-icon name="logo-facebook"></ion-icon></button>
+            <button ion-fab mini (click)="compartir('twitter', datos.folio)"><ion-icon name="logo-twitter"></ion-icon></button>
+            <button ion-fab mini (click)="compartir('whatsapp', datos.folio)"><ion-icon name="logo-whatsapp"></ion-icon></button>
+            <button ion-fab mini (click)="compartir('instagram', datos.folio)"><ion-icon name="logo-instagram"></ion-icon></button>
+            <button ion-fab mini (click)="compartir('pinterest', datos.folio)"><ion-icon name="logo-pinterest"></ion-icon></button>
+            <!--<button ion-fab mini (click)="presentPopover($event)"><ion-icon ios="ios-mail" md="md-mail"></ion-icon></button>-->
+          </ion-fab-list>
+        </ion-fab>
+  </ion-content>
+  
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" (click)="cerrarModal($event)">&times;</span>
+      <form (ngSubmit)="enviarCorreo()" [formGroup]="fMail">
+        <ion-item>
+          <ion-label style="font-size: 13px" floating>Nombre</ion-label>
+          <ion-input style="height: 26px; margin: 0px;" name="nombre" formControlName="nombre" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label style="font-size: 13px" floating>Apellido</ion-label>
+          <ion-input style="height: 26px; margin: 0px;" name="apellido" formControlName="apellido" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label style="font-size: 13px" floating>Telefono</ion-label>
+          <ion-input style="height: 26px;" name="telefono" formControlName="telefono" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label style="font-size: 13px" floating>Correo Electronico</ion-label>
+          <ion-input style="height: 26px;" name="correo" formControlName="correo" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label style="font-size: 13px" floating>Comentario</ion-label>
+          <ion-textarea style="height: 60px;" name="comentario" formControlName="comentario" type="text"></ion-textarea>
+        </ion-item>
+        <button style="height: 25px;" ion-button round type="submit">enviar</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="modalImagen" class="modalImagen">
+      <span class="close" (click)="cerrarModal()">&times;</span>
+    <!--<ion-slides style="height: 100%;">
+  
+      <ion-slide style="height: 100%;" *ngFor="let slide of slider">
+        <img style="width: 100%; height: 100%;" (click)="verImagen(slide.largefile)" src="{{slide.largefile}}" />
+      </ion-slide>
+    </ion-slides>-->
+    <img src="{{ImagenSlide}}" alt="">
+  </div>

@@ -1,0 +1,69 @@
+page-login {
+    ion-content{
+        position: absolute;
+    }
+    ::placeholder{
+        color: white;
+    }
+    .img-fondo{
+        width: 100%;
+        height: 100%;
+        background-image: url('assets/imgs/fondo.png');
+        filter: blur(5px);
+        transform: scale(1.1);
+        background-size: cover;
+        position: absolute;
+        transform: scale(1.01);
+    }
+    
+    .logo{
+        margin-top: 20px;
+        width: auto;
+        margin: auto;
+    }
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+    .input-transparente{
+        width: 100%;
+        height: 45px;
+        display: flex;
+        flex-direction: row;
+        margin: 10px 0px;
+        border-bottom: 1px solid #666;
+    }
+    .contenedor-input{
+        width: 100%;
+        margin: 0px 10px;
+        height: 90px;
+        display: flex;
+        flex-direction: row;
+    }
+    .icono{
+        height: auto;
+    }
+    .ion-icon{
+        margin-top: 10px;
+        font-size: 10px;
+    }
+    .boton{
+        background-color: botones;
+        display: block;
+        width: 100%;
+        margin: auto;
+        height: 30px;
+        margin-bottom: 10px;
+    }
+    .contenido{
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 100px;
+    }
+    .scroll-content {
+        padding-bottom: 0 !important;
+    }
+}

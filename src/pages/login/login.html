@@ -1,0 +1,41 @@
+<!-- -->
+<ion-content padding class="animated fadeIn login auth-page">
+  <div class="login-content">
+
+    <!-- Logo -->
+    <div padding-horizontal text-center class="animated fadeInDown">
+      <div class="logo">
+        <img class="center" width="100%" style="margin: 10px auto;" src="assets/imgs/logoN.png">
+      </div>
+    </div>
+
+    <!-- Login form -->
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+          Email
+        </ion-label>
+        <ion-input type="email" [(ngModel)]='Nusuario'></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+          Password
+        </ion-label>
+        <ion-input type="password" [(ngModel)]='contrasena'></ion-input>
+      </ion-item>
+
+
+
+    <div>
+      <button ion-button icon-start block color="botones" tappable (click)="createUser()">
+        <ion-icon name="log-in"></ion-icon>
+        INICIAR SESIÓN
+      </button>
+    </div>
+
+  </div>
+</ion-content>
+

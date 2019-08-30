@@ -1,0 +1,68 @@
+page-ver-contacto {
+    .contenedor{
+        display: flex;
+        flex-direction: column;
+    }
+    .logo{
+        margin: auto;
+    }
+    .menu{
+        //background-color: rgba(136, 136, 136, 0.262);
+        padding: 2px 4px;
+        width: 100%;
+        height: 30px;
+        margin: 3px;
+        align-items: flex-end;
+        //border: 1px solid black;
+        //border-radius: 5px 5px 5px 5px;
+    }
+    .visible{
+        display: block;
+    }
+    .invisible{
+        display: none;
+    }
+    ion-icon{
+        color: #666;
+        float: right;
+    }
+    .datos{
+        font-size: 12px;
+    }
+    .modal{
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 80px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0,0,0,0.4);
+    }
+    .modal-content{
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 88%;
+    }
+    .close{
+        color: #aaa;
+        float: right;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus{
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .titulo{
+        font-weight: bold;
+        font-size: 15px;
+    }
+}

@@ -1,0 +1,468 @@
+<ion-header *ngIf="type == 'r'">
+  <ion-toolbar color="primary">
+    <ion-title>Activar Visita #{{visitid}}</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon color="whiteImmo" name="ios-close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-header *ngIf="type == 'c'">
+  <ion-toolbar color="primary">
+    <ion-title>Convertir a Potencial #{{visitid}}</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon color="whiteImmo" name="ios-close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-header *ngIf="type == 'p'">
+  <ion-toolbar color="primary">
+    <ion-title>Control de facturación #{{visitid}}</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon color="whiteImmo" name="ios-close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="type == 'pop'">
+  <ion-list>
+    <ion-item>
+      <h2>Ingresa el correo electronico</h2>
+    </ion-item>
+
+    <ion-item class="textarea">
+      <ion-label floating>Nombre y apellidos</ion-label>
+      <ion-input [(ngModel)]="name"></ion-input>
+    </ion-item>
+
+    <ion-item class="textarea">
+      <ion-label floating>E-Mail</ion-label>
+      <ion-input [(ngModel)]="mail"></ion-input>
+    </ion-item>
+
+    <ion-item no-lines class="title">
+      <ion-buttons right>
+        <button (click)="turnPage()" color="success" ion-button icon-only>
+          <ion-icon name="redo"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-content padding *ngIf="type == 'r'">
+  <form (ngSubmit)="activate()" [formGroup]="formActivateVisit">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label color="primary">Nombre</ion-label>
+            <ion-input formControlName="nombre" disabled value="{{fullname}}"></ion-input>
+          </ion-item>
+          <ion-item class="ErrorMensaje fondo" *ngIf="formActivateVisit.get('nombre').errors && error">
+            <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
+            <p color="danger" ion-text *ngIf="formActivateVisit.get('nombre').hasError('required')">Este campo es necesario</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label color="primary" stacked>E-mail</ion-label>
+            <ion-input [(ngModel)]="dateActivateVisit.email" type="email" formControlName="mail"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label color="primary" stacked>Nacionalidad</ion-label>
+            <ion-input [(ngModel)]="dateActivateVisit.nacionalidad" formControlName="nacionalidad"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <h2>El Cliente Busca</h2>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item no-lines class="formulario fondo">
+            <ion-label class="textoLabel">Comprar</ion-label>
+            <ion-checkbox [(ngModel)]="dateActivateVisit.busca_c" [checked]="false" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item no-lines class="formulario fondo">
+            <ion-label class="textoLabel">Rentar</ion-label>
+            <ion-checkbox [(ngModel)]="dateActivateVisit.busca_r" [checked]="false" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item text-wrap no-lines class="formulario fondo">
+            <ion-label class="textoLabel">Listar Venta</ion-label>
+            <ion-checkbox [(ngModel)]="dateActivateVisit.listar_v" [checked]="false" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+        <ion-col col-6>
+          <ion-item text-wrap no-lines class="formulario fondo">
+            <ion-label class="textoLabel">Listar Renta</ion-label>
+            <ion-checkbox [(ngModel)]="dateActivateVisit.listar_r" [checked]="false" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button type="submit" color="primary">Activar</button>
+        </ion-col>
+        <ion-col col-4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+
+
+<ion-content padding *ngIf="type == 'c'">
+  <form (ngSubmit)="activate()" [formGroup]="formActivateBuyer">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item padding-bottom>
+            <ion-label color="primary">Nombre</ion-label>
+            <ion-input [(ngModel)]="dateActivateBuyer.nombre" formControlName="nombre" disabled value="{{fullname}}"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <ion-item padding-bottom class="formulario fondo">
+            <ion-label class="textoLabel" stacked>Asesor <sup>*</sup></ion-label>
+            <ion-select [(ngModel)]="dateActivateBuyer.asesor" formControlName="asesor" name="propiedad" >
+              <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>
+            </ion-select>
+          </ion-item> 
+        </ion-col>
+        <ion-col col-6>
+          <ion-item padding-bottom>
+            <ion-label color="primary" stacked>concepto</ion-label>
+            <ion-input [(ngModel)]="dateActivateBuyer.concepto" formControlName="concepto"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item padding-bottom class="formulario fondo">
+            <ion-label class="textoLabel" stacked>Fase<sup>*</sup></ion-label>
+            <ion-select [(ngModel)]="dateActivateBuyer.fase" formControlName="fase" name="propiedad" >
+              <ion-option *ngFor="let phase of phases" value="{{phase.id}}">{{phase.phase}}</ion-option>
+            </ion-select>
+          </ion-item> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          <ion-item padding-bottom>
+            <ion-label color="primary" stacked>Monto</ion-label>
+            <ion-input [(ngModel)]="dateActivateBuyer.monto" formControlName="concepto1"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item padding-bottom class="formulario fondo">
+            <ion-label class="textoLabel" stacked>Moneda<sup>*</sup></ion-label>
+            <ion-select [(ngModel)]="dateActivateBuyer.moneda" formControlName="moneda" name="propiedad" >
+              <ion-option value="1">MXN</ion-option>
+              <ion-option value="2">USD</ion-option>
+              <ion-option value="3">EUR</ion-option>
+            </ion-select>
+          </ion-item> 
+        </ion-col>
+        <ion-col col-4>
+          <ion-item padding-bottom>
+            <ion-label color="primary" stacked>% comisión</ion-label>
+            <ion-input [(ngModel)]="dateActivateBuyer.comision" formControlName="comision"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-8>
+          <ion-item padding-bottom>
+            <ion-label color="primary" stacked>Propiedad</ion-label>
+            <ion-input formControlName="propiedad" value="{{namePropertie}}" disabled></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item padding-bottom no-lines>
+            <div ion-button color="primary" (click)="openSearch()">Buscar</div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="none" id="search">
+        <ion-col col-8>
+          <ion-item padding-bottom>
+            <ion-label color="primary" stacked>Palabra Clave</ion-label>
+            <ion-input [(ngModel)]="keyWord" formControlName="keyword"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item padding-bottom no-lines>
+            <div ion-button color="primary" (click)="searchPropertie()">Buscar</div>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          <ion-item padding-bottom>
+            <ion-label color="primary" stacked>Certeza</ion-label>
+            <ion-input [(ngModel)]="dateActivateBuyer.certeza" formControlName="certeza"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+            <ion-item padding-bottom>
+                <ion-label color="primary" stacked>Cierre</ion-label>
+                <ion-datetime [(ngModel)]="dateActivateBuyer.cierre_fecha" formControlName="cierre" displayFormat="MM/DD/YYYY"></ion-datetime>
+            </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item padding-bottom class="formulario fondo">
+            <ion-label class="textoLabel" stacked>Operación<sup>*</sup></ion-label>
+            <ion-select [(ngModel)]="dateActivateBuyer.operacionT" formControlName="operacion" name="propiedad" >
+              <ion-option *ngFor="let operation of operations" value="{{operation.id}}">{{operation.operationtype}}</ion-option>
+            </ion-select>
+          </ion-item> 
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <ion-item padding-bottom>
+                <ion-label color="primary" stacked>Comentario</ion-label>
+              <ion-textarea [(ngModel)]="dateActivateBuyer.comentarios" formControlName="comentario" placeholder="Ingresa comentarios..."></ion-textarea>
+            </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button type="submit" color="primary">Convertir</button>
+        </ion-col>
+        <ion-col col-4>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+
+
+<ion-content padding *ngIf="type == 'p'">
+  <form (ngSubmit)="controlFact()" [formGroup]="formNewBilling">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label color="primary">Nombre</ion-label>
+            <ion-input [(ngModel)]="dateNewBilling.folios" formControlName="nombre" disabled value="{{visitid}}"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div id="seccion1">
+      <h2>Seleccionar propiedad</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-8>
+            <ion-item padding-bottom>
+              <ion-label color="primary" stacked>Propiedad</ion-label>
+              <ion-input disabled value="{{namePropertie}}"formControlName="propiedad"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-4>
+            <ion-item padding-bottom no-lines>
+              <div ion-button color="primary" (click)="openSearch()">Buscar</div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="none" id="search">
+          <ion-col col-8>
+            <ion-item padding-bottom>
+              <ion-label color="primary" stacked>Palabra Clave</ion-label>
+              <ion-input [(ngModel)]="keyWord" formControlName="keyword"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col col-4>
+            <ion-item padding-bottom no-lines>
+              <div ion-button color="primary" (click)="searchPropertie()">Buscar</div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <h2>Datos Generales</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+              <ion-item>
+                  <ion-label color="primary" stacked>Cierre</ion-label>
+                  <ion-datetime [(ngModel)]="dateNewBilling.fecha" formControlName="cierre" displayFormat="MM/DD/YYYY"></ion-datetime>
+              </ion-item>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" stacked>Operación<sup>*</sup></ion-label>
+              <ion-select [(ngModel)]="dateNewBilling.operacion" formControlName="operacion" name="propiedad" >
+                <ion-option *ngFor="let operation of operations" value="{{operation.id}}">{{operation.operationtype}}</ion-option>
+              </ion-select>
+            </ion-item> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-col col-6>
+              <ion-item>
+                <ion-label color="primary" stacked>Monto operación</ion-label>
+                <ion-input [(ngModel)]="dateNewBilling.monto" formControlName="monto"></ion-input>
+                <ion-input class="none" [(ngModel)]="dateNewBilling.oportunidad" value="0" formControlName="monto"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-col>
+          <ion-col col-6>
+            <ion-item class="formulario fondo">
+              <ion-label class="textoLabel" stacked>Moneda<sup>*</sup></ion-label>
+              <ion-select [(ngModel)]="dateNewBilling.moneda" formControlName="moneda" name="propiedad" >
+                <ion-option value="1">MXN</ion-option>
+                <ion-option value="2">USD</ion-option>
+                <ion-option value="3">EUR</ion-option>
+              </ion-select>
+            </ion-item> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6>
+            <ion-col col-6>
+              <ion-item>
+                <ion-label color="primary" stacked>Tipo de cambio</ion-label>
+                <ion-input [(ngModel)]="dateNewBilling.cambio" formControlName="cambio"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-col>
+          <ion-col col-4>
+            <ion-item>
+              <ion-label color="primary" stacked>% comisión</ion-label>
+              <ion-input [(ngModel)]="dateNewBilling.comision" formControlName="comision"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div class="none" id="seccion2">
+      <h2>Involucrados</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+              <ion-item padding-bottom class="formulario fondo">
+                  <ion-label class="textoLabel" stacked>Involucrado <sup>*</sup></ion-label>
+                  <ion-select [(ngModel)]="involucrado.name" name="propiedad" [ngModelOptions]="{standalone: true}">
+                    <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>
+                  </ion-select>
+                </ion-item> 
+          </ion-col>
+          <ion-col col-6>
+              <ion-item padding-bottom class="formulario fondo">
+                  <ion-label class="textoLabel" stacked>Tipo de actividad <sup>*</sup></ion-label>
+                  <ion-select [(ngModel)]="involucrado.activity" name="propiedad" [ngModelOptions]="{standalone: true}">
+                    <ion-option *ngFor="let activity of activities" value="{{activity.id}}">{{activity.papelname}}</ion-option>
+                  </ion-select>
+                </ion-item> 
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6>
+              <ion-item>
+                <ion-label color="primary" stacked>% comisión</ion-label>
+                <ion-input [(ngModel)]="involucrado.comision" [ngModelOptions]="{standalone: true}"></ion-input>
+              </ion-item>
+          </ion-col>
+          <ion-col col-4>
+            <ion-item padding-bottom no-lines>
+              <div ion-button color="primary" (click)="addAgent()">agregar</div>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-5>
+            <p>agente</p>
+          </ion-col>
+          <ion-col col-4>
+            <p>actividad</p>
+          </ion-col>
+          <ion-col col-3>
+            <p>comisión</p>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let inv of involucrados">
+            <ion-col col-5>
+              <p>{{inv.name}}</p>
+            </ion-col>
+            <ion-col col-4>
+              <p>{{inv.activity}}</p>
+            </ion-col>
+            <ion-col col-3>
+              <p>{{inv.comision}}</p>
+            </ion-col>
+          </ion-row>
+        <ion-row>
+          <ion-col>
+              <ion-item>
+                <ion-label color="primary" stacked>Total de comisión %, claculado en base a involucrados</ion-label>
+                <ion-input disabled></ion-input>
+              </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button type="submit" color="primary">Crear Control</button>
+          </ion-col>
+          <ion-col col-4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+  </form>
+</ion-content>
+<ion-footer *ngIf="type == 'p'">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="center" col-2 (click)="changeSlide(1)">
+          <ion-icon name="arrow-dropleft-circle"></ion-icon>
+      </ion-col>
+      <ion-col col-8>
+      </ion-col>
+      <ion-col class="center" col-2 (click)="changeSlide(0)">
+          <ion-icon name="arrow-dropright-circle"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

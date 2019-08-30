@@ -1,0 +1,148 @@
+<ion-header no-border>
+
+  <ion-navbar color="header">
+    <ion-title>Resultados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content fullscreen class="fondo">
+  <div class="ocultar" id="resulta2">
+    <div class="targetas" *ngIf="tipo == 'propiedades'">
+      <ion-card style="margin: 20px 0px;" class="contenedor" *ngFor="let propiedad of resultados" (click)="share(propiedad.folio)">
+        <ion-card-header style="padding: 0px;">
+          <div class="imagen">
+            <img src="{{propiedad.largephoto}}">
+            <div class="texto-encima">
+                <!--<p style="color: black; font-weight: bold;" *ngIf="propiedad.price != '0'">{{propiedad.price}}</p>-->
+              <img src="{{propiedad.office_image}}" alt="">
+            </div>
+          </div>
+
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-12>
+                <p style="font-size: 15px;">
+                  <strong>{{propiedad.namePropertyEs}}</strong>
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-9>
+                <ion-row>
+                  <p>{{propiedad.address}}</p>
+                </ion-row>
+              </ion-col>
+              <ion-col col-3>
+                <ion-row>
+                  <p>{{propiedad.operation}}</p>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-4 *ngIf="propiedad.m2c != 0">
+                <ion-row>
+                  <p>
+                    <ion-icon ios="ios-home" md="md-home"></ion-icon> {{propiedad.m2c}} m
+                    <SUP>2</SUP>
+                  </p>
+                </ion-row>
+              </ion-col>
+              <ion-col col-4 *ngIf="propiedad.mlot != 0">
+                <ion-row>
+                  <p>
+                    <ion-icon ios="ios-home" md="md-home"></ion-icon> {{propiedad.mlot}} m
+                    <SUP>2</SUP>
+                  </p>
+                </ion-row>
+              </ion-col>
+              <ion-col col-4>
+                <ion-row>
+                  <p>
+                    <ion-icon ios="ios-attach" md="md-attach"></ion-icon> {{propiedad.folio}}</p>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-row>
+            <ion-col col-6>
+              <p style="font-size: 15px;" *ngIf="propiedad.price != '0'">
+                <strong>{{propiedad.price}}</strong>
+              </p>
+            </ion-col>
+            <ion-col text-capitalize text-right col-6>
+              <button ion-button outline icon-start item-end small>
+                <ion-icon name="share-alt"></ion-icon>
+                Enviar Correo
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <div class="targetas" *ngIf="tipo == 'desarrollos'">
+      <ion-card style="margin: 20px 0px;" class="contenedor" *ngFor="let propiedad of resultados" (click)="shareDev(propiedad.folio)">
+        <ion-card-header style="padding: 0px;">
+          <div class="imagen">
+            <img src="{{propiedad.image.smallphoto}}">
+            <div class="texto-encima">
+                <!--<p style="color: black; font-weight: bold;" *ngIf="propiedad.price != '0'">{{propiedad.price}}</p>-->
+              <img src="{{propiedad.office_image}}" alt="">
+            </div>
+          </div>
+
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-12>
+                <p style="font-size: 15px;">
+                  <strong>{{propiedad.developmentNameEs}}</strong>
+                </p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-9>
+                <ion-row>
+                  <p>{{propiedad.address}}</p>
+                </ion-row>
+              </ion-col>
+              <ion-col col-3>
+                <ion-row>
+                  <p>
+                    <ion-icon ios="ios-attach" md="md-attach"></ion-icon> {{propiedad.folio}}</p>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-6 *ngIf="propiedad.m2c != 0">
+                <ion-row>
+                  <p>
+                    <ion-icon ios="ios-home" md="md-home"></ion-icon> Unidades: {{propiedad.units}}</p>
+                </ion-row>
+              </ion-col>
+              <ion-col col-6 *ngIf="propiedad.mlot != 0">
+                <ion-row>
+                  <p>
+                    <ion-icon ios="ios-home" md="md-home"></ion-icon> Disponibles: {{propiedad.unitsAviable}}</p>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <ion-row>
+            <ion-col text-capitalize text-right>
+              <button ion-button outline icon-start item-end small>
+                <ion-icon name="share-alt"></ion-icon>
+                Enviar Correo
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+
+  </div>
+
+</ion-content>

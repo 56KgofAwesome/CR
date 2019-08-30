@@ -1,0 +1,42 @@
+page-usuario {
+    .contenedor{
+        display: flex;
+        flex-direction: column;
+        $colors: tabs;
+    }
+    .logo{
+        margin: auto;
+        margin-top: 10px;
+    }
+    .menu{
+        //background-color: rgba(136, 136, 136, 0.262);
+        padding: 2px 4px;
+        width: 100%;
+        height: 35px;
+        margin: 3px;
+        align-items: flex-end;
+        //border: 1px solid black;
+        //border-radius: 5px 5px 5px 5px;
+    }
+    .visible{
+        display: block;
+    }
+    .invisible{
+        display: none;
+    }
+    ion-icon{
+        color: #666;
+        float: right;
+    }
+    .datosPersonales{
+        margin-top: 10px;
+        padding: 0px 2px;
+    }
+    .o_row{
+        display: flex;
+        flex-direction: row;
+    }
+    .alinear{
+        text-align: center;
+    }
+}
