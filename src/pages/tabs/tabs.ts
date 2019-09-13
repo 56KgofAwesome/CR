@@ -32,14 +32,12 @@ export class TabsPage {
     this.tab3 = BuscarPage;
     this.tab4 = DestinosPage;
     this.tab5 = InfoPage;
-    console.log("usuario normal");
-    events.subscribe('user:created', (user, time)=>{
-      this.navCtrl.setRoot(TabsUsuarioPage);
-    });
+      events.subscribe('user:created', (user, time)=>{
+        this.navCtrl.setRoot(TabsUsuarioPage);
+      });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TabsPage');
+  ionViewDidLoad(){
   }
 
 

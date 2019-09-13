@@ -1,8 +1,11 @@
-import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
+import { ApiProvider } from '../api/api';
+import { Http, Headers, RequestOptions, RequestMethod, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { Header } from '../../../node_modules/ionic-angular/umd';
 import { companyid } from '../../interfaces/datosContacto';
-import { ApiProvider } from '../api/api';
+import { AlertController, Events,LoadingController } from 'ionic-angular';
+
 
 // http://www.immosystem.com.mx/appImmov2/immoApp2.php?d=0&m=[eliminaresto]contact&folio=139&propertyid=16690&fullname=jair&email=asdasd@asdasda.com.mx&phone=998155881238&message=testeando&location=Av.%20Xpujil%20Sur%2039,%2015,%2077505%20Canc%C3%BAn,%20Q.R.,%20M%C3%A9xico&contacttype=1&latitude=21.1452964&longitude=-86.82968079999999&soldagentid=0
 
@@ -15,19 +18,47 @@ export class UsuarioProvider {
   companycontact;
   companyUser = 1671;
   companyOffice = 227;
+  //-------------------------------------------------------------
+  datos       : any = [];
 
-  constructor(public http : Http, public apiProvider: ApiProvider) {
+  constructor(public http : Http, public apiProvider: ApiProvider,public alertCtrl: AlertController,private storage: Storage,public events: Events,public loadingCtrl: LoadingController) {
   }
-  //Construir el body desde los Providers
-  login(username:any, password:any){
-    var body = 'm=login'+'&email='+username+'&password='+password;
-    Promise.all([
-      this.apiProvider.post(body)
-    ]).then(data=>{
-      console.log(data);
+  //------------------------------------------------------------------------------------------------------------
+  //Login del usuario
+  login(username:any, password:any) {
+    const loader = this.loadingCtrl.create({
+      dismissOnPageChange: false
     });
+    loader.present();
+    var body = 'm=login'+'&email='+username+'&password='+password;
+    //---------------------------------------------//
+    // Aquí hay que validar que el correo y pass   //
+    // estén correctos antes de pasar al request   //
+    //---------------------------------------------//
+      this.apiProvider.post(body)
+        .subscribe(data=>{
+          var answerLogin = data.json().status;
+          var dataLogin =  data.json().data;
+          loader.dismiss();
+          //Checar que pex con el .info que dice undefined
+          if(answerLogin == 200 && dataLogin.info.companyid == this.companyid || dataLogin.info.companyid == 227 ){
+            this.storage.set('usuario', data.json().data.info.userid);
+            this.storage.set('data',data.json().data.info);
+            this.storage.set('folio', data.json().data.info.companyid);
+            this.datos.userid = data.json().data.userid;
+            this.datos.officeid = data.json().data.officeid;
+            this.datos.companyid = data.json().data.companyid;
+
+            this.storage.set('assign', this.datos);
+
+            this.events.publish('user:created', data.json().data.info, Date.now());
+          }else{
+            this.incorrectAlert();
+          }
+        })
+
   }
-  /*
+
 // metodo para la seccion de destino para cargar los destinos
   cargarDestino(){
     let body    : string  =   'm=developments&folio='+ companyid +'&states=1',
@@ -132,8 +163,16 @@ getLeads(data){
   options :   any     =   new RequestOptions({headers: header});
   return this.http.post('http://www.immosystem.com.mx/appImmo/immoApp.php', body, options);
 }
+//---------------------------------------------------------------------------------------------------------------
+//Alerta de Datos incorrectos
+incorrectAlert(){
+  let alert = this.alertCtrl.create({
+    title: 'Datos incorrectos',
+    message: 'Revisa bien los datos ingresados',
+  });
+  alert.present();
+}
 
 
-*/
 
 }

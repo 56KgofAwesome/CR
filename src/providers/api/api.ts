@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Http, RequestOptions,Headers } from '@angular/http';
+import { Http, RequestOptions,Headers} from '@angular/http';
 import { Injectable } from '@angular/core';
 
 @Injectable()
@@ -13,15 +13,7 @@ export class ApiProvider {
 
   }
   post(body){
-    return new Promise((resolve)=>{
-      this.http.post(this.url, body, this.options)
-      .subscribe(data=>{
-
-        resolve(data);
-      })
-    });
-
-
+      return this.http.post(this.url, body, this.options);
   }
   //--------------------------------------------------------------------------------------------------------
   //API solo contruye los headers

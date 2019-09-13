@@ -37,7 +37,6 @@ export class Tabs2Page {
         this.navCtrl.setRoot(TabsUsuarioPage);
       }
     });
-    console.log("uuu");
     this.tab1 = HomePage;
     this.tab2 = LoginPage;
     this.tab3 = BuscarPage;
@@ -46,8 +45,8 @@ export class Tabs2Page {
   }
 
   ionViewDidLoad() {
-    
-    
+
+
   }
   cambiarRoot(){
     this.navCtrl.setRoot(TabsPage);

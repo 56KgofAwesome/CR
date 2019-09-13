@@ -15,17 +15,14 @@ export class NetworkProvider {
   previousStatus;
 
   constructor(
-        public alertCtrl: AlertController, 
+        public alertCtrl: AlertController,
         public network: Network,
         public eventCtrl: Events,
         public platform: Platform,
         public http :   Http
         ) {
+        this.previousStatus = ConnectionStatusEnum.Online;
 
-    console.log('Hello NetworkProvider Provider');
-
-    this.previousStatus = ConnectionStatusEnum.Online;
-    
   }
 
     public initializeNetworkEvents(): void {

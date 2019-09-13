@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
-import { 
+import {
   DestinosPage,
   ContactosPage,
   FormularioPage,
@@ -8,7 +8,7 @@ import {
   BuscarPage,
   InfoPage
  } from '../index.paginas';
- 
+
 
 @Component({
   selector: 'page-home',
@@ -19,13 +19,10 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public events: Events
-  ) {
-
-console.log("home");
-    
+    ) {    
   }
-  
-  
+
+
 
   irAPagina(destino){
     if(destino === 'login'){
