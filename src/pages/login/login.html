@@ -16,7 +16,7 @@
           <ion-icon name="mail" item-start class="text-primary"></ion-icon>
           Email
         </ion-label>
-        <ion-input type="email" [(ngModel)]='Nusuario'></ion-input>
+        <ion-input type="email" [(ngModel)]='username' value="hponce@immosystem.com.mx"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -24,13 +24,13 @@
           <ion-icon name="lock" item-start class="text-primary"></ion-icon>
           Password
         </ion-label>
-        <ion-input type="password" [(ngModel)]='contrasena'></ion-input>
+        <ion-input type="password" [(ngModel)]='password' value="RgxOfmci48"></ion-input>
       </ion-item>
 
 
 
     <div>
-      <button ion-button icon-start block color="botones" tappable (click)="createUser()">
+      <button ion-button icon-start block color="botones" tappable (click)="loginUser()">
         <ion-icon name="log-in"></ion-icon>
         INICIAR SESIÓN
       </button>
@@ -38,4 +38,3 @@
 
   </div>
 </ion-content>
-

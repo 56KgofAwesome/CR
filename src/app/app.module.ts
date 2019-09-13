@@ -55,6 +55,7 @@ import * as ionicGalleryModal from 'ionic-gallery-modal';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { Calendar } from '@ionic-native/calendar';
+import { ApiProvider } from '../providers/api/api';
 
 
 @NgModule({
@@ -142,7 +143,8 @@ import { Calendar } from '@ionic-native/calendar';
     Network,
     NetworkProvider,
     ContactosProvider,
-    Geolocation
+    Geolocation,
+    ApiProvider
   ]
 })
 export class AppModule {}
