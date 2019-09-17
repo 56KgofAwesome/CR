@@ -1,40 +1,36 @@
-<!-- -->
 <ion-content padding class="animated fadeIn login auth-page">
   <div class="login-content">
-
-    <!-- Logo -->
+      <!-- Logo -->
     <div padding-horizontal text-center class="animated fadeInDown">
       <div class="logo">
         <img class="center" width="100%" style="margin: 10px auto;" src="assets/imgs/logoN.png">
       </div>
     </div>
-
-    <!-- Login form -->
-
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="mail" item-start class="text-primary"></ion-icon>
-          Email
-        </ion-label>
-        <ion-input type="email" [(ngModel)]='username' value="hponce@immosystem.com.mx" required></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label floating>
-          <ion-icon name="lock" item-start class="text-primary"></ion-icon>
-          Password
-        </ion-label>
-        <ion-input type="password" [(ngModel)]='password' value="RgxOfmci48"></ion-input>
-      </ion-item>
-
-
-
+      <!-- Login form -->
     <div>
-      <button ion-button icon-start block color="botones" tappable (click)="loginUser()">
-        <ion-icon name="log-in"></ion-icon>
-        INICIAR SESIÓN
-      </button>
-    </div>
+      <form [formGroup]="loginForm">
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+              Email
+            </ion-label>
+            <ion-input type="email" formControlName="username" [(ngModel)]="username" value="hponce@immosystem.com.mx"></ion-input>
+          </ion-item>
 
+          <ion-item>
+            <ion-label floating>
+              <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+              Password
+            </ion-label>
+            <ion-input type="password" formControlName="password" [(ngModel)]="password" value="RgxOfmci48"></ion-input>
+          </ion-item>
+        <div>
+          <button ion-button icon-start block color="botones" tappable [disabled]="!loginForm.valid" (click)="loginUser()">
+            <ion-icon name="log-in"></ion-icon>
+            INICIAR SESIÓN
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </ion-content>

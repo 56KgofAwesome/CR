@@ -13,7 +13,7 @@ import {
   RegistrarPage
  } from "../index.paginas";
  import { UsuarioProvider } from '../../providers/usuario/usuario';
-
+import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -24,6 +24,7 @@ export class LoginPage {
   username    : any;
   password  : any;
   datos       : any = [];
+  loginForm: FormGroup;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -32,7 +33,8 @@ export class LoginPage {
     public modalCtrl: ModalController,
     public usuario: UsuarioProvider,
     private storage: Storage,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public formBuilder: FormBuilder
   ) {
     /*this.ga.startTrackerWithId('135891659')
    .then(() => {
@@ -42,15 +44,21 @@ export class LoginPage {
      // You can now track pages or set additional information such as AppVersion or UserId
    })
    .catch(e => console.log('Error starting GoogleAnalytics', e));*/
+   this.loginForm = this.formBuilder.group({
+     username: new FormControl('', Validators.compose([
+       Validators.required,
+       Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+     ])),
+     password: new FormControl('',Validators.required)
+   })
   }
-
-
+  //----------------------------------------------------------------------------
+  //Login del usuario
+  loginUser(){
+    this.usuario.login(this.username,this.password);
+  }
+  //----------------------------------------------------------------------------
   irABuscar(){
 
   }
-
-
-    loginUser(){
-      this.usuario.login(this.username,this.password);
-    }
 }
