@@ -1339,14 +1339,18 @@ var UsuarioProvider = /** @class */ (function () {
                 if (answerLogin == 501) {
                     _this.incorrectAlert();
                 }
-                else if ((answerLogin == 200 && dataLogin.info.companyid == _this.companyid) || dataLogin.info.companyid == 27) {
-                    _this.storage.set('usuario', data.json().data.info.userid);
-                    _this.storage.set('data', data.json().data.info);
-                    _this.storage.set('folio', data.json().data.info.companyid);
-                    _this.datos.userid = data.json().data.userid;
-                    _this.datos.officeid = data.json().data.officeid;
-                    _this.datos.companyid = data.json().data.companyid;
-                    _this.storage.set('assign', _this.datos);
+                else if ((answerLogin == 200 && dataLogin.companyid == _this.companyid) || dataLogin.companyid == 27) {
+                    _this.storage.set('userToken', dataLogin.token);
+                    console.log(dataLogin.token);
+                    /*this.storage.set('usuario', data.json().data.userid);
+                    this.storage.set('data',data.json().data.info);
+                    this.storage.set('folio', data.json().data.companyid);
+                    this.datos.userid = data.json().data.userid;
+                    this.datos.officeid = data.json().data.officeid;
+                    this.datos.companyid = data.json().data.companyid;
+                    this.storage.set('assign', this.datos);*/
+                    //this.storage.set('usuario', data.json().data.userid);
+                    //this.storage.set('data',data.json().data);
                     _this.events.publish('user:created', data.json().data.info, Date.now());
                 }
             }
@@ -1364,7 +1368,7 @@ var UsuarioProvider = /** @class */ (function () {
     //-------------------------------------------------------------------------------------------------------------
     //Método para cargar la seccion de contactos
     UsuarioProvider.prototype.cargarContacto = function (id) {
-        var body = 'm=visits&user=' + id;
+        var body = 'm=visits&user=' + id + '&token=';
         return this.apiProvider.post(body);
     };
     //-------------------------------------------------------------------------------------------------------------
@@ -1394,37 +1398,48 @@ var UsuarioProvider = /** @class */ (function () {
     //-------------------------------------------------------------------------------------------------------------
     //Método para agregar un preregistro
     UsuarioProvider.prototype.agregarPreregistro = function (datos) {
-        var body = 'm=addBuyerPreregister', header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
-        var UrlData = '';
+        var body = 'm=addBuyerPreregister';
         var datos = datos;
         Object.keys(datos).forEach(function (key) {
             body += '&' + key + '=' + datos[key];
         });
-        return this.http.post(this.url, body, options);
+        return this.apiProvider.post(body);
     };
+    //-------------------------------------------------------------------------------------------------------------
+    //Método para enviar un mail
     UsuarioProvider.prototype.enviarPropiedadMail = function (datos) {
-        var body = 'm=notifications&property=' + datos.property + '&name=' + datos.name + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message + '&agent=true', header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
-        return this.http.post(this.url, body, options);
+        var body = 'm=notifications&property=' + datos.property + '&name=' + datos.name + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message + '&agent=true';
+        return this.apiProvider.post(body);
     };
+    //-------------------------------------------------------------------------------------------------------------
+    //Método para enviar un mail de desarrollo
     UsuarioProvider.prototype.enviarDesarrolloMail = function (datos) {
-        var body = 'm=notifications&development=' + datos.development + '&name=' + datos.name + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message + '&agent=true', header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
-        return this.http.post(this.url, body, options);
+        var body = 'm=notifications&development=' + datos.development + '&name=' + datos.name + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message + '&agent=true';
+        return this.apiProvider.post(body);
     };
-    // http://www.immosystem.com.mx/appImmov2/immoApp2.php?d=0&m=contact&folio=
+    //-------------------------------------------------------------------------------------------------------------
+    //Método para guardar mail en DB
     UsuarioProvider.prototype.guardarMailDB = function (datos) {
-        var body = 'm=contact&fullname=' + datos.fullname + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message + '&contacttype=' + datos.contacttype + '&propertyid=' + datos.propertyid + '&folio=' + datos.folio + '&soldagentid=' + datos.soldagentid, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
-        return this.http.post(this.url, body, options);
+        var body = 'm=contact&fullname=' + datos.fullname + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message + '&contacttype=' + datos.contacttype + '&propertyid=' + datos.propertyid + '&folio=' + datos.folio + '&soldagentid=' + datos.soldagentid;
+        return this.apiProvider.post(body);
     };
+    //-------------------------------------------------------------------------------------------------------------
+    //Método para obtener tarea
     UsuarioProvider.prototype.getTask = function (id) {
-        var body = 'm=task&user=' + id, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
-        return this.http.post(this.url, body, options);
+        var body = 'm=task&user=' + id;
+        return this.apiProvider.post(body);
     };
+    //-------------------------------------------------------------------------------------------------------------
+    //Método para añadir tarea
     UsuarioProvider.prototype.addTask = function (data) {
-        var body = data, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
-        return this.http.post(this.url, body, options);
+        var body = data;
+        return this.apiProvider.post(body);
     };
+    //-------------------------------------------------------------------------------------------------------------
+    //Método para leads
     UsuarioProvider.prototype.getLeads = function (data) {
         var body = 'function=loadLocations' + data, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
+        //OTRO URL
         return this.http.post('http://www.immosystem.com.mx/appImmo/immoApp.php', body, options);
     };
     //---------------------------------------------------------------------------------------------------------------
@@ -1509,51 +1524,51 @@ var map = {
 		12
 	],
 	"../pages/property-pickead-pick/property-pickead-pick.module": [
-		466,
+		476,
 		11
 	],
 	"../pages/registrar/registrar.module": [
-		467,
+		466,
 		10
 	],
 	"../pages/resultados/resultados.module": [
-		468,
+		467,
 		9
 	],
 	"../pages/seguimiento/seguimiento.module": [
-		469,
+		468,
 		8
 	],
 	"../pages/sharing/sharing.module": [
-		470,
+		469,
 		7
 	],
 	"../pages/tabs-usuario/tabs-usuario.module": [
-		471,
+		470,
 		6
 	],
 	"../pages/tabs/tabs.module": [
-		472,
+		471,
 		4
 	],
 	"../pages/tabs2/tabs2.module": [
-		473,
+		472,
 		5
 	],
 	"../pages/usuario/usuario.module": [
-		474,
+		473,
 		3
 	],
 	"../pages/ver-contacto/ver-contacto.module": [
-		475,
+		477,
 		2
 	],
 	"../pages/ver-desarrollo/ver-desarrollo.module": [
-		476,
+		474,
 		1
 	],
 	"../pages/ver-propiedad/ver-propiedad.module": [
-		477,
+		475,
 		0
 	]
 };
@@ -1594,7 +1609,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ApiProvider = /** @class */ (function () {
     function ApiProvider(http) {
         this.http = http;
-        this.url = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
+        //url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
+        this.url = 'http://api.immosystem.com.mx';
         this.header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' });
         this.options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: this.header });
     }
@@ -3805,7 +3821,8 @@ var UsuarioPage = /** @class */ (function () {
                 'compania': data['company'],
                 'mail': data['email'],
                 'telefono': data['cellphone'],
-                'celular': data['phone']
+                'celular': data['phone'],
+                'userToken': data['token']
             };
         });
         this.storage.get('usuario').then(function (data) {
@@ -3873,16 +3890,14 @@ var UsuarioPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-usuario',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\usuario\usuario.html"*/'<ion-content padding>\n\n\n\n    <div class="contenedor">\n\n        <div style="margin-bottom: 10%">\n\n            <div *ngIf="datos.imagen != \'\'" class="logo alinear">\n\n                <img style="border-radius: 50px;" width="90px" src="{{datos.imagen}}">\n\n            </div>\n\n            <div *ngIf="datos.imagen == \'\'" class="logo alinear">\n\n                <img width="90px" src="assets/imgs/user.png">\n\n            </div>\n\n        </div>\n\n        <div>\n\n                <ion-list>\n\n                    <ion-item>\n\n                        <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>\n\n                        <p style="font-size: 15px;">{{datos.nombre}}</p>\n\n                    </ion-item>\n\n                    <ion-item *ngIf="datos.celular != 0">\n\n                        <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>\n\n                        <p>celular: {{datos.celular}}</p>\n\n                    </ion-item>\n\n                    <ion-item *ngIf="datos.celular == 0">\n\n                        <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>\n\n                        <p>celular: no disponible</p>\n\n                    </ion-item>\n\n                    <ion-item *ngIf="datos.telefono != 0">\n\n                        <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>\n\n                        <p style="font-size: 15px;">Telefono: {{datos.telefono}}</p>\n\n                    </ion-item>\n\n                    <ion-item *ngIf="datos.telefono == 0">\n\n                        <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>\n\n                        <p style="font-size: 15px;">Telefono: {{datos.telefono}}</p>\n\n                    </ion-item>\n\n                </ion-list>\n\n            \n\n\n\n\n\n            <div>\n\n                <div class="logo alinear">\n\n                    <img width="90" src="{{datos.logo}}">\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n        <!--<div class="datosPersonales">\n\n          <div>\n\n            <div class="o_roW">\n\n                <div>\n\n\n\n                </div>\n\n            </div>\n\n          </div>\n\n          <div>\n\n            <ion-card class="menu" (click)="desplegar(1)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono1" name="arrow-down"></ion-icon></p></ion-card>\n\n            <div id="seccion1" class="invisible" padding>\n\n              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>\n\n            </div>\n\n    \n\n    \n\n          </div>\n\n          <div>\n\n              <ion-card class="menu" (click)="desplegar(2)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono2" name="arrow-down"></ion-icon></p></ion-card>\n\n              <div id="seccion2" class="invisible" padding>\n\n                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>\n\n              </div>\n\n    \n\n          </div>\n\n          <div>\n\n              <ion-card class="menu" (click)="desplegar(3)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono3" rigth name="arrow-down"></ion-icon></p></ion-card>\n\n              <div id="seccion3" class="invisible" padding>\n\n                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>\n\n              </div>\n\n    \n\n          </div>\n\n    \n\n    \n\n        </div>-->\n\n    \n\n    \n\n    \n\n    \n\n    <button style="margin-top: 10px; font-size: 12px; color: botones;" class="center boton" ion-button color="botones" full (click)="cerrarSesion()">Cerrar Sesion</button>\n\n\n\n    <div text-center class="animated fadeInDown">\n\n      <div class="logo">\n\n        <img class="center" width="100%" style="margin: 20px auto;" src="assets/imgs/web.gif">\n\n      </div>\n\n    </div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\usuario\usuario.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */] /*,
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */] /*,
             private usuarioProvider: UsuarioProvider,
-            private httpClient: HttpClient*/])
+            private httpClient: HttpClient*/ !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */] /*,
+            private usuarioProvider: UsuarioProvider,
+            private httpClient: HttpClient*/) === "function" && _f || Object])
     ], UsuarioPage);
     return UsuarioPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=usuario.js.map
@@ -4669,7 +4684,6 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/info/info.module#InfoPageModule', name: 'InfoPage', segment: 'info', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/lead-pickead-pick/lead-pickead-pick.module#LeadPickeadPickPageModule', name: 'LeadPickeadPickPage', segment: 'lead-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/property-pickead-pick/property-pickead-pick.module#PropertyPickeadPickPageModule', name: 'PropertyPickeadPickPage', segment: 'property-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/registrar/registrar.module#RegistrarPageModule', name: 'RegistrarPage', segment: 'registrar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/seguimiento/seguimiento.module#SeguimientoPageModule', name: 'SeguimientoPage', segment: 'seguimiento', priority: 'low', defaultHistory: [] },
@@ -4678,9 +4692,10 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs2/tabs2.module#Tabs2PageModule', name: 'Tabs2Page', segment: 'tabs2', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-desarrollo/ver-desarrollo.module#VerDesarrolloPageModule', name: 'VerDesarrolloPage', segment: 'ver-desarrollo', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/property-pickead-pick/property-pickead-pick.module#PropertyPickeadPickPageModule', name: 'PropertyPickeadPickPage', segment: 'property-pickead-pick', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_11__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
@@ -4836,7 +4851,7 @@ var MyApp = /** @class */ (function () {
         }, function (error) {
             _this.networkAlert();
         });
-        this.storage.get('usuario').then(function (data) {
+        this.storage.get('userToken').then(function (data) {
             if (data == null) {
                 _this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_tabs2_tabs2__["a" /* Tabs2Page */];
             }
@@ -4858,17 +4873,10 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\app\app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* Platform */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
-            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
-            __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_8__providers_network_network__["a" /* NetworkProvider */],
-            __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__["a" /* Network */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_9_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__providers_network_network__["a" /* NetworkProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__providers_network_network__["a" /* NetworkProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__["a" /* Network */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__["a" /* Network */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Events */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_9_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]) === "function" && _j || Object])
     ], MyApp);
     return MyApp;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 }());
 
 //# sourceMappingURL=app.component.js.map

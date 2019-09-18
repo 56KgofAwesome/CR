@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { 
-  IonicPage, 
-  NavController, 
+import {
+  IonicPage,
+  NavController,
   NavParams,
-  Events 
+  Events
 } from 'ionic-angular';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 //import { UsuarioProvider } from '../../providers/usuario/usuario';
@@ -24,7 +24,7 @@ export class UsuarioPage {
   datosUsuario:any = {};
   datos:any = {};
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
     private storage: Storage,
@@ -52,7 +52,8 @@ export class UsuarioPage {
         'compania': data['company'],
         'mail': data['email'],
         'telefono': data['cellphone'],
-        'celular': data['phone']
+        'celular': data['phone'],
+        'userToken' : data['token']
       }
     })
     this.storage.get('usuario').then(data => {

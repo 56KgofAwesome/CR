@@ -16,16 +16,16 @@ export class MyApp {
   conexion:Boolean;
   loading:any;
   constructor(
-    public platform: Platform, 
-    statusBar: StatusBar, 
-    public splashScreen: SplashScreen, 
+    public platform: Platform,
+    statusBar: StatusBar,
+    public splashScreen: SplashScreen,
     private storage: Storage,
     public alertCtrl: AlertController,
     public networkProvider: NetworkProvider,
     public network: Network,
     public events: Events,
     public loadingCtrl: LoadingController
-  ) {    
+  ) {
 
 
     platform.ready().then(() => {
@@ -43,15 +43,15 @@ export class MyApp {
         statusBar.backgroundColorByHexString('#1F2321');  /**Establece el color del status bar, SOLO IOS */
       }
 
-      this.networkProvider.initializeNetworkEvents();  
+      this.networkProvider.initializeNetworkEvents();
 
       // Offline event
-      this.events.subscribe('network:offline', () => { 
-        this.networkAlert(); 
+      this.events.subscribe('network:offline', () => {
+        this.networkAlert();
       });
-        
+
       // Online event
-      this.events.subscribe('network:online', () => {     
+      this.events.subscribe('network:online', () => {
           this.finishNetworkAlert();
       });
 
@@ -61,7 +61,7 @@ export class MyApp {
       setTimeout(function(){
         $this.splashScreen.hide();
       },10000);
-      
+
 
 
     });
@@ -76,7 +76,7 @@ export class MyApp {
     })
 
 
-    this.storage.get('usuario').then(data => {
+    this.storage.get('userToken').then(data => {
       if(data == null){
         this.rootPage = Tabs2Page;
       }else{
@@ -107,4 +107,3 @@ export class MyApp {
 
 
 }
-

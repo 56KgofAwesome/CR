@@ -38,14 +38,18 @@ export class UsuarioProvider {
           if(data.status == 200){
             if(answerLogin == 501){
               this.incorrectAlert();
-            }else if((answerLogin == 200 && dataLogin.info.companyid == this.companyid) || dataLogin.info.companyid ==27){
-              this.storage.set('usuario', data.json().data.info.userid);
+            }else if((answerLogin == 200 && dataLogin.companyid == this.companyid) || dataLogin.companyid ==27){
+              this.storage.set('userToken', dataLogin.token)
+              console.log(dataLogin.token);
+              /*this.storage.set('usuario', data.json().data.userid);
               this.storage.set('data',data.json().data.info);
-              this.storage.set('folio', data.json().data.info.companyid);
+              this.storage.set('folio', data.json().data.companyid);
               this.datos.userid = data.json().data.userid;
               this.datos.officeid = data.json().data.officeid;
               this.datos.companyid = data.json().data.companyid;
-              this.storage.set('assign', this.datos);
+              this.storage.set('assign', this.datos);*/
+              //this.storage.set('usuario', data.json().data.userid);
+              //this.storage.set('data',data.json().data);
               this.events.publish('user:created', data.json().data.info, Date.now());
             }
           }else{
@@ -62,7 +66,7 @@ export class UsuarioProvider {
   //-------------------------------------------------------------------------------------------------------------
   //Método para cargar la seccion de contactos
   cargarContacto(id:any){
-    var body = 'm=visits&user='+id;
+    var body = 'm=visits&user='+id+'&token=';
     return this.apiProvider.post(body);
   }
   //-------------------------------------------------------------------------------------------------------------
@@ -92,61 +96,50 @@ export class UsuarioProvider {
   //-------------------------------------------------------------------------------------------------------------
   //Método para agregar un preregistro
   agregarPreregistro(datos:any){
-    let body    : string  = 'm=addBuyerPreregister',
-        header  : any     = new Headers({'content-type':  'application/x-www-form-urlencoded; charset=UTF-8'}),
-        options : any     = new RequestOptions({headers: header});
-
-        var UrlData = '';
+    var body    : string  = 'm=addBuyerPreregister';
         var datos = datos;
         Object.keys(datos).forEach(function(key){
           body += '&' + key + '=' + datos[key];
         })
-    return this.http.post(this.url, body, options);
+    return this.apiProvider.post(body);
   }
-
+  //-------------------------------------------------------------------------------------------------------------
+  //Método para enviar un mail
   enviarPropiedadMail(datos:any){
-    let body    : string  = 'm=notifications&property='+ datos.property +'&name=' + datos.name + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message+'&agent=true',
-        header  : any     = new Headers({'content-type':  'application/x-www-form-urlencoded; charset=UTF-8'}),
-        options : any     = new RequestOptions({headers: header});
-
-    return this.http.post(this.url, body, options);
+    var body = 'm=notifications&property='+ datos.property +'&name=' + datos.name + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message+'&agent=true';
+    return this.apiProvider.post(body);
   }
-
-
+  //-------------------------------------------------------------------------------------------------------------
+  //Método para enviar un mail de desarrollo
   enviarDesarrolloMail(datos:any){
-    let body    : string  = 'm=notifications&development='+ datos.development +'&name=' + datos.name + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message+'&agent=true',
-        header  : any     = new Headers({'content-type':  'application/x-www-form-urlencoded; charset=UTF-8'}),
-        options : any     = new RequestOptions({headers: header});
-
-    return this.http.post(this.url, body, options);
+    var body = 'm=notifications&development='+ datos.development +'&name=' + datos.name + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message+'&agent=true';
+    return this.apiProvider.post(body);
   }
-
-  // http://www.immosystem.com.mx/appImmov2/immoApp2.php?d=0&m=contact&folio=
+  //-------------------------------------------------------------------------------------------------------------
+  //Método para guardar mail en DB
   guardarMailDB(datos:any){
-    let body    :   string  =   'm=contact&fullname=' + datos.fullname + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message + '&contacttype=' + datos.contacttype + '&propertyid=' + datos.propertyid + '&folio=' + datos.folio + '&soldagentid=' + datos.soldagentid,
-    header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
-    options :   any     =   new RequestOptions({headers: header});
-    return this.http.post(this.url, body, options);
+    var body =  'm=contact&fullname=' + datos.fullname + '&email=' + datos.email + '&phone=' + datos.phone + '&message=' + datos.message + '&contacttype=' + datos.contacttype + '&propertyid=' + datos.propertyid + '&folio=' + datos.folio + '&soldagentid=' + datos.soldagentid;
+    return this.apiProvider.post(body);
   }
-
+  //-------------------------------------------------------------------------------------------------------------
+  //Método para obtener tarea
   getTask(id){
-    let body    :   string  =   'm=task&user=' + id,
-    header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
-    options :   any     =   new RequestOptions({headers: header});
-    return this.http.post(this.url, body, options);
+    var body = 'm=task&user=' + id;
+    return this.apiProvider.post(body);
   }
-
+  //-------------------------------------------------------------------------------------------------------------
+  //Método para añadir tarea
   addTask(data){
-    let body    :   string  =   data,
-    header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
-    options :   any     =   new RequestOptions({headers: header});
-    return this.http.post(this.url, body, options);
+    var body : string = data;
+    return this.apiProvider.post(body);
   }
-
+  //-------------------------------------------------------------------------------------------------------------
+  //Método para leads
   getLeads(data){
     let body    :   string  =   'function=loadLocations' + data,
     header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
     options :   any     =   new RequestOptions({headers: header});
+    //OTRO URL
     return this.http.post('http://www.immosystem.com.mx/appImmo/immoApp.php', body, options);
   }
 //---------------------------------------------------------------------------------------------------------------
