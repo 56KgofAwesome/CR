@@ -19,7 +19,7 @@ export class UsuarioProvider {
   companyUser = 1671;
   companyOffice = 227;
   datos       : any = [];
-
+  answer: any;
   constructor(public http : Http, public apiProvider: ApiProvider,public alertCtrl: AlertController,private storage: Storage,public events: Events,public loadingCtrl: LoadingController) {
   }
   //------------------------------------------------------------------------------------------------------------
@@ -29,32 +29,25 @@ export class UsuarioProvider {
       dismissOnPageChange: false
     });
     loader.present();
-    var body = 'm=login'+'&email='+username+'&password='+password;
-    this.apiProvider.post(body)
-      .subscribe(data=>{
-          var answerLogin = data.json().status;
-          var dataLogin =  data.json().data;
-          loader.dismiss();
-          if(data.status == 200){
-            if(answerLogin == 501){
-              this.incorrectAlert();
-            }else if((answerLogin == 200 && dataLogin.companyid == this.companyid) || dataLogin.companyid ==27){
-              this.storage.set('userToken', dataLogin.token)
-              console.log(dataLogin.token);
-              /*this.storage.set('usuario', data.json().data.userid);
-              this.storage.set('data',data.json().data.info);
-              this.storage.set('folio', data.json().data.companyid);
-              this.datos.userid = data.json().data.userid;
-              this.datos.officeid = data.json().data.officeid;
-              this.datos.companyid = data.json().data.companyid;
-              this.storage.set('assign', this.datos);*/
-              //this.storage.set('usuario', data.json().data.userid);
-              //this.storage.set('data',data.json().data);
-              this.events.publish('user:created', data.json().data.info, Date.now());
+    return new Promise((resolve)=>{
+      var body = 'm=login'+'&email='+username+'&password='+password;
+      this.apiProvider.post(body)
+        .subscribe(data=>{
+            var answerLogin = data.json().status;
+            var dataLogin =  data.json().data;
+            loader.dismiss();
+            if(data.status == 200){
+              if(answerLogin == 501){
+                resolve(false);
+              }else if((answerLogin == 200 && dataLogin.companyid == this.companyid) || dataLogin.companyid ==27){
+                this.storage.set('userToken', dataLogin.token);
+                this.storage.set('dataUser',dataLogin);
+                resolve(true);
+              }
+            }else{
+              resolve(false);
             }
-          }else{
-            this.incorrectAlert();
-          }
+          })
         })
     }
   //-------------------------------------------------------------------------------------------------------------
@@ -142,13 +135,5 @@ export class UsuarioProvider {
     //OTRO URL
     return this.http.post('http://www.immosystem.com.mx/appImmo/immoApp.php', body, options);
   }
-//---------------------------------------------------------------------------------------------------------------
-//Alerta de Datos incorrectos
-  incorrectAlert(){
-    let alert = this.alertCtrl.create({
-      title: 'Datos incorrectos',
-      message: 'Revisa bien los datos ingresados',
-    });
-    alert.present();
-  }
+
 }

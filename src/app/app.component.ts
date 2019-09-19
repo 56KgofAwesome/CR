@@ -78,8 +78,12 @@ export class MyApp {
 
     this.storage.get('userToken').then(data => {
       if(data == null){
+        console.log('no hay token');
+        console.log(data);
         this.rootPage = Tabs2Page;
       }else{
+        console.log('Si hay token');
+        console.log(data);
         this.rootPage = TabsUsuarioPage;
       }
     });

@@ -36,29 +36,40 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public formBuilder: FormBuilder
   ) {
-    /*this.ga.startTrackerWithId('135891659')
-   .then(() => {
-     console.log('Google analytics is ready now');
-      this.ga.trackView('test');
-     // Tracker is ready
-     // You can now track pages or set additional information such as AppVersion or UserId
-   })
-   .catch(e => console.log('Error starting GoogleAnalytics', e));*/
-   this.loginForm = this.formBuilder.group({
-     username: new FormControl('', Validators.compose([
-       Validators.required,
-       Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-     ])),
-     password: new FormControl('',Validators.required)
-   })
+
+     this.loginForm = this.formBuilder.group({
+       username: new FormControl('', Validators.compose([
+         Validators.required,
+         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+       ])),
+       password: new FormControl('',Validators.required)
+     })
   }
   //----------------------------------------------------------------------------
   //Login del usuario
   loginUser(){
-    this.usuario.login(this.username,this.password);
+    Promise.all([
+      this.usuario.login(this.username,this.password)
+    ]).then(data=>{
+      if(data[0] == true){
+        this.events.publish('user:created',Date.now());
+      }else{
+        this.incorrectAlert();
+      }
+    })
+
   }
   //----------------------------------------------------------------------------
   irABuscar(){
 
+  }
+  //---------------------------------------------------------------------------------------------------------------
+  //Alerta de Datos incorrectos
+  incorrectAlert(){
+    let alert = this.alertCtrl.create({
+      title: 'Datos incorrectos',
+      message: 'Revisa bien los datos ingresados',
+    });
+    alert.present();
   }
 }

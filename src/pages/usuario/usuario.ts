@@ -69,7 +69,7 @@ export class UsuarioPage {
 
   cerrarSesion(user = 'cerraste sesion'){
     this.events.publish('user:logOut', user, Date.now());
-    this.storage.set('usuario', null);
+    this.storage.set('userToken', null);
     this.storage.set('data', null);
   }
 
