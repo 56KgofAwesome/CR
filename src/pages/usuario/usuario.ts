@@ -22,40 +22,28 @@ export class UsuarioPage {
   activo2:boolean = false;
   activo3:boolean = false;
   datosUsuario:any = {};
-  datos:any = {};
+  datos:any = [];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public events: Events,
     private storage: Storage,
     public usuario: UsuarioProvider,
-    private statusBar: StatusBar /*,
-    private usuarioProvider: UsuarioProvider,
-    private httpClient: HttpClient*/
-  ) {
-    /*this.datosUsuario = usuarioProvider.cargarDatos(this.datos);
-    console.log(this.datosUsuario);*/
+    private statusBar: StatusBar
+  ){
+
 
   }
 
   ionViewCanEnter(){
-    //var promise = this.usuario.cargarDatos()
     this.events.subscribe('user:created', (data, time) =>{
       this.datosUsuario = data;
     })
-
-    this.storage.get('data').then(data =>{
-      this.datos = {
-        'nombre': data['fullname'],
-        'imagen': data['image'],
-        'logo': data['logo'],
-        'compania': data['company'],
-        'mail': data['email'],
-        'telefono': data['cellphone'],
-        'celular': data['phone'],
-        'userToken' : data['token']
-      }
-    })
+    //Promise.all([
+      this.datos = this.usuario.datos;
+    //]).then(data=>{
+      //this.datos = data[0];
+    //})
     this.storage.get('usuario').then(data => {
       if(data == null){
 
@@ -70,7 +58,7 @@ export class UsuarioPage {
   cerrarSesion(user = 'cerraste sesion'){
     this.events.publish('user:logOut', user, Date.now());
     this.storage.set('userToken', null);
-    this.storage.set('data', null);
+    this.storage.set('dataUser', null);
   }
 
   desplegar(seccion:any){

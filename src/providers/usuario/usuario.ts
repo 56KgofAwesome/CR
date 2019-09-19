@@ -6,20 +6,17 @@ import { Header } from '../../../node_modules/ionic-angular/umd';
 import { companyid } from '../../interfaces/datosContacto';
 import { AlertController, Events,LoadingController } from 'ionic-angular';
 
-
-// http://www.immosystem.com.mx/appImmov2/immoApp2.php?d=0&m=[eliminaresto]contact&folio=139&propertyid=16690&fullname=jair&email=asdasd@asdasda.com.mx&phone=998155881238&message=testeando&location=Av.%20Xpujil%20Sur%2039,%2015,%2077505%20Canc%C3%BAn,%20Q.R.,%20M%C3%A9xico&contacttype=1&latitude=21.1452964&longitude=-86.82968079999999&soldagentid=0
-
 @Injectable()
 export class UsuarioProvider {
   url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
-  //body:any = 'mdvp=true&mode=user&f=G&email=jorge@immosystem.com.mx&password=Sysadmin32';
   companyid = 4;
   companyurl = 'http://crrivieramaya.com';
   companycontact;
   companyUser = 1671;
   companyOffice = 227;
-  datos       : any = [];
+  datos: any = {};
   answer: any;
+
   constructor(public http : Http, public apiProvider: ApiProvider,public alertCtrl: AlertController,private storage: Storage,public events: Events,public loadingCtrl: LoadingController) {
   }
   //------------------------------------------------------------------------------------------------------------
@@ -50,6 +47,26 @@ export class UsuarioProvider {
           })
         })
     }
+  //-------------------------------------------------------------------------------------------------------------
+  //Obtener los datos del usuario
+  getUserData(){
+    //return new Promise((resolve)=>{
+      this.storage.get('dataUser').then(data =>{
+        this.datos = {
+          'nombre': data['fullname'],
+          'imagen': data['image'],
+          'logo': data['logo'],
+          'compania': data['company'],
+          'mail': data['email'],
+          'telefono': data['cellphone'],
+          'celular': data['phone'],
+          'userToken' : data['token']
+        }
+        //resolve(this.datos);
+      })
+    }//)
+
+  //}
   //-------------------------------------------------------------------------------------------------------------
   //Método para cargar los destinos
   cargarDestino(){

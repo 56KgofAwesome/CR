@@ -15,6 +15,7 @@ export class MyApp {
   rootPage:any;
   conexion:Boolean;
   loading:any;
+  datos:any = {};
   constructor(
     public platform: Platform,
     statusBar: StatusBar,
@@ -78,12 +79,20 @@ export class MyApp {
 
     this.storage.get('userToken').then(data => {
       if(data == null){
-        console.log('no hay token');
-        console.log(data);
         this.rootPage = Tabs2Page;
       }else{
-        console.log('Si hay token');
-        console.log(data);
+        /*this.storage.get('dataUser').then(data=>{
+          this.datos = {
+            'nombre': data['fullname'],
+            'imagen': data['image'],
+            'logo': data['logo'],
+            'compania': data['company'],
+            'mail': data['email'],
+            'telefono': data['cellphone'],
+            'celular': data['phone'],
+            'userToken' : data['token']
+          }
+        })*/
         this.rootPage = TabsUsuarioPage;
       }
     });

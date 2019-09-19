@@ -36,7 +36,7 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public formBuilder: FormBuilder
   ) {
-
+    //Valida el formato del formulario
      this.loginForm = this.formBuilder.group({
        username: new FormControl('', Validators.compose([
          Validators.required,
@@ -51,13 +51,12 @@ export class LoginPage {
     Promise.all([
       this.usuario.login(this.username,this.password)
     ]).then(data=>{
-      if(data[0] == true){
-        this.events.publish('user:created',Date.now());
-      }else{
-        this.incorrectAlert();
-      }
+        if(data[0] == true){
+          this.events.publish('user:created',Date.now());
+        }else{
+          this.incorrectAlert();
+        }
     })
-
   }
   //----------------------------------------------------------------------------
   irABuscar(){

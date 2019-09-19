@@ -1304,7 +1304,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// http://www.immosystem.com.mx/appImmov2/immoApp2.php?d=0&m=[eliminaresto]contact&folio=139&propertyid=16690&fullname=jair&email=asdasd@asdasda.com.mx&phone=998155881238&message=testeando&location=Av.%20Xpujil%20Sur%2039,%2015,%2077505%20Canc%C3%BAn,%20Q.R.,%20M%C3%A9xico&contacttype=1&latitude=21.1452964&longitude=-86.82968079999999&soldagentid=0
 var UsuarioProvider = /** @class */ (function () {
     function UsuarioProvider(http, apiProvider, alertCtrl, storage, events, loadingCtrl) {
         this.http = http;
@@ -1314,12 +1313,11 @@ var UsuarioProvider = /** @class */ (function () {
         this.events = events;
         this.loadingCtrl = loadingCtrl;
         this.url = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
-        //body:any = 'mdvp=true&mode=user&f=G&email=jorge@immosystem.com.mx&password=Sysadmin32';
         this.companyid = 4;
         this.companyurl = 'http://crrivieramaya.com';
         this.companyUser = 1671;
         this.companyOffice = 227;
-        this.datos = [];
+        this.datos = {};
     }
     //------------------------------------------------------------------------------------------------------------
     //Login del usuario
@@ -1352,6 +1350,26 @@ var UsuarioProvider = /** @class */ (function () {
             });
         });
     };
+    //-------------------------------------------------------------------------------------------------------------
+    //Obtener los datos del usuario
+    UsuarioProvider.prototype.getUserData = function () {
+        var _this = this;
+        //return new Promise((resolve)=>{
+        this.storage.get('dataUser').then(function (data) {
+            _this.datos = {
+                'nombre': data['fullname'],
+                'imagen': data['image'],
+                'logo': data['logo'],
+                'compania': data['company'],
+                'mail': data['email'],
+                'telefono': data['cellphone'],
+                'celular': data['phone'],
+                'userToken': data['token']
+            };
+            //resolve(this.datos);
+        });
+    }; //)
+    //}
     //-------------------------------------------------------------------------------------------------------------
     //Método para cargar los destinos
     UsuarioProvider.prototype.cargarDestino = function () {
@@ -2600,6 +2618,7 @@ var LoginPage = /** @class */ (function () {
         this.alertCtrl = alertCtrl;
         this.formBuilder = formBuilder;
         this.datos = [];
+        //Valida el formato del formulario
         this.loginForm = this.formBuilder.group({
             username: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].compose([
                 __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required,
@@ -2639,10 +2658,17 @@ var LoginPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-login',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\login\login.html"*/'<ion-content padding class="animated fadeIn login auth-page">\n\n  <div class="login-content">\n\n      <!-- Logo -->\n\n    <div padding-horizontal text-center class="animated fadeInDown">\n\n      <div class="logo">\n\n        <img class="center" width="100%" style="margin: 10px auto;" src="assets/imgs/logoN.png">\n\n      </div>\n\n    </div>\n\n      <!-- Login form -->\n\n    <div>\n\n      <form [formGroup]="loginForm">\n\n          <ion-item>\n\n            <ion-label floating>\n\n              <ion-icon name="mail" item-start class="text-primary"></ion-icon>\n\n              Email\n\n            </ion-label>\n\n            <ion-input type="email" formControlName="username" [(ngModel)]="username" value="hponce@immosystem.com.mx"></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item>\n\n            <ion-label floating>\n\n              <ion-icon name="lock" item-start class="text-primary"></ion-icon>\n\n              Password\n\n            </ion-label>\n\n            <ion-input type="password" formControlName="password" [(ngModel)]="password" value="RgxOfmci48"></ion-input>\n\n          </ion-item>\n\n        <div>\n\n          <button ion-button icon-start block color="botones" tappable [disabled]="!loginForm.valid" (click)="loginUser()">\n\n            <ion-icon name="log-in"></ion-icon>\n\n            INICIAR SESIÓN\n\n          </button>\n\n        </div>\n\n      </form>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\login\login.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* LoadingController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]) === "function" && _j || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */],
+            __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]])
     ], LoginPage);
     return LoginPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 }());
 
 //# sourceMappingURL=login.js.map
@@ -3777,43 +3803,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var UsuarioPage = /** @class */ (function () {
-    function UsuarioPage(navCtrl, navParams, events, storage, usuario, statusBar /*,
-        private usuarioProvider: UsuarioProvider,
-        private httpClient: HttpClient*/) {
-        /*this.datosUsuario = usuarioProvider.cargarDatos(this.datos);
-        console.log(this.datosUsuario);*/
+    function UsuarioPage(navCtrl, navParams, events, storage, usuario, statusBar) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.events = events;
         this.storage = storage;
         this.usuario = usuario;
-        this.statusBar = statusBar; /*,
-        private usuarioProvider: UsuarioProvider,
-        private httpClient: HttpClient*/
+        this.statusBar = statusBar;
         this.activo1 = false;
         this.activo2 = false;
         this.activo3 = false;
         this.datosUsuario = {};
-        this.datos = {};
+        this.datos = [];
     }
     UsuarioPage.prototype.ionViewCanEnter = function () {
         var _this = this;
-        //var promise = this.usuario.cargarDatos()
         this.events.subscribe('user:created', function (data, time) {
             _this.datosUsuario = data;
         });
-        this.storage.get('data').then(function (data) {
-            _this.datos = {
-                'nombre': data['fullname'],
-                'imagen': data['image'],
-                'logo': data['logo'],
-                'compania': data['company'],
-                'mail': data['email'],
-                'telefono': data['cellphone'],
-                'celular': data['phone'],
-                'userToken': data['token']
-            };
-        });
+        //Promise.all([
+        this.datos = this.usuario.datos;
+        //]).then(data=>{
+        //this.datos = data[0];
+        //})
         this.storage.get('usuario').then(function (data) {
             if (data == null) {
             }
@@ -3827,7 +3839,7 @@ var UsuarioPage = /** @class */ (function () {
         if (user === void 0) { user = 'cerraste sesion'; }
         this.events.publish('user:logOut', user, Date.now());
         this.storage.set('userToken', null);
-        this.storage.set('data', null);
+        this.storage.set('dataUser', null);
     };
     UsuarioPage.prototype.desplegar = function (seccion) {
         if (seccion == 1) {
@@ -3879,16 +3891,10 @@ var UsuarioPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-usuario',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\usuario\usuario.html"*/'<ion-content padding>\n\n\n\n    <div class="contenedor">\n\n        <div style="margin-bottom: 10%">\n\n            <div *ngIf="datos.imagen != \'\'" class="logo alinear">\n\n                <img style="border-radius: 50px;" width="90px" src="{{datos.imagen}}">\n\n            </div>\n\n            <div *ngIf="datos.imagen == \'\'" class="logo alinear">\n\n                <img width="90px" src="assets/imgs/user.png">\n\n            </div>\n\n        </div>\n\n        <div>\n\n                <ion-list>\n\n                    <ion-item>\n\n                        <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>\n\n                        <p style="font-size: 15px;">{{datos.nombre}}</p>\n\n                    </ion-item>\n\n                    <ion-item *ngIf="datos.celular != 0">\n\n                        <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>\n\n                        <p>celular: {{datos.celular}}</p>\n\n                    </ion-item>\n\n                    <ion-item *ngIf="datos.celular == 0">\n\n                        <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>\n\n                        <p>celular: no disponible</p>\n\n                    </ion-item>\n\n                    <ion-item *ngIf="datos.telefono != 0">\n\n                        <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>\n\n                        <p style="font-size: 15px;">Telefono: {{datos.telefono}}</p>\n\n                    </ion-item>\n\n                    <ion-item *ngIf="datos.telefono == 0">\n\n                        <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>\n\n                        <p style="font-size: 15px;">Telefono: {{datos.telefono}}</p>\n\n                    </ion-item>\n\n                </ion-list>\n\n            \n\n\n\n\n\n            <div>\n\n                <div class="logo alinear">\n\n                    <img width="90" src="{{datos.logo}}">\n\n                </div>\n\n            </div>\n\n        </div>\n\n    </div>\n\n    \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n        <!--<div class="datosPersonales">\n\n          <div>\n\n            <div class="o_roW">\n\n                <div>\n\n\n\n                </div>\n\n            </div>\n\n          </div>\n\n          <div>\n\n            <ion-card class="menu" (click)="desplegar(1)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono1" name="arrow-down"></ion-icon></p></ion-card>\n\n            <div id="seccion1" class="invisible" padding>\n\n              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>\n\n            </div>\n\n    \n\n    \n\n          </div>\n\n          <div>\n\n              <ion-card class="menu" (click)="desplegar(2)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono2" name="arrow-down"></ion-icon></p></ion-card>\n\n              <div id="seccion2" class="invisible" padding>\n\n                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>\n\n              </div>\n\n    \n\n          </div>\n\n          <div>\n\n              <ion-card class="menu" (click)="desplegar(3)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono3" rigth name="arrow-down"></ion-icon></p></ion-card>\n\n              <div id="seccion3" class="invisible" padding>\n\n                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>\n\n              </div>\n\n    \n\n          </div>\n\n    \n\n    \n\n        </div>-->\n\n    \n\n    \n\n    \n\n    \n\n    <button style="margin-top: 10px; font-size: 12px; color: botones;" class="center boton" ion-button color="botones" full (click)="cerrarSesion()">Cerrar Sesion</button>\n\n\n\n    <div text-center class="animated fadeInDown">\n\n      <div class="logo">\n\n        <img class="center" width="100%" style="margin: 20px auto;" src="assets/imgs/web.gif">\n\n      </div>\n\n    </div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\usuario\usuario.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */] /*,
-            private usuarioProvider: UsuarioProvider,
-            private httpClient: HttpClient*/])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _f || Object])
     ], UsuarioPage);
     return UsuarioPage;
+    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=usuario.js.map
@@ -4806,6 +4812,7 @@ var MyApp = /** @class */ (function () {
         this.network = network;
         this.events = events;
         this.loadingCtrl = loadingCtrl;
+        this.datos = {};
         platform.ready().then(function () {
             //statusBar.styleBlackOpaque();
             //if (platform.is('android')) {
@@ -4844,13 +4851,21 @@ var MyApp = /** @class */ (function () {
         });
         this.storage.get('userToken').then(function (data) {
             if (data == null) {
-                console.log('no hay token');
-                console.log(data);
                 _this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_tabs2_tabs2__["a" /* Tabs2Page */];
             }
             else {
-                console.log('Si hay token');
-                console.log(data);
+                /*this.storage.get('dataUser').then(data=>{
+                  this.datos = {
+                    'nombre': data['fullname'],
+                    'imagen': data['image'],
+                    'logo': data['logo'],
+                    'compania': data['company'],
+                    'mail': data['email'],
+                    'telefono': data['cellphone'],
+                    'celular': data['phone'],
+                    'userToken' : data['token']
+                  }
+                })*/
                 _this.rootPage = __WEBPACK_IMPORTED_MODULE_5__pages_tabs_usuario_tabs_usuario__["a" /* TabsUsuarioPage */];
             }
         });
@@ -4868,10 +4883,17 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\app\app.html"*/'<ion-nav [root]="rootPage"></ion-nav>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\app\app.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__providers_network_network__["a" /* NetworkProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__providers_network_network__["a" /* NetworkProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__["a" /* Network */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__["a" /* Network */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Events */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_9_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]) === "function" && _j || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+            __WEBPACK_IMPORTED_MODULE_6__ionic_storage__["b" /* Storage */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_8__providers_network_network__["a" /* NetworkProvider */],
+            __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__["a" /* Network */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_9_ionic_angular_components_loading_loading_controller__["a" /* LoadingController */]])
     ], MyApp);
     return MyApp;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 }());
 
 //# sourceMappingURL=app.component.js.map
