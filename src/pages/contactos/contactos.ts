@@ -7,7 +7,7 @@ import {
 } from '../index.paginas';
 import { AgregarContactoPage } from '../agregar-contacto/agregar-contacto';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
-import { Storage } from '@ionic/storage';
+import { ContactosProvider } from '../../providers/contactos/contactos';
 
 
 @IonicPage()
@@ -29,31 +29,18 @@ export class ContactosPage {
     public navParams: NavParams,
     private callNumber: CallNumber,
     public usuarioProvider: UsuarioProvider,
-    private storage: Storage
+    private contactosProvider: ContactosProvider
   ) {
+
   }
 
   ionViewCanEnter() {
-    this.storage.get('usuario').then((data) => {
-      this.id = data;
-      var promise = this.usuarioProvider.cargarContacto(data);
-      promise.subscribe(data => {
-        this.contactos = data.json().data;
-      });
-
-      var promise = this.usuarioProvider.cargarContactoReferidos(data);
-      promise.subscribe(data => {
-        this.referidos = data.json().data;
-      });
-
-      var promise3 = this.usuarioProvider.cargarContactoPotencial(1671);
-      promise3.subscribe(data => {
-        this.potenciales = data.json().data;
-      });
-    });
+      this.showContactsList();
+      this.showReferedContactsList();
+      this.showPotencialContactsList();
   }
 
-  llamar(numero: any) {
+  callContact(numero: any) {
     this.callNumber.callNumber(numero, true)
       .then(res => console.log('llamando', res))
       .catch(err => console.log('error de llamada', err));
@@ -64,8 +51,6 @@ export class ContactosPage {
   }
 
   agregarContacto() {
-    //this.navCtrl.push(AgregarCompradoresPage);
-    //this.navCtrl.push(AgregarCompradoresPage);
     let modal = document.getElementById("modal");
     modal.style.display = "block";
 
@@ -88,23 +73,10 @@ export class ContactosPage {
 
   }
 
-  refrescar(refresher) {
-
-    var promise = this.usuarioProvider.cargarContacto(this.id);
-    promise.subscribe(data => {
-      this.contactos = data.json().data;
-    })
-
-    var promise2 = this.usuarioProvider.cargarContactoReferidos(this.id);
-    promise2.subscribe(data => {
-      this.referidos = data.json().data;
-    });
-
-    var promise3 = this.usuarioProvider.cargarContactoPotencial(1671);
-    promise3.subscribe(data => {
-      this.potenciales = data.json().data;
-    });
-
+  refreshPage(refresher) {
+    this.showContactsList();
+    this.showReferedContactsList();
+    this.showPotencialContactsList();
 
     setTimeout(() => {
       refresher.complete();
@@ -147,10 +119,30 @@ export class ContactosPage {
     let modal = document.getElementById("modal");
     modal.style.display = "none";
   }
-
-
-
-
+  //----------------------------------------------------------------------------
+  //Método para obtener la lista de contactos
+  showContactsList(){
+    var promise = this.contactosProvider.getContactsList(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
+    promise.subscribe(data => {
+      this.contactos = data.json().data;
+    });
+  }
+  //----------------------------------------------------------------------------
+  //Método para obtener la lista de contactos referidos
+  showReferedContactsList(){
+    var promise = this.contactosProvider.getReferedContactsList(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
+    promise.subscribe(data => {
+      this.referidos = data.json().data;
+    });
+  }
+  //----------------------------------------------------------------------------
+  //Método para obtener la lista potenciales compradores
+  showPotencialContactsList(){
+    var promise = this.contactosProvider.getPotencialContactsList(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
+    promise.subscribe(data => {
+      this.potenciales = data.json().data;
+    });
+  }
 
 
 }

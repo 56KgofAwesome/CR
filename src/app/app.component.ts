@@ -8,6 +8,8 @@ import { Storage } from '@ionic/storage';
 import { Network } from '@ionic-native/network';
 import { NetworkProvider } from '../providers/network/network';
 import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { UsuarioProvider } from '../providers/usuario/usuario';
+import { ApiProvider } from '../providers/api/api';
 @Component({
   templateUrl: 'app.html'
 })
@@ -25,9 +27,19 @@ export class MyApp {
     public networkProvider: NetworkProvider,
     public network: Network,
     public events: Events,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public usuario: UsuarioProvider,
+    public apiProvider: ApiProvider
   ) {
 
+    this.storage.get('userToken').then(token => {
+      if(token == null){
+        this.rootPage = Tabs2Page;
+      }else{
+        //this.usuario.loginToken(token);
+        this.rootPage = TabsUsuarioPage;
+      }
+    });
 
     platform.ready().then(() => {
 
@@ -77,25 +89,7 @@ export class MyApp {
     })
 
 
-    this.storage.get('userToken').then(data => {
-      if(data == null){
-        this.rootPage = Tabs2Page;
-      }else{
-        /*this.storage.get('dataUser').then(data=>{
-          this.datos = {
-            'nombre': data['fullname'],
-            'imagen': data['image'],
-            'logo': data['logo'],
-            'compania': data['company'],
-            'mail': data['email'],
-            'telefono': data['cellphone'],
-            'celular': data['phone'],
-            'userToken' : data['token']
-          }
-        })*/
-        this.rootPage = TabsUsuarioPage;
-      }
-    });
+
   }
 
 
@@ -105,7 +99,7 @@ export class MyApp {
       spinner: 'hide',
       content: `
       <div style="background-color: black;">
-        <div style="background-color: black;">no hay conexion a internet. <br> Conecte a inernet</div>
+        <div style="background-color: black;">no hay conexion a internet. <br> Conecte a internet</div>
       </div>`
     });
 

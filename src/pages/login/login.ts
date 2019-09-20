@@ -9,9 +9,7 @@ import {
   LoadingController,
   ModalController
 } from 'ionic-angular';
-import {
-  RegistrarPage
- } from "../index.paginas";
+//import { RegistrarPage } from "../index.paginas";
  import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 

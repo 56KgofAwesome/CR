@@ -8,24 +8,10 @@
     </div>
   </ion-navbar>
 </ion-header>
-
-<!-- Si no lo vas a usar, borralo -->
-<!-- Acomoda tu html x2 -->
-<!-- Si todos los h2 van a tener font-size de 10, metelo en css -->
-
-<!-- 
-[(ngModel)]="myInput"
-[showCancelButton]="shouldShowCancel"
-(ionInput)="onInput($event)"
-(ionCancel)="onCancel($event)"
-(keyup)="buscar($event)"
-(search)="onSearch($event)"
--->
-
-<ion-content class="fondo">
-  <ion-refresher (ionRefresh)="refrescar($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  <ion-content class="fondo">
+    <ion-refresher (ionRefresh)="refreshPage($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
 
 
@@ -41,7 +27,7 @@
         <h2 style="font-size: 10px;">{{contacto.fullname}}</h2>
         <h2 style="font-size: 10px;" *ngIf="contacto.email != 0">{{contacto.email}}</h2>
         <h2 style="font-size: 10px;" *ngIf="contacto.email == 0">No Disponible</h2>
-        <h2 style="font-size: 8px;">folio: {{contacto.folio}} - 
+        <h2 style="font-size: 8px;">folio: {{contacto.folio}} -
           <span *ngIf="contacto.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{contacto.lastcomment}} días</span>
           <span *ngIf="contacto.lastcomment >= 3 && contacto.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{contacto.lastcomment}} días</span>
           <span *ngIf="contacto.lastcomment >= 0 && contacto.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{contacto.lastcomment}} días</span>
@@ -51,7 +37,7 @@
         </ion-avatar>
       </ion-item>
       <ion-item-options class="fondo" side="right">
-        <button *ngIf="contacto.cellphone != 0" ion-button color="secondary" (click)="llamar(contacto.cellphone)">
+        <button *ngIf="contacto.cellphone != 0" ion-button color="secondary" (click)="callContact(contacto.cellphone)">
           <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>
         </button>
         <button ion-button color="botones" (click)="verContacto(contacto.folio, 'c')">
@@ -59,7 +45,7 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-    
+
   </ion-list>
 
   <ion-list *ngSwitchCase="'referidos'" id="myUL">
@@ -72,7 +58,7 @@
         <h2 style="font-size: 10px;">{{referido.fullname}}</h2>
         <h2 style="font-size: 10px;" *ngIf="referido.email != 0">{{referido.email}}</h2>
         <h2 style="font-size: 10px;" *ngIf="referido.email == 0">No Disponible</h2>
-        <h2 style="font-size: 8px;">folio: {{referido.folio}} - 
+        <h2 style="font-size: 8px;">folio: {{referido.folio}} -
           <span *ngIf="referido.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{referido.lastcomment}} días</span>
           <span *ngIf="referido.lastcomment >= 3 && referido.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{referido.lastcomment}} días</span>
           <span *ngIf="referido.lastcomment >= 0 && referido.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{referido.lastcomment}} días</span>
@@ -90,7 +76,7 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-    
+
   </ion-list>
 
   <ion-list *ngSwitchCase="'potenciales'" id="myUL">
@@ -103,7 +89,7 @@
         <h2 style="font-size: 10px;">{{potencial.fullname}}</h2>
         <h2 style="font-size: 10px;" *ngIf="potencial.email != 0">{{potencial.email}}</h2>
         <h2 style="font-size: 10px;" *ngIf="potencial.email == 0">No Disponible</h2>
-        <h2 style="font-size: 8px;">folio: {{potencial.folio}} - 
+        <h2 style="font-size: 8px;">folio: {{potencial.folio}} -
           <span *ngIf="potencial.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{potencial.lastcomment}} días</span>
           <span *ngIf="potencial.lastcomment >= 3 && potencial.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{potencial.lastcomment}} días</span>
           <span *ngIf="potencial.lastcomment >= 0 && potencial.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{potencial.lastcomment}} días</span>
@@ -121,7 +107,7 @@
         </button>
       </ion-item-options>
     </ion-item-sliding>
-    
+
   </ion-list>
 </div>
 
@@ -157,5 +143,3 @@
     </ion-segment-button>-->
   </ion-segment>
 </ion-footer>
-
-

@@ -32,27 +32,30 @@ export class UsuarioPage {
     private statusBar: StatusBar
   ){
 
+    }
+    ionViewWillEnter(){
+        Promise.all([
+          this.usuario.getUserData()
+        ]).then(data=>{
+          console.log(data);
+          this.datosUsuario = data[0];
+        })
+    }
+    ionViewCanEnter(){
+        this.events.subscribe('user:created', (data, time) =>{
 
-  }
+        })
 
-  ionViewCanEnter(){
-    this.events.subscribe('user:created', (data, time) =>{
-      this.datosUsuario = data;
-    })
-    //Promise.all([
-      this.datos = this.usuario.datos;
-    //]).then(data=>{
-      //this.datos = data[0];
-    //})
-    this.storage.get('usuario').then(data => {
-      if(data == null){
+      /*this.storage.get('usuario').then(data => {
+        if(data == null){
 
-      }else{
-      }
-    });
-  }
+        }else{
+        }
+      });*/
+    }
 
   ionViewDidLoad() {
+
   }
 
   cerrarSesion(user = 'cerraste sesion'){

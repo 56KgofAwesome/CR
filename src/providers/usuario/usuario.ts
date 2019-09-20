@@ -50,57 +50,28 @@ export class UsuarioProvider {
   //-------------------------------------------------------------------------------------------------------------
   //Obtener los datos del usuario
   getUserData(){
-    //return new Promise((resolve)=>{
+    return new Promise((resolve)=>{
       this.storage.get('dataUser').then(data =>{
-        this.datos = {
-          'nombre': data['fullname'],
-          'imagen': data['image'],
-          'logo': data['logo'],
-          'compania': data['company'],
-          'mail': data['email'],
-          'telefono': data['cellphone'],
-          'celular': data['phone'],
-          'userToken' : data['token']
-        }
-        //resolve(this.datos);
+          this.datos = {
+            'id': data['userid'],
+            'nombre': data['fullname'],
+            'imagen': data['image'],
+            'logo': data['logo'],
+            'compania': data['company'],
+            'mail': data['email'],
+            'telefono': data['cellphone'],
+            'celular': data['phone'],
+            'userToken': data['token']
+          }
+          console.log(data['token']);
+      resolve(this.datos);
       })
-    }//)
-
-  //}
+    })
+  }
   //-------------------------------------------------------------------------------------------------------------
   //Método para cargar los destinos
   cargarDestino(){
     var body = 'm=developments&folio='+ companyid +'&states=1';
-    return this.apiProvider.post(body);
-  }
-  //-------------------------------------------------------------------------------------------------------------
-  //Método para cargar la seccion de contactos
-  cargarContacto(id:any){
-    var body = 'm=visits&user='+id+'&token=';
-    return this.apiProvider.post(body);
-  }
-  //-------------------------------------------------------------------------------------------------------------
-  //Método para cargar contactos referidos
-  cargarContactoReferidos(id:any){
-    var body = 'm=visitsPreregister&user='+id;
-    return this.apiProvider.post(body);
-  }
-  //-------------------------------------------------------------------------------------------------------------
-  //Cargar lista de contactos potenciales
-  cargarContactoPotencial(id:any){
-    var body = 'm=potentialBuyers&folio='+ 4 +'&user='+id;
-    return this.apiProvider.post(body);
-  }
-  //-------------------------------------------------------------------------------------------------------------
-  //Método para ver a un contacto en específico
-  verContacto(id:any, idUsuario){
-    var body = 'm=visit&user='+ idUsuario +'&visitid=' + id;
-    return this.apiProvider.post(body);
-  }
-  //-------------------------------------------------------------------------------------------------------------
-  //Método para ver un contacto referido
-  verContactoReferido(id:any, idUsuario){
-    var body = 'm=visitPreregister&user='+ idUsuario + '&visitid='+ id;
     return this.apiProvider.post(body);
   }
   //-------------------------------------------------------------------------------------------------------------

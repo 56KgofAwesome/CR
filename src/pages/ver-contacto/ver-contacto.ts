@@ -3,16 +3,10 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { EmailComposer } from '../../../node_modules/@ionic-native/email-composer';
 import { SeguimientoPage } from '../seguimiento/seguimiento';
-import { Storage } from '@ionic/storage';
 import { SharingPage } from '../index.paginas';
 import { GeneralFormPage } from '../general-form/general-form';
+import { ContactosProvider } from '../../providers/contactos/contactos';
 
-/**
- * Generated class for the VerContactoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -24,56 +18,38 @@ export class VerContactoPage {
   activo2     :boolean  = false;
   activo3     :boolean  = false;
   seccion     :string   = "datos";
-  idContacto  :any;
+  contactId  :any;
   datos       : any     = [];
   comentarios : any     = {};
   tipo        : any;
   idUsuario   : any;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public usuarioProvider: UsuarioProvider,
     private emailComposer: EmailComposer,
-    private storage: Storage,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public contactosProvider: ContactosProvider
   ) {
   }
 
   ionViewCanEnter(){
-    this.idContacto = this.navParams.get("id");
+    this.contactId = this.navParams.get("id");
     this.tipo  = this.navParams.get("tipo");
 
-    this.storage.get('usuario').then(data=>{
-       this.idUsuario = data;
-
-
       if(this.tipo == 'c'){
-
-        var promise = this.usuarioProvider.verContacto(this.idContacto, this.idUsuario);
+        var promise = this.contactosProvider.getContactInfo(this.contactId, this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
         promise.subscribe(data=>{
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
-          //this.contactos = data.json().data;
         })
-  
       }else{
-  
-        var promise = this.usuarioProvider.verContactoReferido(this.idContacto, this.idUsuario);
+        var promise = this.contactosProvider.getReferedContactInfo(this.contactId,this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
         promise.subscribe(data=>{
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
-          //this.contactos = data.json().data;
-        })      
-  
+        })
       }
-
-
-    });
-
-
-
-
-
   }
 
 
@@ -111,10 +87,10 @@ export class VerContactoPage {
       this.navCtrl.push(SeguimientoPage, {'contacto': this.datos, 'tipo': this.tipo});
     }else{
       this.navCtrl.push(SeguimientoPage, {'contacto': this.datos, 'tipo': this.tipo});
-    } 
+    }
 
 
-    
+
   }
 
 
@@ -131,7 +107,7 @@ export class VerContactoPage {
   cerrarModal(){
     let modal = document.getElementById("modal");
     modal.style.display = "none";
-  }  
+  }
 
   openForm(datos, nombre){
     const modal = this.modalCtrl.create(GeneralFormPage, {'id':this.tipo,'visitid':datos, 'fullname': nombre});

@@ -13,7 +13,7 @@
                 <ion-list>
                     <ion-item>
                         <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>
-                        <p style="font-size: 15px;">{{datos.nombre}}</p>
+                        <p style="font-size: 15px;">{{datosUsuario.nombre}}</p>
                     </ion-item>
                     <ion-item *ngIf="datos.celular != 0">
                         <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
@@ -32,17 +32,14 @@
                         <p style="font-size: 15px;">Telefono: {{datos.telefono}}</p>
                     </ion-item>
                 </ion-list>
-            
-
-
             <div>
                 <div class="logo alinear">
-                    <img width="90" src="{{datos.logo}}">
+                    <img width="90" src="{{datosUsuario.logo}}">
                 </div>
             </div>
         </div>
     </div>
-    
+
 
 
 
@@ -65,30 +62,30 @@
             <div id="seccion1" class="invisible" padding>
               <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>
             </div>
-    
-    
+
+
           </div>
           <div>
               <ion-card class="menu" (click)="desplegar(2)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono2" name="arrow-down"></ion-icon></p></ion-card>
               <div id="seccion2" class="invisible" padding>
                   <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>
               </div>
-    
+
           </div>
           <div>
               <ion-card class="menu" (click)="desplegar(3)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono3" rigth name="arrow-down"></ion-icon></p></ion-card>
               <div id="seccion3" class="invisible" padding>
                   <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>
               </div>
-    
+
           </div>
-    
-    
+
+
         </div>-->
-    
-    
-    
-    
+
+
+
+
     <button style="margin-top: 10px; font-size: 12px; color: botones;" class="center boton" ion-button color="botones" full (click)="cerrarSesion()">Cerrar Sesion</button>
 
     <div text-center class="animated fadeInDown">
