@@ -58,6 +58,7 @@ export class UsuarioProvider {
             'imagen': data['image'],
             'logo': data['logo'],
             'compania': data['company'],
+            'companyid': data['companyid'],
             'mail': data['email'],
             'telefono': data['cellphone'],
             'celular': data['phone'],

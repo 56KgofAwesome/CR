@@ -8,8 +8,8 @@ import {
 } from 'ionic-angular';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 //import { UsuarioProvider } from '../../providers/usuario/usuario';
-import { Tabs2Page } from '../tabs2/tabs2';
-import { TabsUsuarioPage } from '../tabs-usuario/tabs-usuario';
+//import { Tabs2Page } from '../tabs2/tabs2';
+//import { TabsUsuarioPage } from '../tabs-usuario/tabs-usuario';
 import { StatusBar } from '@ionic-native/status-bar';
 
 @IonicPage()
@@ -37,13 +37,11 @@ export class UsuarioPage {
         Promise.all([
           this.usuario.getUserData()
         ]).then(data=>{
-          console.log(data);
           this.datosUsuario = data[0];
         })
     }
     ionViewCanEnter(){
         this.events.subscribe('user:created', (data, time) =>{
-
         })
 
       /*this.storage.get('usuario').then(data => {

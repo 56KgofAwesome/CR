@@ -6,55 +6,44 @@
 
 </ion-header>
 
-<!--jeje>-->
 <ion-content>
 
-  <h1 class="cabecera">LLenar: datos generales</h1>
+  <h1 class="cabecera"> Datos Generales </h1>
   <div id="generales" padding class="generales">
     <form (ngSubmit)="formularioGeneral()" [formGroup]="fGeneral">
-
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating>Nombre <sup>*</sup></ion-label>
-          <ion-input [(ngModel)]="datosGenerales.nombre" type="text" formControlName="nombre"></ion-input>
+          <ion-input [(ngModel)]="datosGenerales.name" type="text" formControlName="name" name="name"></ion-input>
         </ion-item>
-        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get('nombre').errors && error">
-          <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
-          <p color="danger" ion-text *ngIf="fGeneral.get('nombre').hasError('required')">Este campo es necesario</p>
+        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get('name').errors && error">
+          <p color="danger" ion-text *ngIf="fGeneral.get('name').hasError('required')">Este campo es necesario</p>
         </ion-item>
-        <!--<ion-item class="ErrorMensaje" *ngIf="flagN">
-          <p color="danger" ion-text>Este campo es necesario</p>
-        </ion-item>-->
         <ion-item class="formulario">
-          <ion-label class="textoLabel" floating>Apellido paterno <sup>*</sup></ion-label>
-          <ion-input [(ngModel)]="datosGenerales.ap_paterno" type="text" formControlName="apellidoP" name="celular"></ion-input>
+          <ion-label class="textoLabel" floating>Apellido Paterno <sup>*</sup></ion-label>
+          <ion-input [(ngModel)]="datosGenerales.lastNameF" type="text" formControlName="lastNameF" name="lastNameF"></ion-input>
         </ion-item>
-        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get('apellidoP').errors && error">
-          <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
-          <p color="danger" ion-text *ngIf="fGeneral.get('apellidoP').hasError('required')">Este campo es necesario</p>
+        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get('lastNameF').errors && error">
+          <p color="danger" ion-text *ngIf="fGeneral.get('lastNameF').hasError('required')">Este campo es necesario</p>
         </ion-item>
-        <!--<ion-item class="ErrorMensaje" *ngIf="flagA">
-          <p color="danger" ion-text>Este campo es necesario</p>
-        </ion-item>-->
         <ion-item class="formulario">
-          <ion-label class="textoLabel" floating>Apellido Materno</ion-label>
-          <ion-input [(ngModel)]="datosGenerales.ap_materno" type="text" formControlName="apellidoM" name="ap_materno"></ion-input>
+          <ion-label class="textoLabel" floating> Apellido Materno </ion-label>
+          <ion-input [(ngModel)]="datosGenerales.lastNameM" type="text" formControlName="lastNameM" name="lastNameM"></ion-input>
         </ion-item>
-
         <ion-item class="formulario">
-          <ion-label class="textoLabel" floating>E-mail principal<sup>*</sup></ion-label>
-          <ion-input [(ngModel)]="datosGenerales.email" type="email" formControlName="email1" name="email1"></ion-input>
+          <ion-label class="textoLabel" floating> Correo electrónico <sup>*</sup></ion-label>
+          <ion-input [(ngModel)]="datosGenerales.email" type="email" formControlName="email" name="email"></ion-input>
         </ion-item>
-        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get('email1').errors && error">
-          <p color="danger" ion-text *ngIf="fGeneral.get('email1').hasError('required')">Este campo es necesario</p>
-          <p color="danger" ion-text *ngIf="fGeneral.get('email1').hasError('email') && flag">Este no es un correo valido</p>
+        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get('email').errors && error">
+          <p color="danger" ion-text *ngIf="fGeneral.get('email').hasError('required')">Este campo es necesario</p>
+          <p color="danger" ion-text *ngIf="fGeneral.get('email').hasError('email') && flag">Este no es un correo válido</p>
         </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating>Celular</ion-label>
-          <ion-input [(ngModel)]="datosGenerales.cel" type="text" formControlName="rfc" name="rfc"></ion-input>
+          <ion-input [(ngModel)]="datosGenerales.cellphone" type="text" formControlName="cellphone" name="cellphone"></ion-input>
         </ion-item>
         <ion-item class="formulario">
-          <ion-label class="textoLabel" floating>Telefono Casa / Oficina</ion-label>
-          <ion-input [(ngModel)]="datosGenerales.oficina_tel" type="text" [ngModelOptions]="{standalone: true}" name="rfc"></ion-input>
+          <ion-label class="textoLabel" floating>Teléfono Casa / Oficina</ion-label>
+          <ion-input [(ngModel)]="datosGenerales.telephone" type="text" formControlName="telephone" name="telephone"></ion-input>
         </ion-item>
       <div class="botones">
         <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>
@@ -64,16 +53,16 @@
 
 <!--____________________________________________________________-->
 
-<h1 class="cabecera">LLenar: medio de contacto</h1>
+<h1 class="cabecera"> Medio de Contacto </h1>
 <div padding id="contacto" class="contacto">
   <form (ngSubmit)="formularioContacto()" [formGroup]="fContacto">
 
       <ion-item class="formulario">
-        <ion-label class="textoLabel">Medio de contacto <sup>*</sup></ion-label>
+        <ion-label class="textoLabel"> Medio de contacto <sup>*</sup></ion-label>
         <ion-select [(ngModel)]="datosGenerales.contacto" name="propiedad" (ionChange)="validarDetalle()" formControlName="medioC" (ionChange)="actualizarDetalle()">
           <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>
         </ion-select>
-      </ion-item> 
+      </ion-item>
       <ion-item class="ErrorMensaje" *ngIf="fContacto.get('medioC').errors && error">
         <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
         <p color="danger" ion-text *ngIf="fContacto.get('medioC').hasError('required')">Este campo es necesario</p>
@@ -83,7 +72,7 @@
         <ion-select [(ngModel)]="datosGenerales.subcontacto" name="propiedad" formControlName="detalle">
           <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>
         </ion-select>
-      </ion-item> 
+      </ion-item>
 
       <div *ngIf="media_extra == 3 || media_extra == 7">
         <ion-item class="formulario">
@@ -91,20 +80,19 @@
           <ion-input [(ngModel)]="datosGenerales.referid" type="text" formControlName="Nbroker" name="Nbroker"></ion-input>
         </ion-item>
         <ion-item class="ErrorMensaje" *ngIf="fContacto.get('Nbroker').errors && error">
-          <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
           <p color="danger" ion-text *ngIf="fContacto.get('Nbroker').hasError('required')">Este campo es necesario</p>
         </ion-item>
         <ion-item class="formulario">
-          <ion-label class="textoLabel" floating>E-mail broker</ion-label>
-          <ion-input [(ngModel)]="datosGenerales.email-ref" type="text" formControlName="Ebroker" name="Ebroker"></ion-input>
+          <ion-label class="textoLabel" floating>Correo electrónico broker</ion-label>
+          <ion-input [(ngModel)]="datosGenerales.emailRef" type="text" formControlName="Ebroker" name="Ebroker"></ion-input>
         </ion-item>
         <ion-item class="formulario">
-          <ion-label class="textoLabel" floating>Telefono broker</ion-label>
-          <ion-input [(ngModel)]="datosGenerales.telefono-ref" type="text" formControlName="Tbroker" name="Tbroker"></ion-input>
+          <ion-label class="textoLabel" floating>Teléfono broker</ion-label>
+          <ion-input [(ngModel)]="datosGenerales.telefonoRef" type="text" formControlName="Tbroker" name="Tbroker"></ion-input>
         </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating>Agencia broker</ion-label>
-          <ion-input [(ngModel)]="datosGenerales.agencia-ref" type="text" formControlName="Abroker" name="Abroker"></ion-input>
+          <ion-input [(ngModel)]="datosGenerales.agenciaRef" type="text" formControlName="Abroker" name="Abroker"></ion-input>
         </ion-item>
       </div>
       <div *ngIf="media_extra == 6">
@@ -126,7 +114,7 @@
         <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->
         <p color="danger" ion-text *ngIf="fContacto.get('comentarios').hasError('required')">Este campo es necesario</p>
       </ion-item>
-    
+
     <div class="botones">
       <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>
     </div>
@@ -184,13 +172,13 @@
         <ion-select [(ngModel)]="datosGenerales.office" (ionChange)="actualizarAsesor()" name="propiedad" formControlName="officinaA">
           <ion-option *ngFor="let oficina of listaDeOficinas" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>
         </ion-select>
-      </ion-item> 
+      </ion-item>
       <ion-item class="formulario">
         <ion-label class="textoLabel">Asesor <sup>*</sup></ion-label>
         <ion-select [(ngModel)]="datosGenerales.user" name="propiedad" formControlName="asesorA">
           <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>
         </ion-select>
-      </ion-item> 
+      </ion-item>
       <div class="botones">
         <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Agregar</button>
       </div>

@@ -35,10 +35,10 @@ export class AgregarCompradoresPage {
   listaDeOficinas     : any = [];
   agentesDeOficina    : any = [];
   listaDeLenguajes    : any = [];
-  listaDeCiudades     : any = [];   
-  listaDePaises       : any = []; 
+  listaDeCiudades     : any = [];
+  listaDePaises       : any = [];
   listaDeEstados      : any = [];
-  medioValor          : any;  
+  medioValor          : any;
   datosFG             :any  = {};
   datosMC             :any  = {};
   datosCB             :any  = {};
@@ -47,7 +47,7 @@ export class AgregarCompradoresPage {
   media_extra         :any;
   datosGenerales      :any  = [];
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     public formularioProvider: FormulariosProvider,
@@ -65,7 +65,7 @@ export class AgregarCompradoresPage {
       email2: ['', [Validators.email]],
       rfc: [''],
       nac: ['']
-      
+
     });
 //9984069591
     this.fContacto = this.formBuilder.group({
@@ -146,15 +146,15 @@ export class AgregarCompradoresPage {
   }
 
   ionViewCanEnter() {
-    
-    this.storage.get('usuario').then(data=>{
+
+    /*this.storage.get('usuario').then(data=>{
        this.idUsuario = data;
 
        var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
        oficinas.subscribe(data=>{
          this.listaDeOficinas = data.json().data;
        });
-    });
+    });*/
 
     this.storage.get('folio').then(data => {
       var ciudad = this.formularioProvider.listaDeCiudad(data);
@@ -168,10 +168,10 @@ export class AgregarCompradoresPage {
       this.mediosDeContacto = data.json().data;
     });
 
-    var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
+    /*var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
     oficinas.subscribe(data=>{
       this.listaDeOficinas = data.json().data;
-    });
+    });*/
 
     var subContactos = this.formularioProvider.subMediosDeContactos(this.medioValor);
     subContactos.subscribe(data=> {
@@ -261,7 +261,7 @@ export class AgregarCompradoresPage {
     }else{
       var elemento = document.getElementById('operacionMensaje').innerHTML = '<div><p style="color: red;">este campo es obligatorio</p></div>';
     }
-        
+
   }
 
   formularioCompradores(){
@@ -336,12 +336,12 @@ export class AgregarCompradoresPage {
       Object.keys(datos).forEach(function(key){
         UrlData += '&' + key + '=' + datos[key];
       })
-  
+
       var loader = this.loadingCtrl.create({
         dismissOnPageChange: false
       });
       loader.present();
-      var agregarContacto = this.contactoProvider.agergarContactosComp(UrlData);
+      /*var agregarContacto = this.contactoProvider.agergarContactosComp(UrlData);
       agregarContacto.subscribe(data => {
         if(data.status == 200){
           loader.dismiss();
@@ -353,8 +353,8 @@ export class AgregarCompradoresPage {
           alerta.present();
           this.navCtrl.pop();
         }
-          
-      })
+
+      })*/
 
 
 
