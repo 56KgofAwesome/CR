@@ -55,8 +55,6 @@ export class AgregarContactoPage {
 
     this.storage.get('dataUser').then(data=>{
       console.log(data);
-      //this.generalData.user = data;
-      //this.generalData.creatorid = data;
     });
     //Formulario datos generales
     this.generalForm = this.formBuilder.group({
@@ -79,13 +77,11 @@ export class AgregarContactoPage {
       asesorA: ['', Validators.required]
     });
     //Datos de Opcion: Referencias y Otro
-    this.generalData.referid = '';
-    this.generalData.emailRef = '';
-    this.generalData.telefonoRef = '';
-    this.generalData.agenciaRef = '';
-
-    //this.generalData.cel = '';
-    //this.generalData.ap_materno = '';
+    this.generalData.rephId = '';
+    this.generalData.rephEmail = '';
+    this.generalData.rephTel = '';
+    this.generalData.rephAgency = '';
+    //
     this.generalData.subcontacto = '';
     this.generalData.online = 1;
     this.generalData.office = '';
@@ -145,7 +141,7 @@ export class AgregarContactoPage {
     this.error = true;
 
     if((this.contactForm.value.contactMedia == 3 || this.contactForm.value.contactMedia == 7)){
-      if(!this.contactForm.get('Nbroker').hasError('required') && !this.contactForm.get('Ebroker').hasError('email') && !this.contactForm.get('comments').hasError('required')){
+      if(!this.contactForm.get('brokerName').hasError('required') && !this.contactForm.get('brokerEmail').hasError('email') && !this.contactForm.get('comments').hasError('required')){
         var contactoH = document.getElementById('contacto');
         var clienteB = document.getElementById('busca');
         contactoH.style.display = "none";
@@ -153,7 +149,7 @@ export class AgregarContactoPage {
         this.error = false;
       }
     }else if((this.contactForm.value.contactMedia == 6)){
-      if(!this.contactForm.get('otro').hasError('required')){
+      if(!this.contactForm.get('Other').hasError('required')){
         var contactoH = document.getElementById('contacto');
         var clienteB = document.getElementById('busca');
         contactoH.style.display = "none";
@@ -161,7 +157,7 @@ export class AgregarContactoPage {
         this.error = false;
       }
     }else{
-      if(!this.contactForm.get('contactMedia').hasError('required') && !this.contactForm.get('contactMedia').hasError('required')){
+      if(!this.contactForm.get('contactMedia').hasError('required') && !this.contactForm.get('contactMedia').hasError('required') && !this.contactForm.get('comments').hasError('required')){
         var contactoH = document.getElementById('contacto');
         var clienteB = document.getElementById('busca');
         contactoH.style.display = "none";
@@ -173,9 +169,10 @@ export class AgregarContactoPage {
   //----------------------------------------------------------------------------
   //Actualiza el Select de Opciones de medio de contacto
   detailUpdate(){
-    var subContactos = this.formularioProvider.subMediosDeContactos(this.contactForm.value.contactMedia);
-      subContactos.subscribe(data=>{
+    var subContacts = this.formularioProvider.subMediosDeContactos(this.contactForm.value.contactMedia);
+      subContacts.subscribe(data=>{
       this.subMediosDeContactos = data.json().data;
+      console.log(this.subMediosDeContactos);
       });
     }
   //----------------------------------------------------------------------------
@@ -183,30 +180,30 @@ export class AgregarContactoPage {
   detailValidation(){
     this.media_extra = this.contactForm.value.contactMedia
     if(this.media_extra == 3 || this.media_extra == 7){
-      this.contactForm.addControl('Nbroker', new FormControl('', Validators.required));
-      this.contactForm.addControl('Ebroker', new FormControl('',Validators.email));
-      this.contactForm.addControl('Tbroker', new FormControl(''));
-      this.contactForm.addControl('Abroker', new FormControl(''));
+      this.contactForm.addControl('brokerName', new FormControl('', Validators.required));
+      this.contactForm.addControl('brokerEmail', new FormControl('',Validators.email));
+      this.contactForm.addControl('brokerTel', new FormControl(''));
+      this.contactForm.addControl('brokerAgency', new FormControl(''));
     }else if(this.media_extra == 6){
-        this.generalData.referid = '';
-        this.generalData.emailRef = '';
-        this.generalData.telefonoRef = '';
-        this.generalData.agenciaRef = '';
-        this.contactForm.removeControl('Nbroker');
-        this.contactForm.removeControl('Ebroker');
-        this.contactForm.removeControl('Tbroker');
-        this.contactForm.removeControl('Abroker');
-        this.contactForm.addControl('otro', new FormControl('', Validators.required));
+        this.generalData.rephId = '';
+        this.generalData.rephEmail = '';
+        this.generalData.rephTel = '';
+        this.generalData.rephAgency = '';
+        this.contactForm.removeControl('brokerName');
+        this.contactForm.removeControl('brokerEmail');
+        this.contactForm.removeControl('brokerTel');
+        this.contactForm.removeControl('brokerAgency');
+        this.contactForm.addControl('Other', new FormControl('', Validators.required));
     }else{
-      this.generalData.referid = '';
-      this.generalData.emailRef = '';
-      this.generalData.telefonoRef = '';
-      this.generalData.agenciaRef = '';
-      this.contactForm.removeControl('Nbroker');
-      this.contactForm.removeControl('Ebroker');
-      this.contactForm.removeControl('Tbroker');
-      this.contactForm.removeControl('Abroker');
-      this.contactForm.removeControl('otro');
+      this.generalData.rephId = '';
+      this.generalData.rephEmail = '';
+      this.generalData.rephTel = '';
+      this.generalData.rephAgency = '';
+      this.contactForm.removeControl('brokerName');
+      this.contactForm.removeControl('brokerEmail');
+      this.contactForm.removeControl('brokerTel');
+      this.contactForm.removeControl('brokerAgency');
+      this.contactForm.removeControl('Other');
     }
   }
   //----------------------------------------------------------------------------

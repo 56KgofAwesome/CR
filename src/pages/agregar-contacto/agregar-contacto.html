@@ -66,7 +66,7 @@
         <ion-item class="ErrorMensaje" *ngIf="contactForm.get('contactMedia').errors && error">
           <p color="danger" ion-text *ngIf="contactForm.get('contactMedia').hasError('required')">Este campo es necesario</p>
         </ion-item>
-      <ion-item *ngIf="subMediosDeContactos != null" class="formulario">
+      <ion-item *ngIf="subMediosDeContactos != 0" class="formulario">
         <ion-label class="textoLabel"> Detalle </ion-label>
         <ion-select [(ngModel)]="generalData.subcontacto" name="propiedad" formControlName="contactDetail">
           <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>
@@ -76,35 +76,35 @@
       <div *ngIf="media_extra == 3 || media_extra == 7">
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Nombre del broker <sup>*</sup></ion-label>
-          <ion-input [(ngModel)]="generalData.referid" type="text" formControlName="Nbroker" name="Nbroker"></ion-input>
+          <ion-input [(ngModel)]="generalData.rephId" type="text" formControlName="brokerName" name="brokerName"></ion-input>
         </ion-item>
-        <ion-item class="ErrorMensaje" *ngIf="contactForm.get('Nbroker').errors && error">
-          <p color="danger" ion-text *ngIf="contactForm.get('Nbroker').hasError('required')">Este campo es necesario</p>
+        <ion-item class="ErrorMensaje" *ngIf="contactForm.get('brokerName').errors && error">
+          <p color="danger" ion-text *ngIf="contactForm.get('brokerName').hasError('required')">Este campo es necesario</p>
         </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Correo electrónico broker </ion-label>
-          <ion-input [(ngModel)]="generalData.emailRef" type="text" formControlName="Ebroker" name="Ebroker"></ion-input>
+          <ion-input [(ngModel)]="generalData.rephEmail" type="text" formControlName="brokerEmail" name="brokerEmail"></ion-input>
         </ion-item>
-          <ion-item class="ErrorMensaje" *ngIf="contactForm.get('Ebroker').errors && error">
-            <p color="danger" ion-text *ngIf="contactForm.get('Ebroker').hasError('required')">Este campo es necesario</p>
-            <p color="danger" ion-text *ngIf="!contactForm.get('Ebroker').valid && flag">Este no es un correo válido</p>
+          <ion-item class="ErrorMensaje" *ngIf="contactForm.get('brokerEmail').errors && error">
+            <p color="danger" ion-text *ngIf="contactForm.get('brokerEmail').hasError('required')"> Este campo es necesario</p>
+            <p color="danger" ion-text *ngIf="!contactForm.get('brokerEmail').valid && flag"> Este no es un correo válido</p>
           </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Teléfono broker </ion-label>
-          <ion-input [(ngModel)]="generalData.telefonoRef" type="text" formControlName="Tbroker" name="Tbroker"></ion-input>
+          <ion-input [(ngModel)]="generalData.rephTel" type="text" formControlName="brokerTel" name="brokerTel"></ion-input>
         </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Agencia broker </ion-label>
-          <ion-input [(ngModel)]="generalData.agenciaRef" type="text" formControlName="Abroker" name="Abroker"></ion-input>
+          <ion-input [(ngModel)]="generalData.rephAgency" type="text" formControlName="brokerAgency" name="brokerAgency"></ion-input>
         </ion-item>
       </div>
       <div *ngIf="media_extra == 6">
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Otro <sup>*</sup></ion-label>
-          <ion-input [(ngModel)]="generalData.otro_camp" type="text" formControlName="otro"  name="otro"></ion-input>
+          <ion-input [(ngModel)]="generalData.other" type="text" formControlName="Other"  name="Other"></ion-input>
         </ion-item>
-          <ion-item class="ErrorMensaje" *ngIf="contactForm.get('otro').errors && error">
-            <p color="danger" ion-text *ngIf="contactForm.get('otro').hasError('required')">  Este campo es necesario </p>
+          <ion-item class="ErrorMensaje" *ngIf="contactForm.get('Other').errors && error">
+            <p color="danger" ion-text *ngIf="contactForm.get('Other').hasError('required')">  Este campo es necesario </p>
           </ion-item>
       </div>
       <ion-item>
