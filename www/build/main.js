@@ -28,12 +28,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/**
- * Generated class for the AgregarContactoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 var AgregarContactoPage = /** @class */ (function () {
     function AgregarContactoPage(navCtrl, navParams, formBuilder, formularioProvider, storage, usuarioProvider, contactoProvider, loadingCtrl, alertCtrl) {
         this.navCtrl = navCtrl;
@@ -45,6 +39,7 @@ var AgregarContactoPage = /** @class */ (function () {
         this.contactoProvider = contactoProvider;
         this.loadingCtrl = loadingCtrl;
         this.alertCtrl = alertCtrl;
+        this.look = false;
         this.flag = false;
         this.formulario = {};
         this.error = false;
@@ -61,15 +56,15 @@ var AgregarContactoPage = /** @class */ (function () {
         this.datosMC = {};
         this.datosCB = {};
         this.datosAgregar = {};
-        this.datosGenerales = [];
+        this.generalData = [];
         this.aux = [];
         this.storage.get('dataUser').then(function (data) {
             console.log(data);
-            //this.datosGenerales.user = data;
-            //this.datosGenerales.creatorid = data;
+            //this.generalData.user = data;
+            //this.generalData.creatorid = data;
         });
         //Formulario datos generales
-        this.fGeneral = this.formBuilder.group({
+        this.generalForm = this.formBuilder.group({
             name: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
             lastNameF: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
             lastNameM: [''],
@@ -78,10 +73,10 @@ var AgregarContactoPage = /** @class */ (function () {
             telephone: ['']
         });
         //Formulario Medio de Contacto
-        this.fContacto = this.formBuilder.group({
-            medioC: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
-            detalle: [''],
-            comentarios: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
+        this.contactForm = this.formBuilder.group({
+            contactMedia: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
+            contactDetail: [''],
+            comments: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
         });
         //
         this.fAgente = this.formBuilder.group({
@@ -89,78 +84,72 @@ var AgregarContactoPage = /** @class */ (function () {
             asesorA: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
         });
         //Datos de Opcion: Referencias y Otro
-        this.datosGenerales.referid = '';
-        this.datosGenerales.emailRef = '';
-        this.datosGenerales.telefonoRef = '';
-        this.datosGenerales.agenciaRef = '';
-        this.datosGenerales.cel = '';
-        this.datosGenerales.ap_materno = '';
-        this.datosGenerales.subcontacto = '';
-        this.datosGenerales.online = 1;
-        this.datosGenerales.office = '';
-        this.datosGenerales.user = '';
-        this.datosGenerales.companyid = this.usuarioProvider.companyid;
+        this.generalData.referid = '';
+        this.generalData.emailRef = '';
+        this.generalData.telefonoRef = '';
+        this.generalData.agenciaRef = '';
+        this.generalData.cel = '';
+        this.generalData.ap_materno = '';
+        this.generalData.subcontacto = '';
+        this.generalData.online = 1;
+        this.generalData.office = '';
+        this.generalData.user = '';
+        this.generalData.companyid = this.usuarioProvider.companyid;
     }
     //----------------------------------------------------------------------------
     //Obtiene antes de entrar a la página
     AgregarContactoPage.prototype.ionViewCanEnter = function () {
         var _this = this;
-        var oficinas = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id, this.usuarioProvider.datos.token);
-        oficinas.subscribe(function (data) {
-            _this.listaDeOficinas = data.json().data;
+        var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
+        offices.subscribe(function (data) {
+            _this.listaDeOficinas = data.json().data.userOffice;
         });
         //
-        var ciudades = this.formularioProvider.listaDeCiudad(this.usuarioProvider.datos.companyid);
-        ciudades.subscribe(function (data) {
+        var cities = this.formularioProvider.listaDeCiudad(this.usuarioProvider.datos.companyid);
+        cities.subscribe(function (data) {
             _this.listaDeCiudades = data.json().data;
         });
         //
-        var contactos = this.formularioProvider.mediosDeContactos();
-        contactos.subscribe(function (data) {
+        var contacts = this.formularioProvider.mediosDeContactos();
+        contacts.subscribe(function (data) {
             _this.mediosDeContacto = data.json().data;
         });
         //
-        /*var subContactos = this.formularioProvider.subMediosDeContactos(this.medioValor);
-        subContactos.subscribe(data=> {
-          this.subMediosDeContactos = data.json().data;
-        });*/
-        //
-        var lenguajes = this.formularioProvider.listaDeLenguajes();
-        lenguajes.subscribe(function (data) {
+        var languages = this.formularioProvider.listaDeLenguajes();
+        languages.subscribe(function (data) {
             _this.listaDeLenguajes = data.json().data;
         });
         //
-        var paises = this.formularioProvider.listaDePaises();
-        paises.subscribe(function (data) {
+        var countries = this.formularioProvider.listaDePaises();
+        countries.subscribe(function (data) {
             _this.listaDePaises = data.json().data;
         });
     };
     //----------------------------------------------------------------------------
     //Valida la sección "Datos Generales"
-    AgregarContactoPage.prototype.formularioGeneral = function () {
+    AgregarContactoPage.prototype.generalDataForm = function () {
         this.error = true;
-        if (this.fGeneral.get('email').hasError('required')) {
+        if (this.generalForm.get('email').hasError('required')) {
             this.flag = false;
         }
         else {
             this.flag = true;
         }
-        if (!this.fGeneral.get('name').hasError('required') && !this.fGeneral.get('lastNameF').hasError('required') && (!this.fGeneral.get('email').hasError('required') && !this.fGeneral.get('email').hasError('email'))) {
+        if (!this.generalForm.get('name').hasError('required') && !this.generalForm.get('lastNameF').hasError('required') && this.generalForm.get('email').valid) {
             var contactoH = document.getElementById('contacto');
             var generalesH = document.getElementById('generales');
             contactoH.style.display = "block";
             generalesH.style.display = "none";
             this.error = false;
-            console.log(this.fGeneral);
         }
         else { }
     };
     //----------------------------------------------------------------------------
     //Formulario Medios de contacto
-    AgregarContactoPage.prototype.formularioContacto = function () {
+    AgregarContactoPage.prototype.contactDataForm = function () {
         this.error = true;
-        if (this.fContacto.value.medioC == 3 || this.fContacto.value.medioC == 7) {
-            if (!this.fContacto.get('Nbroker').hasError('required')) {
+        if ((this.contactForm.value.contactMedia == 3 || this.contactForm.value.contactMedia == 7)) {
+            if (!this.contactForm.get('Nbroker').hasError('required') && !this.contactForm.get('Ebroker').hasError('email') && !this.contactForm.get('comments').hasError('required')) {
                 var contactoH = document.getElementById('contacto');
                 var clienteB = document.getElementById('busca');
                 contactoH.style.display = "none";
@@ -168,8 +157,8 @@ var AgregarContactoPage = /** @class */ (function () {
                 this.error = false;
             }
         }
-        else if (this.fContacto.value.medioC == 6) {
-            if (!this.fContacto.get('otro').hasError('required')) {
+        else if ((this.contactForm.value.contactMedia == 6)) {
+            if (!this.contactForm.get('otro').hasError('required')) {
                 var contactoH = document.getElementById('contacto');
                 var clienteB = document.getElementById('busca');
                 contactoH.style.display = "none";
@@ -178,7 +167,7 @@ var AgregarContactoPage = /** @class */ (function () {
             }
         }
         else {
-            if (!this.fContacto.get('medioC').hasError('required') && !this.fContacto.get('medioC').hasError('required')) {
+            if (!this.contactForm.get('contactMedia').hasError('required') && !this.contactForm.get('contactMedia').hasError('required')) {
                 var contactoH = document.getElementById('contacto');
                 var clienteB = document.getElementById('busca');
                 contactoH.style.display = "none";
@@ -189,29 +178,68 @@ var AgregarContactoPage = /** @class */ (function () {
     };
     //----------------------------------------------------------------------------
     //Actualiza el Select de Opciones de medio de contacto
-    AgregarContactoPage.prototype.actualizarDetalle = function () {
+    AgregarContactoPage.prototype.detailUpdate = function () {
         var _this = this;
-        var subContactos = this.formularioProvider.subMediosDeContactos(this.fContacto.value.medioC);
+        var subContactos = this.formularioProvider.subMediosDeContactos(this.contactForm.value.contactMedia);
         subContactos.subscribe(function (data) {
             _this.subMediosDeContactos = data.json().data;
         });
     };
     //----------------------------------------------------------------------------
-    //Valida la sección de detalles si está activa
-    AgregarContactoPage.prototype.validarDetalle = function () {
-        this.media_extra = this.fContacto.value.medioC;
+    //Cambia la lista de detalles dependiendo del Medio de Contacto y Elimina FormControls innecesarios
+    AgregarContactoPage.prototype.detailValidation = function () {
+        this.media_extra = this.contactForm.value.contactMedia;
         if (this.media_extra == 3 || this.media_extra == 7) {
-            this.fContacto.addControl('Nbroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
-            this.fContacto.addControl('Ebroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
-            this.fContacto.addControl('Tbroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
-            this.fContacto.addControl('Abroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
+            this.contactForm.addControl('Nbroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
+            this.contactForm.addControl('Ebroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email));
+            this.contactForm.addControl('Tbroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
+            this.contactForm.addControl('Abroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
         }
-        else if (this.fContacto.value.medioC == 6) {
-            this.fContacto.addControl('otro', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
+        else if (this.media_extra == 6) {
+            this.generalData.referid = '';
+            this.generalData.emailRef = '';
+            this.generalData.telefonoRef = '';
+            this.generalData.agenciaRef = '';
+            this.contactForm.removeControl('Nbroker');
+            this.contactForm.removeControl('Ebroker');
+            this.contactForm.removeControl('Tbroker');
+            this.contactForm.removeControl('Abroker');
+            this.contactForm.addControl('otro', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
+        }
+        else {
+            this.generalData.referid = '';
+            this.generalData.emailRef = '';
+            this.generalData.telefonoRef = '';
+            this.generalData.agenciaRef = '';
+            this.contactForm.removeControl('Nbroker');
+            this.contactForm.removeControl('Ebroker');
+            this.contactForm.removeControl('Tbroker');
+            this.contactForm.removeControl('Abroker');
+            this.contactForm.removeControl('otro');
         }
     };
     //----------------------------------------------------------------------------
-    AgregarContactoPage.prototype.regresar = function (index) {
+    //Formulario de que busca el usuario
+    AgregarContactoPage.prototype.lookingForForm = function () {
+        var size = Object.keys(this.aux).length;
+        if (size > 0) {
+            if (this.aux.busca_c || this.aux.busca_r) {
+                var clienteB = document.getElementById('busca');
+                var compradores = document.getElementById('enlista');
+                clienteB.style.display = "none";
+                compradores.style.display = "block";
+            }
+            else {
+                this.look = true;
+            }
+        }
+        else {
+            this.look = true;
+        }
+    };
+    //----------------------------------------------------------------------------
+    //Regresa a formularios anteriores
+    AgregarContactoPage.prototype.goBack = function (index) {
         switch (index) {
             case "general": {
                 break;
@@ -260,54 +288,50 @@ var AgregarContactoPage = /** @class */ (function () {
             }
         }
     };
-    AgregarContactoPage.prototype.formularioBusca = function () {
-        var clienteB = document.getElementById('busca');
-        var compradores = document.getElementById('enlista');
-        clienteB.style.display = "none";
-        compradores.style.display = "block";
-    };
+    //----------------------------------------------------------------------------
     AgregarContactoPage.prototype.agregarContacto = function () {
-        var _this = this;
-        if (this.aux.busca_c && this.datosGenerales.busca_r) {
-            this.datosGenerales.lookfor = 'CR';
+        if (this.aux.busca_c && this.generalData.busca_r) {
+            this.generalData.lookfor = 'CR';
         }
         else if (this.aux.busca_c) {
-            this.datosGenerales.lookfor = 'C';
+            this.generalData.lookfor = 'C';
         }
         else if (this.aux.busca_r) {
-            this.datosGenerales.lookfor = 'R';
+            this.generalData.lookfor = 'R';
         }
         if (this.aux.listar_v && this.aux.listar_r) {
-            this.datosGenerales.lookfor1 = 'VR';
+            this.generalData.lookfor1 = 'VR';
         }
         else if (this.aux.listar_v) {
-            this.datosGenerales.lookfor1 = 'V';
+            this.generalData.lookfor1 = 'V';
         }
         else if (this.aux.listar_r) {
-            this.datosGenerales.lookfor1 = 'R';
+            this.generalData.lookfor1 = 'R';
         }
-        if (this.datosGenerales.office != '' && this.datosGenerales.user != '') {
+        if (this.generalData.office != '' && this.generalData.user != '') {
             var UrlData = '';
-            var datos = this.datosGenerales;
+            var datos = this.generalData;
             Object.keys(datos).forEach(function (key) {
                 UrlData += '&' + key + '=' + datos[key];
             });
+            console.log(this.generalData);
             var loader = this.loadingCtrl.create({
                 dismissOnPageChange: false
             });
-            var agregarContacto = this.usuarioProvider.agregarPreregistro(this.datosGenerales);
-            agregarContacto.subscribe(function (data) {
-                if (data.status == 200) {
-                    loader.dismiss();
-                    var alerta = _this.alertCtrl.create({
-                        title: 'EXITO',
-                        subTitle: 'El contacto ha sido agregado con éxito',
-                        buttons: ['ok']
-                    });
-                    alerta.present();
-                    _this.navCtrl.pop();
-                }
-            });
+            /*var agregarContacto = this.usuarioProvider.agregarPreregistro(this.generalData);
+            agregarContacto.subscribe(data => {
+              if(data.status == 200){
+                loader.dismiss();
+                const alerta = this.alertCtrl.create({
+                  title: 'EXITO',
+                  subTitle: 'El contacto ha sido agregado con éxito',
+                  buttons: ['ok']
+                });
+                alerta.present();
+                this.navCtrl.pop();
+              }
+            })
+            */
         }
         else {
             var alerta = this.alertCtrl.create({
@@ -327,7 +351,7 @@ var AgregarContactoPage = /** @class */ (function () {
     };
     AgregarContactoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-agregar-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/'<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title>Agregar Visita</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content>\n\n\n\n  <h1 class="cabecera"> Datos Generales </h1>\n\n  <div id="generales" padding class="generales">\n\n    <form (ngSubmit)="formularioGeneral()" [formGroup]="fGeneral">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Nombre <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.name" type="text" formControlName="name" name="name"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get(\'name\').errors && error">\n\n          <p color="danger" ion-text *ngIf="fGeneral.get(\'name\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Apellido Paterno <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.lastNameF" type="text" formControlName="lastNameF" name="lastNameF"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get(\'lastNameF\').errors && error">\n\n          <p color="danger" ion-text *ngIf="fGeneral.get(\'lastNameF\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Materno </ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.lastNameM" type="text" formControlName="lastNameM" name="lastNameM"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.email" type="email" formControlName="email" name="email"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="fGeneral.get(\'email\').errors && error">\n\n          <p color="danger" ion-text *ngIf="fGeneral.get(\'email\').hasError(\'required\')">Este campo es necesario</p>\n\n          <p color="danger" ion-text *ngIf="fGeneral.get(\'email\').hasError(\'email\') && flag">Este no es un correo válido</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Celular</ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.cellphone" type="text" formControlName="cellphone" name="cellphone"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Teléfono Casa / Oficina</ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.telephone" type="text" formControlName="telephone" name="telephone"></ion-input>\n\n        </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n      </div>\n\n  </form>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Medio de Contacto </h1>\n\n<div padding id="contacto" class="contacto">\n\n  <form (ngSubmit)="formularioContacto()" [formGroup]="fContacto">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Medio de contacto <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="datosGenerales.contacto" name="propiedad" (ionChange)="validarDetalle()" formControlName="medioC" (ionChange)="actualizarDetalle()">\n\n          <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item class="ErrorMensaje" *ngIf="fContacto.get(\'medioC\').errors && error">\n\n        <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n        <p color="danger" ion-text *ngIf="fContacto.get(\'medioC\').hasError(\'required\')">Este campo es necesario</p>\n\n      </ion-item>\n\n      <ion-item *ngIf="subMediosDeContactos != null" class="formulario">\n\n        <ion-label class="textoLabel">Detalle</ion-label>\n\n        <ion-select [(ngModel)]="datosGenerales.subcontacto" name="propiedad" formControlName="detalle">\n\n          <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <div *ngIf="media_extra == 3 || media_extra == 7">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Nombre del broker <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.referid" type="text" formControlName="Nbroker" name="Nbroker"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="fContacto.get(\'Nbroker\').errors && error">\n\n          <p color="danger" ion-text *ngIf="fContacto.get(\'Nbroker\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Correo electrónico broker</ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.emailRef" type="text" formControlName="Ebroker" name="Ebroker"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Teléfono broker</ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.telefonoRef" type="text" formControlName="Tbroker" name="Tbroker"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Agencia broker</ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.agenciaRef" type="text" formControlName="Abroker" name="Abroker"></ion-input>\n\n        </ion-item>\n\n      </div>\n\n      <div *ngIf="media_extra == 6">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating>Otro <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="datosGenerales.otro_camp" type="text" formControlName="otro"  name="otro"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="fContacto.get(\'otro\').errors && error">\n\n          <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n          <p color="danger" ion-text *ngIf="fContacto.get(\'otro\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n      </div>\n\n\n\n      <ion-item>\n\n        <ion-label style="font-size: 13px" floating>Comentarios <sup>*</sup></ion-label>\n\n        <ion-textarea [(ngModel)]="datosGenerales.comentarios" formControlName="comentarios" style="height: 60px;" name="comentario" type="text"></ion-textarea>\n\n      </ion-item>\n\n      <ion-item class="ErrorMensaje" *ngIf="fContacto.get(\'comentarios\').errors && error">\n\n        <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n        <p color="danger" ion-text *ngIf="fContacto.get(\'comentarios\').hasError(\'required\')">Este campo es necesario</p>\n\n      </ion-item>\n\n\n\n    <div class="botones">\n\n      <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n    </div>\n\n</form>\n\n<button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'contact\')" >Regresar</button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera" color="dark">LLenar: el cliente Busca</h1>\n\n<div id="busca" padding class="busca">\n\n  <form (ngSubmit)="formularioBusca()" novalidate>\n\n    <ion-label>\n\n      Operacion <sup>*</sup>\n\n    </ion-label>\n\n    <div>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel">Comprar</ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.busca_c" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel">Rentar</ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.busca_r" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-label>Otro</ion-label>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel">Listar Venta</ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listar_v" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel">Listar Renta</ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listar_r" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel">Exclusiva</ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.exclusiva" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n    </div>\n\n\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'busca\')" >Regresar</button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera">LLenar: agente que enlista</h1>\n\n<div id="enlista" padding class="enlista">\n\n  <form (ngSubmit)="agregarContacto()" [formGroup]="fAgente">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel">Officina <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="datosGenerales.office" (ionChange)="actualizarAsesor()" name="propiedad" formControlName="officinaA">\n\n          <ion-option *ngFor="let oficina of listaDeOficinas" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel">Asesor <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="datosGenerales.user" name="propiedad" formControlName="asesorA">\n\n          <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Agregar</button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'enlista\')" >Regresar</button>\n\n</div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/,
+            selector: 'page-agregar-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/'<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title>Agregar Visita</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content>\n\n\n\n  <h1 class="cabecera"> Datos Generales </h1>\n\n  <div id="generales" padding class="generales">\n\n    <form (ngSubmit)="generalDataForm()" [formGroup]="generalForm">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.name" type="text" formControlName="name" name="name"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'name\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'name\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Paterno <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.lastNameF" type="text" formControlName="lastNameF" name="lastNameF"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'lastNameF\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'lastNameF\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Materno </ion-label>\n\n          <ion-input [(ngModel)]="generalData.lastNameM" type="text" formControlName="lastNameM" name="lastNameM"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.email" type="email" formControlName="email" name="email"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'email\').errors && error">\n\n            <p color="danger" ion-text *ngIf="generalForm.get(\'email\').hasError(\'required\')"> Este campo es necesario </p>\n\n            <p color="danger" ion-text *ngIf="!generalForm.get(\'email\').valid && flag"> Este no es un correo válido </p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Celular </ion-label>\n\n          <ion-input [(ngModel)]="generalData.cellphone" type="text" formControlName="cellphone" name="cellphone"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono Casa / Oficina </ion-label>\n\n          <ion-input [(ngModel)]="generalData.telephone" type="text" formControlName="telephone" name="telephone"></ion-input>\n\n        </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n      </div>\n\n  </form>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Medio de Contacto </h1>\n\n<div padding id="contacto" class="contacto">\n\n  <form (ngSubmit)="contactDataForm()" [formGroup]="contactForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Medio de contacto <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.contacto" name="propiedad" (ionChange)="detailValidation()" formControlName="contactMedia" (ionChange)="detailUpdate()">\n\n          <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'contactMedia\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'contactMedia\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n      <ion-item *ngIf="subMediosDeContactos != null" class="formulario">\n\n        <ion-label class="textoLabel"> Detalle </ion-label>\n\n        <ion-select [(ngModel)]="generalData.subcontacto" name="propiedad" formControlName="contactDetail">\n\n          <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <div *ngIf="media_extra == 3 || media_extra == 7">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre del broker <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.referid" type="text" formControlName="Nbroker" name="Nbroker"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'Nbroker\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'Nbroker\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.emailRef" type="text" formControlName="Ebroker" name="Ebroker"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'Ebroker\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'Ebroker\').hasError(\'required\')">Este campo es necesario</p>\n\n            <p color="danger" ion-text *ngIf="!contactForm.get(\'Ebroker\').valid && flag">Este no es un correo válido</p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.telefonoRef" type="text" formControlName="Tbroker" name="Tbroker"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Agencia broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.agenciaRef" type="text" formControlName="Abroker" name="Abroker"></ion-input>\n\n        </ion-item>\n\n      </div>\n\n      <div *ngIf="media_extra == 6">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Otro <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.otro_camp" type="text" formControlName="otro"  name="otro"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'otro\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'otro\').hasError(\'required\')">  Este campo es necesario </p>\n\n          </ion-item>\n\n      </div>\n\n      <ion-item>\n\n        <ion-label style="font-size: 13px" floating> Comentarios <sup>*</sup></ion-label>\n\n        <ion-textarea [(ngModel)]="generalData.comments" formControlName="comments" style="height: 60px;" name="comments" type="text"></ion-textarea>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'comments\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'comments\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n    <div class="botones">\n\n      <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n    </div>\n\n</form>\n\n<button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'contact\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera" color="dark"> Busco </h1>\n\n<div id="busca" padding class="busca">\n\n  <form (ngSubmit)="lookingForForm()" novalidate>\n\n    <ion-label>\n\n      Operación <sup>*</sup>\n\n    </ion-label>\n\n    <ion-label color="danger" *ngIf="this.look == true">\n\n      Seleccione por lo menos una Operación\n\n    </ion-label>\n\n    <div>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Comprar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.busca_c" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Rentar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.busca_r" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-label>Otro</ion-label>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Venta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listar_v" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Renta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listar_r" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Exclusiva </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.exclusiva" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n    </div>\n\n\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'busca\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Agente que enlista </h1>\n\n<div id="enlista" padding class="enlista">\n\n  <form (ngSubmit)="agregarContacto()" [formGroup]="fAgente">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Officina <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.office" (ionChange)="actualizarAsesor()" name="propiedad" formControlName="officinaA">\n\n          <ion-option *ngFor="let oficina of listaDeOficinas" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Asesor <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.user" name="propiedad" formControlName="asesorA">\n\n          <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Agregar </button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'enlista\')"> Regresar </button>\n\n</div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/,
         }),
         __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _j || Object])
     ], AgregarContactoPage);
@@ -1413,27 +1437,27 @@ var UsuarioProvider = /** @class */ (function () {
 
 var map = {
 	"../pages/agregar-compradores/agregar-compradores.module": [
-		463,
+		452,
 		25
 	],
 	"../pages/agregar-contacto/agregar-contacto.module": [
-		452,
+		453,
 		24
 	],
 	"../pages/agregar-tarea/agregar-tarea.module": [
-		453,
+		454,
 		23
 	],
 	"../pages/buscar/buscar.module": [
-		454,
+		455,
 		22
 	],
 	"../pages/calendar/calendar.module": [
-		455,
+		456,
 		21
 	],
 	"../pages/contactos/contactos.module": [
-		456,
+		459,
 		20
 	],
 	"../pages/destinos/destinos.module": [
@@ -1445,19 +1469,19 @@ var map = {
 		18
 	],
 	"../pages/filtro-resultados/filtro-resultados.module": [
-		459,
+		460,
 		17
 	],
 	"../pages/formulario/formulario.module": [
-		460,
+		461,
 		16
 	],
 	"../pages/general-form/general-form.module": [
-		461,
+		462,
 		15
 	],
 	"../pages/info/info.module": [
-		462,
+		463,
 		14
 	],
 	"../pages/lead-pickead-pick/lead-pickead-pick.module": [
@@ -1465,15 +1489,15 @@ var map = {
 		13
 	],
 	"../pages/login/login.module": [
-		467,
+		465,
 		12
 	],
 	"../pages/property-pickead-pick/property-pickead-pick.module": [
-		465,
+		466,
 		11
 	],
 	"../pages/registrar/registrar.module": [
-		466,
+		467,
 		10
 	],
 	"../pages/resultados/resultados.module": [
@@ -1481,31 +1505,31 @@ var map = {
 		9
 	],
 	"../pages/seguimiento/seguimiento.module": [
-		471,
+		469,
 		8
 	],
 	"../pages/sharing/sharing.module": [
-		469,
+		470,
 		7
 	],
 	"../pages/tabs-usuario/tabs-usuario.module": [
-		470,
+		471,
 		6
 	],
 	"../pages/tabs/tabs.module": [
-		475,
+		472,
 		4
 	],
 	"../pages/tabs2/tabs2.module": [
-		472,
+		473,
 		5
 	],
 	"../pages/usuario/usuario.module": [
-		473,
+		474,
 		3
 	],
 	"../pages/ver-contacto/ver-contacto.module": [
-		474,
+		475,
 		2
 	],
 	"../pages/ver-desarrollo/ver-desarrollo.module": [
@@ -1593,41 +1617,41 @@ var HomePage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buscar_buscar__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buscar_buscar__ = __webpack_require__(271);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_0__buscar_buscar__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__destinos_destinos__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__destinos_destinos__ = __webpack_require__(272);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_1__destinos_destinos__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__formulario_formulario__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__formulario_formulario__ = __webpack_require__(273);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_2__formulario_formulario__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(208);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_3__home_home__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__info_info__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__info_info__ = __webpack_require__(274);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return __WEBPACK_IMPORTED_MODULE_4__info_info__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(275);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return __WEBPACK_IMPORTED_MODULE_5__login_login__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__ = __webpack_require__(276);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__ = __webpack_require__(149);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__ = __webpack_require__(277);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__ = __webpack_require__(278);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__ = __webpack_require__(279);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__ = __webpack_require__(152);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__ = __webpack_require__(280);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__ = __webpack_require__(281);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__ = __webpack_require__(147);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__ = __webpack_require__(150);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__ = __webpack_require__(282);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__ = __webpack_require__(270);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__ = __webpack_require__(283);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__["a"]; });
@@ -1748,6 +1772,425 @@ var NetworkProvider = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgregarCompradoresPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__ = __webpack_require__(18);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+/**
+ * Generated class for the AgregarCompradoresPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var AgregarCompradoresPage = /** @class */ (function () {
+    function AgregarCompradoresPage(navCtrl, navParams, formBuilder, formularioProvider, storage, contactoProvider, loadingCtrl, alertCtrl, usuarioProvider) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.formularioProvider = formularioProvider;
+        this.storage = storage;
+        this.contactoProvider = contactoProvider;
+        this.loadingCtrl = loadingCtrl;
+        this.alertCtrl = alertCtrl;
+        this.usuarioProvider = usuarioProvider;
+        this.flag = false;
+        this.formulario = {};
+        this.error = false;
+        this.cliente_busca = [];
+        this.mediosDeContacto = [];
+        this.subMediosDeContactos = [];
+        this.listaDeOficinas = [];
+        this.agentesDeOficina = [];
+        this.listaDeLenguajes = [];
+        this.listaDeCiudades = [];
+        this.listaDePaises = [];
+        this.listaDeEstados = [];
+        this.datosFG = {};
+        this.datosMC = {};
+        this.datosCB = {};
+        this.datosAgregar = {};
+        this.datosGenerales = [];
+        this.fGeneral = this.formBuilder.group({
+            nombre: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
+            apellidoP: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
+            apellidoM: [''],
+            email1: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email]],
+            email2: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email]],
+            rfc: [''],
+            nac: ['']
+        });
+        //9984069591
+        this.fContacto = this.formBuilder.group({
+            medioC: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
+            detalle: [''],
+            comentarios: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
+        });
+        this.fAgente = this.formBuilder.group({
+            officinaA: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
+            asesorA: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
+        });
+        this.fDelContacto = this.formBuilder.group({
+            fdcDir1: [''],
+            fdcDir2: [''],
+            fdcPostal: [''],
+            fdcPais: [''],
+            fdcCiudad: [''],
+            fdcNacionalidad: [''],
+            fdcIdioma: [''],
+            fdcTelC: [''],
+            fdcTelO: [''],
+            fdcFax: [''],
+            fdcCelL: [''],
+            fdcNextel: [''],
+            fdcNoFam: [''],
+            fdcProf: [''],
+            fdcCivil: [''],
+            fdcEmpresa: [''],
+            fdcWeb: [''],
+            fdcComentarios: ['']
+        });
+        this.storage.get('usuario').then(function (data) {
+            _this.datosGenerales.user = data;
+        });
+        this.datosGenerales.ap_materno = '';
+        this.datosGenerales.ap_paterno = '';
+        this.datosGenerales.busca_c = false;
+        this.datosGenerales.busca_r = false;
+        this.datosGenerales.listar_v = false;
+        this.datosGenerales.listar_r = false;
+        this.datosGenerales.exclusiva = false;
+        this.datosGenerales.cel_tel = '';
+        this.datosGenerales.ciudad = '';
+        this.datosGenerales.codigo_p = '';
+        this.datosGenerales.comentarios = '';
+        this.datosGenerales.contacto = '';
+        this.datosGenerales.country = '';
+        this.datosGenerales.direccion = '';
+        this.datosGenerales.direccion2 = '';
+        this.datosGenerales.email = '';
+        this.datosGenerales.email2 = '';
+        this.datosGenerales.empresa = '';
+        this.datosGenerales.fax_tel = '';
+        this.datosGenerales.idioma = '';
+        this.datosGenerales.ingreso_anual = '';
+        this.datosGenerales.nacimiento = '';
+        this.datosGenerales.nacionalidad = '';
+        this.datosGenerales.nextel_tel = '';
+        this.datosGenerales.nombre = '';
+        this.datosGenerales.num_familia = '';
+        this.datosGenerales.num_visitas = '';
+        this.datosGenerales.office = '';
+        this.datosGenerales.oficina_tel = '';
+        this.datosGenerales.profecion = '';
+        this.datosGenerales.rfc = '';
+        this.datosGenerales.sitio_web = '';
+        this.datosGenerales.subcontacto = '';
+        this.datosGenerales.tel = '';
+        this.datosGenerales.companyid = this.usuarioProvider.companyid;
+        this.datosGenerales.online = 1;
+    }
+    AgregarCompradoresPage.prototype.ionViewCanEnter = function () {
+        /*this.storage.get('usuario').then(data=>{
+           this.idUsuario = data;
+    
+           var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
+           oficinas.subscribe(data=>{
+             this.listaDeOficinas = data.json().data;
+           });
+        });*/
+        var _this = this;
+        this.storage.get('folio').then(function (data) {
+            var ciudad = _this.formularioProvider.listaDeCiudad(data);
+            ciudad.subscribe(function (data) {
+                _this.listaDeCiudades = data.json().data;
+            });
+        });
+        var contactos = this.formularioProvider.mediosDeContactos();
+        contactos.subscribe(function (data) {
+            _this.mediosDeContacto = data.json().data;
+        });
+        /*var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
+        oficinas.subscribe(data=>{
+          this.listaDeOficinas = data.json().data;
+        });*/
+        var subContactos = this.formularioProvider.subMediosDeContactos(this.medioValor);
+        subContactos.subscribe(function (data) {
+            _this.subMediosDeContactos = data.json().data;
+        });
+        var lenguajes = this.formularioProvider.listaDeLenguajes();
+        lenguajes.subscribe(function (data) {
+            _this.listaDeLenguajes = data.json().data;
+        });
+        var paises = this.formularioProvider.listaDePaises();
+        paises.subscribe(function (data) {
+            _this.listaDePaises = data.json().data;
+        });
+        var ciudades = this.formularioProvider.listaDeCiudad(this.idUsuario);
+        ciudades.subscribe(function (data) {
+            _this.listaDeCiudades = data.json().data;
+        });
+    };
+    AgregarCompradoresPage.prototype.formularioGeneral = function () {
+        this.error = true;
+        if (this.fGeneral.get('email1').hasError('required')) {
+            this.flag = false;
+        }
+        else {
+            this.flag = true;
+        }
+        if (!this.fGeneral.get('nombre').hasError('required') && !this.fGeneral.get('apellidoP').hasError('required') && !this.fGeneral.get('email1').hasError('required') && !this.fGeneral.get('email1').hasError('email')) {
+            var contactoH = document.getElementById('contacto');
+            var generalesH = document.getElementById('generales');
+            contactoH.style.display = "block";
+            generalesH.style.display = "none";
+            this.error = false;
+        }
+    };
+    AgregarCompradoresPage.prototype.formularioContacto = function () {
+        this.error = true;
+        if (this.fContacto.value.medioC == 3 || this.fContacto.value.medioC == 7) {
+            if (!this.fContacto.get('Nbroker').hasError('required')) {
+                var contactoH = document.getElementById('contacto');
+                var clienteB = document.getElementById('busca');
+                contactoH.style.display = "none";
+                clienteB.style.display = "block";
+                this.error = false;
+            }
+        }
+        else if (this.fContacto.value.medioC == 6) {
+            if (!this.fContacto.get('otro').hasError('required')) {
+                var contactoH = document.getElementById('contacto');
+                var clienteB = document.getElementById('busca');
+                contactoH.style.display = "none";
+                clienteB.style.display = "block";
+                this.error = false;
+            }
+        }
+        else {
+            if (!this.fContacto.get('medioC').hasError('required') && !this.fContacto.get('medioC').hasError('required')) {
+                var contactoH = document.getElementById('contacto');
+                var clienteB = document.getElementById('busca');
+                contactoH.style.display = "none";
+                clienteB.style.display = "block";
+                this.error = false;
+            }
+        }
+    };
+    AgregarCompradoresPage.prototype.formularioBusca = function () {
+        if (this.datosGenerales.busca_c || this.datosGenerales.busca_r) {
+            var clienteB = document.getElementById('busca');
+            var compradores = document.getElementById('compradores');
+            clienteB.style.display = "none";
+            compradores.style.display = "block";
+        }
+        else {
+            var elemento = document.getElementById('operacionMensaje').innerHTML = '<div><p style="color: red;">este campo es obligatorio</p></div>';
+        }
+    };
+    AgregarCompradoresPage.prototype.formularioCompradores = function () {
+        if (!this.fDelContacto.get('fdcNacionalidad').hasError('required')) {
+            var contactoH = document.getElementById('compradores');
+            var financiera = document.getElementById('financiera');
+            contactoH.style.display = "none";
+            financiera.style.display = "block";
+        }
+    };
+    AgregarCompradoresPage.prototype.formularioFinanciera = function () {
+        var financiera = document.getElementById('financiera');
+        var inmueble = document.getElementById('inmueble');
+        financiera.style.display = "none";
+        inmueble.style.display = "block";
+    };
+    AgregarCompradoresPage.prototype.formularioInmueble = function () {
+        var inmueble = document.getElementById('inmueble');
+        var enlista = document.getElementById('enlista');
+        inmueble.style.display = "none";
+        enlista.style.display = "block";
+    };
+    AgregarCompradoresPage.prototype.validarDetalle = function () {
+        this.media_extra = this.fContacto.value.medioC;
+        if (this.fContacto.value.medioC == 3 || this.fContacto.value.medioC == 7) {
+            this.fContacto.addControl('Nbroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
+            this.fContacto.addControl('Ebroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
+            this.fContacto.addControl('Tbroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
+            this.fContacto.addControl('Abroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
+        }
+        else if (this.fContacto.value.medioC == 6) {
+            this.fContacto.addControl('otro', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
+        }
+    };
+    AgregarCompradoresPage.prototype.agregarContacto = function () {
+        if (this.datosGenerales.busca_c && this.datosGenerales.busca_r) {
+            this.datosGenerales.lookfor = 'CR';
+        }
+        else if (this.datosGenerales.busca_c) {
+            this.datosGenerales.lookfor = 'C';
+        }
+        else if (this.datosGenerales.busca_r) {
+            this.datosGenerales.lookfor = 'R';
+        }
+        if (this.datosGenerales.listar_v && this.datosGenerales.listar_r) {
+            this.datosGenerales.lookfor1 = 'VR';
+        }
+        else if (this.datosGenerales.listar_v) {
+            this.datosGenerales.lookfor1 = 'V';
+        }
+        else if (this.datosGenerales.listar_r) {
+            this.datosGenerales.lookfor1 = 'R';
+        }
+        if (this.datosGenerales.office != '' && this.datosGenerales.user != '') {
+            var UrlData = '';
+            var datos = this.datosGenerales;
+            Object.keys(datos).forEach(function (key) {
+                UrlData += '&' + key + '=' + datos[key];
+            });
+            var loader = this.loadingCtrl.create({
+                dismissOnPageChange: false
+            });
+            loader.present();
+            /*var agregarContacto = this.contactoProvider.agergarContactosComp(UrlData);
+            agregarContacto.subscribe(data => {
+              if(data.status == 200){
+                loader.dismiss();
+                const alerta = this.alertCtrl.create({
+                  title: 'EXITO',
+                  subTitle: 'El contacto ha sido agregado con éxito',
+                  buttons: ['ok']
+                });
+                alerta.present();
+                this.navCtrl.pop();
+              }
+      
+            })*/
+        }
+        else {
+            var alerta = this.alertCtrl.create({
+                title: '',
+                subTitle: 'El campo Oficina y Asesor son obligatorios',
+                buttons: ['ok']
+            });
+            alerta.present();
+        }
+    };
+    AgregarCompradoresPage.prototype.actualizarDetalle = function () {
+        var _this = this;
+        var subContactos = this.formularioProvider.subMediosDeContactos(this.fContacto.value.medioC);
+        subContactos.subscribe(function (data) {
+            _this.subMediosDeContactos = data.json().data;
+        });
+    };
+    AgregarCompradoresPage.prototype.actualizarAsesor = function () {
+        var _this = this;
+        var agentesO = this.formularioProvider.listaDeAgentes(this.fAgente.value.officinaA);
+        agentesO.subscribe(function (data) {
+            _this.agentesDeOficina = data.json().data;
+        });
+    };
+    AgregarCompradoresPage.prototype.actualizarCiudades = function () {
+    };
+    AgregarCompradoresPage.prototype.actualizarEstado = function () {
+        var _this = this;
+        var estado = this.formularioProvider.listaDeEstados(this.datosGenerales.country);
+        estado.subscribe(function (data) {
+            _this.listaDeEstados = data.json().data;
+        });
+    };
+    AgregarCompradoresPage.prototype.regresar = function (index) {
+        switch (index) {
+            case "general": {
+                break;
+            }
+            case "contact": {
+                var contactoH = document.getElementById('contacto');
+                var generalesH = document.getElementById('generales');
+                contactoH.style.display = "none";
+                generalesH.style.display = "block";
+                break;
+            }
+            case "busca": {
+                var clienteB = document.getElementById('busca');
+                var contacto = document.getElementById('contacto');
+                clienteB.style.display = "none";
+                contacto.style.display = "block";
+                break;
+            }
+            case "compradores": {
+                var compradores = document.getElementById('compradores');
+                var busca = document.getElementById('busca');
+                compradores.style.display = "none";
+                busca.style.display = "block";
+                break;
+            }
+            case "financiera": {
+                var financiera = document.getElementById('financiera');
+                var compradores = document.getElementById('compradores');
+                financiera.style.display = "none";
+                compradores.style.display = "block";
+                break;
+            }
+            case "inmueble": {
+                var inmueble = document.getElementById('inmueble');
+                var financiera = document.getElementById('financiera');
+                inmueble.style.display = "none";
+                financiera.style.display = "block";
+                break;
+            }
+            case "enlista": {
+                var enlista = document.getElementById('enlista');
+                var inmueble = document.getElementById('inmueble');
+                enlista.style.display = "none";
+                inmueble.style.display = "block";
+                break;
+            }
+        }
+    };
+    AgregarCompradoresPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-agregar-compradores',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-compradores\agregar-compradores.html"*/'<!--\n\n  Generated template for the AgregarCompradoresPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title>Agregar Comprador</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content class="fondo">\n\n<!-- Acomoda tu html -->\n\n\n\n      <!--<form (ngSubmit)="submit()" [formGroup]="datos">-->\n\n          <h1 class="cabecera" color="dark" >DATOS GENERALES</h1>\n\n      <div id="generales" padding class="generales">\n\n        <form (ngSubmit)="formularioGeneral()" [formGroup]="fGeneral">\n\n\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>Nombre <sup>*</sup></ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.nombre" type="text" formControlName="nombre"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get(\'nombre\').errors && error">\n\n              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n              <p color="danger" ion-text *ngIf="fGeneral.get(\'nombre\').hasError(\'required\')">Este campo es necesario</p>\n\n            </ion-item>\n\n            <!--<ion-item class="ErrorMensaje" *ngIf="flagN">\n\n              <p color="danger" ion-text>Este campo es necesario</p>\n\n            </ion-item>-->\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>Apellido paterno <sup>*</sup></ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.ap_paterno" type="text" formControlName="apellidoP" name="celular"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get(\'apellidoP\').errors && error">\n\n              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n              <p color="danger" ion-text *ngIf="fGeneral.get(\'apellidoP\').hasError(\'required\')">Este campo es necesario</p>\n\n            </ion-item>\n\n            <!--<ion-item class="ErrorMensaje" *ngIf="flagA">\n\n              <p color="danger" ion-text>Este campo es necesario</p>\n\n            </ion-item>-->\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>Apellido Materno</ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.ap_materno" type="text" formControlName="apellidoM" name="ap_materno"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>E-mail principal<sup>*</sup></ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.email" type="email" formControlName="email1" name="email1"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get(\'email1\').errors && error">\n\n              <p color="danger" ion-text *ngIf="fGeneral.get(\'email1\').hasError(\'required\')">Este campo es necesario</p>\n\n              <p color="danger" ion-text *ngIf="fGeneral.get(\'email1\').hasError(\'email\') && flag">Este no es un correo valido</p>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>E-mail secundario</ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.email2" type="email" formControlName="email2" name="email2"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>RFC</ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.rfc" type="text" formControlName="rfc" name="rfc"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>Fecha de nacimiento</ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.nacimiento" type="text" formControlName="nac" name="nac"></ion-input>\n\n            </ion-item>\n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n      </form>\n\n    </div>\n\n\n\n      <h1 class="cabecera" color="dark" >MEDIO DE CONTACTO</h1>\n\n      <div padding id="contacto" class="contacto">\n\n        <form (ngSubmit)="formularioContacto()" [formGroup]="fContacto">\n\n\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Medio de contacto <sup>*</sup></ion-label>\n\n              <ion-select [(ngModel)]="datosGenerales.contacto" name="propiedad" (ionChange)="validarDetalle()" formControlName="medioC" (ionChange)="actualizarDetalle()">\n\n                <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> \n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get(\'medioC\').errors && error">\n\n              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n              <p color="danger" ion-text *ngIf="fContacto.get(\'medioC\').hasError(\'required\')">Este campo es necesario</p>\n\n            </ion-item>\n\n            <ion-item *ngIf="subMediosDeContactos != null" class="formulario fondo">\n\n              <ion-label class="textoLabel">Detalle</ion-label>\n\n              <ion-select [(ngModel)]="datosGenerales.subcontacto" name="propiedad" formControlName="detalle">\n\n                <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> \n\n\n\n            <div *ngIf="media_extra == 3 || media_extra == 7">\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>Nombre del broker <sup>*</sup></ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.referred" type="text" formControlName="Nbroker" name="Nbroker"></ion-input>\n\n              </ion-item>\n\n              <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get(\'Nbroker\').errors && error">\n\n                <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n                <p color="danger" ion-text *ngIf="fContacto.get(\'Nbroker\').hasError(\'required\')">Este campo es necesario</p>\n\n              </ion-item>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>E-mail broker</ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.referral_email" type="text" formControlName="Ebroker" name="Ebroker"></ion-input>\n\n              </ion-item>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>Telefono broker</ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.referral_phone" type="text" formControlName="Tbroker" name="Tbroker"></ion-input>\n\n              </ion-item>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>Agencia broker</ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.referral_agency" type="text" formControlName="Abroker" name="Abroker"></ion-input>\n\n              </ion-item>\n\n            </div>\n\n            <div *ngIf="media_extra == 6">\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>Otro <sup>*</sup></ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.otro_camp" type="text" formControlName="otro"  name="otro"></ion-input>\n\n              </ion-item>\n\n              <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get(\'otro\').errors && error">\n\n                <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n                <p color="danger" ion-text *ngIf="fContacto.get(\'otro\').hasError(\'required\')">Este campo es necesario</p>\n\n              </ion-item>\n\n            </div>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label style="font-size: 13px" floating>Comentarios <sup>*</sup></ion-label>\n\n              <ion-textarea [(ngModel)]="datosGenerales.comentarios" formControlName="comentarios" style="height: 60px;" name="comentario" type="text"></ion-textarea>\n\n            </ion-item>\n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get(\'comentarios\').errors && error">\n\n              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n              <p color="danger" ion-text *ngIf="fContacto.get(\'comentarios\').hasError(\'required\')">Este campo es necesario</p>\n\n            </ion-item>\n\n          \n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n      </form>\n\n      <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'contact\')" >Regresar</button>\n\n    </div>\n\n\n\n\n\n\n\n      <h1 class="cabecera">CLIENTE BUSCA</h1>\n\n      <div id="busca" padding class="busca">\n\n        <form (ngSubmit)="formularioBusca()" novalidate>\n\n          <ion-label>\n\n            Operacion <sup>*</sup>\n\n          </ion-label>\n\n          <div>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Comprar</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.busca_c" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Rentar</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.busca_r" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n            <div id="operacionMensaje">\n\n            </div>\n\n            <ion-label>Otro</ion-label>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Listar Venta</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.listar_v" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Listar Renta</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.listar_r" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Exclusiva</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.exclusiva" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n          </div>\n\n          <ion-item class="fondo">\n\n            <ion-label>Tipo</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.tipo_busca" [ngModelOptions]="{standalone: true}">\n\n              <ion-option value="C" >Casa</ion-option>\n\n              <ion-option value="D" >Depto</ion-option>\n\n              <ion-option value="T" >Terreno</ion-option>\n\n              <ion-option value="L" >Oficina</ion-option>\n\n              <ion-option value="B" >Bodega</ion-option>\n\n              <ion-option value="P" >Desarrollo</ion-option>\n\n              <ion-option value="O" >Otro</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="fondo" *ngIf="datosGenerales.tipo_busca == \'O\'">\n\n            <ion-label>Otro</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.nota_busca" [ngModelOptions]="{standalone: true}" type="text"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="fondo">\n\n            <ion-label>Monto Inversión</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.presupuesto" [ngModelOptions]="{standalone: true}">\n\n              <ion-option value="1">100,000 USD - 200,000 USD</ion-option>\n\n              <ion-option value="2">200,000 USD - 300,000 USD</ion-option>\n\n              <ion-option value="3">300,000 USD - 500,000 USD</ion-option>\n\n              <ion-option value="15">350,000 USD - 500,000 USD</ion-option>\n\n              <ion-option value="4">500,000 USD - 800,000 USD</ion-option>\n\n              <ion-option value="16">500,000 USD - 750,000 USD</ion-option>\n\n              <ion-option value="5">800,000 USD - 1 Million USD</ion-option>\n\n              <ion-option value="6">1 Million USD and Plus</ion-option>\n\n              <ion-option value="7">Otro - Other</ion-option>\n\n              <ion-option value="8">Menos de 500,000 MXN</ion-option>\n\n              <ion-option value="9">500,000 MXN - 1,000,000 MXN </ion-option>\n\n              <ion-option value="10">1,000,000 MXN - 1,500,000 MXN </ion-option>\n\n              <ion-option value="11">1,500,000 MXN - 2,000,000 MXN </ion-option>\n\n              <ion-option value="12">2,000,000 MXN - 2,500,000 MXN </ion-option>\n\n              <ion-option value="13">3,000,000 MXN - 3,500,000 MXN </ion-option>\n\n              <ion-option value="17">4,000,000 MXN - 4,500,000 MXN </ion-option>\n\n              <ion-option value="18">5,000,000 MXN - 5,500,000 MXN </ion-option>\n\n              <ion-option value="19">6,000,000 MXN - 6,500,000 MXN </ion-option>\n\n              <ion-option value="20">10 Millones MXN y Más </ion-option>\n\n              <ion-option value="14">Otro - Other </ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Otro presupuesto</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.otro_presupuesto" type="text" [ngModelOptions]="{standalone: true}"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Enganche</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.enganche" [ngModelOptions]="{standalone: true}" type="number"></ion-input>\n\n          </ion-item>\n\n\n\n            <div class="botones">\n\n              <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n            </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" ion-button type="submit" block (click)="regresar(\'busca\')" >Regresar</button>\n\n      </div>\n\n\n\n      <h1 class="cabecera">INFORMACION DEL CONTACTO</h1>\n\n      <div id="compradores" padding class="compradores">\n\n        <form (ngSubmit)="formularioCompradores()" [formGroup]="fDelContacto">\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Direccion principal</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.direccion" type="text" formControlName="fdcDir1"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo"> \n\n            <ion-label floating>Segunda direccion</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.direccion2" type="text" formControlName="fdcDir2"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Codigo postal</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.codigo_p" type="text" formControlName="fdcPostal"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Pais</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.country" (ionChange)="actualizarEstado()" formControlName="fdcPais">\n\n              <ion-option *ngFor="let pais of listaDePaises" value="{{pais.countryid}}">{{pais.country}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Estado</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.state" [ngModelOptions]="{standalone: true}" >\n\n              <ion-option *ngFor="let estado of listaDeEstados" value="{{estado.stateid}}">{{estado.state}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>ciudad</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.ciudad" (ionChange)="actualizarCiudades()" formControlName="fdcCiudad">\n\n              <ion-option *ngFor="let ciudad of listaDeCiudades" value="{{ciudad.city}}">{{ciudad.city}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Nacionalidad</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.nacionalidad" type="text" formControlName="fdcNacionalidad"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="fondo" *ngIf="fDelContacto.get(\'fdcNacionalidad\').errors && error">\n\n            <p color="danger" *ngIf="fDelContacto.get(\'fdcNacionalidad\').hasError(\'required\')">Este campo es necesario</p>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Idioma</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.idioma" formControlName="fdcIdioma">\n\n              <ion-option *ngFor="let lenguaje of listaDeLenguajes" value="{{lenguaje.languageid}}">{{lenguaje.language}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Telefono de casa</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.tel" type="text" formControlName="fdcTelC"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Telefono de oficina</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.oficina_tel" type="text" formControlName="fdcTelO"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Fax</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.fax_tel" type="text" formControlName="fdcFax"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Celular con lada</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.cel_tel" type="text" formControlName="fdcCelL"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Nextel</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.nextel_tel" type="text" formControlName="fdcNextel"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>No. Fam</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.num_familia" type="number" formControlName="fdcNoFam"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>profesión</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.profecion" type="text" formControlName="fdcProf"></ion-input>\n\n          </ion-item>\n\n          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.status_civil" [ngModelOptions]="{standalone: true}" >\n\n            <ion-label>Estado civil</ion-label>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel">Soltero(a)</ion-label>\n\n                <ion-checkbox value="1" checked></ion-checkbox>\n\n              </ion-item>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel">Casado(a)</ion-label>\n\n                <ion-checkbox value="0" ></ion-checkbox>\n\n              </ion-item>\n\n            </ion-list>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Empresa</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.empresa" type="text" formControlName="fdcEmpresa"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Website</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.sitio_web" type="text" formControlName="fdcWeb"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label stacked>¿Cuántas veces ha visitado este destino turístico?</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.num_visitas" formControlName="fdcComentarios"></ion-input>\n\n          </ion-item>\n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'compradores\')" >Regresar</button>\n\n      </div>\n\n\n\n      <h1 class="cabecera">INFORMACION FINANCIERA</h1>\n\n      <div id="financiera" padding class="financiera">\n\n        <form (ngSubmit)="formularioFinanciera()">\n\n          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.ingreso_anual" [ngModelOptions]="{standalone: true}" >\n\n              <ion-label>Ingreso anual</ion-label>\n\n              <ion-item class="fondo">\n\n                <ion-label>50-100,000</ion-label>\n\n                <ion-radio value="50-100,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label>100-250,000</ion-label>\n\n                <ion-radio value="100-250,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label>+250,000</ion-label>\n\n                <ion-radio value="+250,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label>+1,000,000</ion-label>\n\n                <ion-radio value="+1,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+5,000,000</ion-label>\n\n                <ion-radio value="+5,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+10,000,000</ion-label>\n\n                <ion-radio value="+10,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+15,000,000</ion-label>\n\n                <ion-radio value="+15,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+20,000,000</ion-label>\n\n                <ion-radio value="+20,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+30,000,000</ion-label>\n\n                <ion-radio value="+30,000,000"></ion-radio>\n\n              </ion-item>\n\n          </ion-list>\n\n\n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'financiera\')" >Regresar</button>\n\n      </div>\n\n\n\n      <h1 class="cabecera">USO DEL INMUEBLE</h1>\n\n      <div id="inmueble" class="inmueble">\n\n        <form (ngSubmit)="formularioInmueble()">\n\n          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.uso_propiedad" [ngModelOptions]="{standalone: true}">\n\n            <ion-label>Uso de la propiedad</ion-label>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label >Vivir</ion-label>\n\n              <ion-radio value="V"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label >Inversión</ion-label>\n\n              <ion-radio value="I"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label >Rentarla</ion-label>\n\n              <ion-radio value="R"></ion-radio>\n\n            </ion-item>\n\n          </ion-list>\n\n\n\n          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.forma_pago" [ngModelOptions]="{standalone: true}">\n\n            <ion-label>Forma de pago</ion-label>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label>Contado</ion-label>\n\n              <ion-radio value="C"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label>Crédito bancario</ion-label>\n\n              <ion-radio value="E"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label>Crédito hipotecario</ion-label>\n\n              <ion-radio value="F"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label>Otro</ion-label>\n\n              <ion-radio value="O"></ion-radio>\n\n            </ion-item>\n\n          </ion-list>\n\n\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Hotel</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.num_hotel" [ngModelOptions]="{standalone: true}"></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item class="fondo">\n\n            <ion-label floating>No Hab</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.cuarto_hotel" [ngModelOptions]="{standalone: true}"></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Salida</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.salida" [ngModelOptions]="{standalone: true}"></ion-input>\n\n          </ion-item>          \n\n\n\n          <ion-item class="fondo">\n\n            <ion-textarea [(ngModel)]="datosGenerales.coment_financiera" placeholder="Comentarios" [ngModelOptions]="{standalone: true}"></ion-textarea>\n\n          </ion-item>\n\n\n\n          <ion-item class="fondo">\n\n            <ion-label stacked>¿Le interesaría recibir información acerca de oportunidades de inversión en bienes raíces?</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.de_acuerdo_info" [ngModelOptions]="{standalone: true}">\n\n              <ion-option value="0" slected="true">No</ion-option>\n\n              <ion-option value="1">Si</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n\n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'inmueble\')" >Regresar</button>\n\n      </div>\n\n\n\n\n\n\n\n      <h1 class="cabecera">AGENTE QUE ENLISTA</h1>\n\n      <div id="enlista" padding class="enlista">\n\n        <form (ngSubmit)="agregarContacto()" [formGroup]="fAgente">\n\n\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Officina <sup>*</sup></ion-label>\n\n              <ion-select [(ngModel)]="datosGenerales.office" (ionChange)="actualizarAsesor()" name="propiedad" formControlName="officinaA">\n\n                <ion-option *ngFor="let oficina of listaDeOficinas" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> \n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Asesor <sup>*</sup></ion-label>\n\n              <ion-select [(ngModel)]="datosGenerales.user" name="propiedad" formControlName="asesorA">\n\n                <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> \n\n            <div class="botones">\n\n              <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Agregar</button>\n\n            </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'enlista\')" >Regresar</button>\n\n      </div>\n\n\n\n        <!--</form>-->\n\n\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-compradores\agregar-compradores.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */]])
+    ], AgregarCompradoresPage);
+    return AgregarCompradoresPage;
+}());
+
+//# sourceMappingURL=agregar-compradores.js.map
+
+/***/ }),
+
+/***/ 271:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuscarPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
@@ -1811,7 +2254,7 @@ var BuscarPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 271:
+/***/ 272:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1901,7 +2344,7 @@ var DestinosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 272:
+/***/ 273:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2023,7 +2466,7 @@ var FormularioPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 273:
+/***/ 274:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2065,7 +2508,7 @@ var InfoPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 274:
+/***/ 275:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2160,7 +2603,7 @@ var LoginPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 275:
+/***/ 276:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2293,7 +2736,7 @@ var ResultadosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 276:
+/***/ 277:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2695,7 +3138,7 @@ var VerDesarrolloPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 277:
+/***/ 278:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3122,7 +3565,7 @@ var VerPropiedadPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 278:
+/***/ 279:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3252,7 +3695,7 @@ var VerContactoPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 279:
+/***/ 280:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3383,7 +3826,7 @@ var UsuarioPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3429,7 +3872,7 @@ var RegistrarPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 281:
+/***/ 282:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3481,425 +3924,6 @@ var FiltroResultadosPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=filtro-resultados.js.map
-
-/***/ }),
-
-/***/ 282:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgregarCompradoresPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__ = __webpack_require__(18);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-/**
- * Generated class for the AgregarCompradoresPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var AgregarCompradoresPage = /** @class */ (function () {
-    function AgregarCompradoresPage(navCtrl, navParams, formBuilder, formularioProvider, storage, contactoProvider, loadingCtrl, alertCtrl, usuarioProvider) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.formBuilder = formBuilder;
-        this.formularioProvider = formularioProvider;
-        this.storage = storage;
-        this.contactoProvider = contactoProvider;
-        this.loadingCtrl = loadingCtrl;
-        this.alertCtrl = alertCtrl;
-        this.usuarioProvider = usuarioProvider;
-        this.flag = false;
-        this.formulario = {};
-        this.error = false;
-        this.cliente_busca = [];
-        this.mediosDeContacto = [];
-        this.subMediosDeContactos = [];
-        this.listaDeOficinas = [];
-        this.agentesDeOficina = [];
-        this.listaDeLenguajes = [];
-        this.listaDeCiudades = [];
-        this.listaDePaises = [];
-        this.listaDeEstados = [];
-        this.datosFG = {};
-        this.datosMC = {};
-        this.datosCB = {};
-        this.datosAgregar = {};
-        this.datosGenerales = [];
-        this.fGeneral = this.formBuilder.group({
-            nombre: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
-            apellidoP: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
-            apellidoM: [''],
-            email1: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email]],
-            email2: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email]],
-            rfc: [''],
-            nac: ['']
-        });
-        //9984069591
-        this.fContacto = this.formBuilder.group({
-            medioC: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
-            detalle: [''],
-            comentarios: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
-        });
-        this.fAgente = this.formBuilder.group({
-            officinaA: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
-            asesorA: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
-        });
-        this.fDelContacto = this.formBuilder.group({
-            fdcDir1: [''],
-            fdcDir2: [''],
-            fdcPostal: [''],
-            fdcPais: [''],
-            fdcCiudad: [''],
-            fdcNacionalidad: [''],
-            fdcIdioma: [''],
-            fdcTelC: [''],
-            fdcTelO: [''],
-            fdcFax: [''],
-            fdcCelL: [''],
-            fdcNextel: [''],
-            fdcNoFam: [''],
-            fdcProf: [''],
-            fdcCivil: [''],
-            fdcEmpresa: [''],
-            fdcWeb: [''],
-            fdcComentarios: ['']
-        });
-        this.storage.get('usuario').then(function (data) {
-            _this.datosGenerales.user = data;
-        });
-        this.datosGenerales.ap_materno = '';
-        this.datosGenerales.ap_paterno = '';
-        this.datosGenerales.busca_c = false;
-        this.datosGenerales.busca_r = false;
-        this.datosGenerales.listar_v = false;
-        this.datosGenerales.listar_r = false;
-        this.datosGenerales.exclusiva = false;
-        this.datosGenerales.cel_tel = '';
-        this.datosGenerales.ciudad = '';
-        this.datosGenerales.codigo_p = '';
-        this.datosGenerales.comentarios = '';
-        this.datosGenerales.contacto = '';
-        this.datosGenerales.country = '';
-        this.datosGenerales.direccion = '';
-        this.datosGenerales.direccion2 = '';
-        this.datosGenerales.email = '';
-        this.datosGenerales.email2 = '';
-        this.datosGenerales.empresa = '';
-        this.datosGenerales.fax_tel = '';
-        this.datosGenerales.idioma = '';
-        this.datosGenerales.ingreso_anual = '';
-        this.datosGenerales.nacimiento = '';
-        this.datosGenerales.nacionalidad = '';
-        this.datosGenerales.nextel_tel = '';
-        this.datosGenerales.nombre = '';
-        this.datosGenerales.num_familia = '';
-        this.datosGenerales.num_visitas = '';
-        this.datosGenerales.office = '';
-        this.datosGenerales.oficina_tel = '';
-        this.datosGenerales.profecion = '';
-        this.datosGenerales.rfc = '';
-        this.datosGenerales.sitio_web = '';
-        this.datosGenerales.subcontacto = '';
-        this.datosGenerales.tel = '';
-        this.datosGenerales.companyid = this.usuarioProvider.companyid;
-        this.datosGenerales.online = 1;
-    }
-    AgregarCompradoresPage.prototype.ionViewCanEnter = function () {
-        /*this.storage.get('usuario').then(data=>{
-           this.idUsuario = data;
-    
-           var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
-           oficinas.subscribe(data=>{
-             this.listaDeOficinas = data.json().data;
-           });
-        });*/
-        var _this = this;
-        this.storage.get('folio').then(function (data) {
-            var ciudad = _this.formularioProvider.listaDeCiudad(data);
-            ciudad.subscribe(function (data) {
-                _this.listaDeCiudades = data.json().data;
-            });
-        });
-        var contactos = this.formularioProvider.mediosDeContactos();
-        contactos.subscribe(function (data) {
-            _this.mediosDeContacto = data.json().data;
-        });
-        /*var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
-        oficinas.subscribe(data=>{
-          this.listaDeOficinas = data.json().data;
-        });*/
-        var subContactos = this.formularioProvider.subMediosDeContactos(this.medioValor);
-        subContactos.subscribe(function (data) {
-            _this.subMediosDeContactos = data.json().data;
-        });
-        var lenguajes = this.formularioProvider.listaDeLenguajes();
-        lenguajes.subscribe(function (data) {
-            _this.listaDeLenguajes = data.json().data;
-        });
-        var paises = this.formularioProvider.listaDePaises();
-        paises.subscribe(function (data) {
-            _this.listaDePaises = data.json().data;
-        });
-        var ciudades = this.formularioProvider.listaDeCiudad(this.idUsuario);
-        ciudades.subscribe(function (data) {
-            _this.listaDeCiudades = data.json().data;
-        });
-    };
-    AgregarCompradoresPage.prototype.formularioGeneral = function () {
-        this.error = true;
-        if (this.fGeneral.get('email1').hasError('required')) {
-            this.flag = false;
-        }
-        else {
-            this.flag = true;
-        }
-        if (!this.fGeneral.get('nombre').hasError('required') && !this.fGeneral.get('apellidoP').hasError('required') && !this.fGeneral.get('email1').hasError('required') && !this.fGeneral.get('email1').hasError('email')) {
-            var contactoH = document.getElementById('contacto');
-            var generalesH = document.getElementById('generales');
-            contactoH.style.display = "block";
-            generalesH.style.display = "none";
-            this.error = false;
-        }
-    };
-    AgregarCompradoresPage.prototype.formularioContacto = function () {
-        this.error = true;
-        if (this.fContacto.value.medioC == 3 || this.fContacto.value.medioC == 7) {
-            if (!this.fContacto.get('Nbroker').hasError('required')) {
-                var contactoH = document.getElementById('contacto');
-                var clienteB = document.getElementById('busca');
-                contactoH.style.display = "none";
-                clienteB.style.display = "block";
-                this.error = false;
-            }
-        }
-        else if (this.fContacto.value.medioC == 6) {
-            if (!this.fContacto.get('otro').hasError('required')) {
-                var contactoH = document.getElementById('contacto');
-                var clienteB = document.getElementById('busca');
-                contactoH.style.display = "none";
-                clienteB.style.display = "block";
-                this.error = false;
-            }
-        }
-        else {
-            if (!this.fContacto.get('medioC').hasError('required') && !this.fContacto.get('medioC').hasError('required')) {
-                var contactoH = document.getElementById('contacto');
-                var clienteB = document.getElementById('busca');
-                contactoH.style.display = "none";
-                clienteB.style.display = "block";
-                this.error = false;
-            }
-        }
-    };
-    AgregarCompradoresPage.prototype.formularioBusca = function () {
-        if (this.datosGenerales.busca_c || this.datosGenerales.busca_r) {
-            var clienteB = document.getElementById('busca');
-            var compradores = document.getElementById('compradores');
-            clienteB.style.display = "none";
-            compradores.style.display = "block";
-        }
-        else {
-            var elemento = document.getElementById('operacionMensaje').innerHTML = '<div><p style="color: red;">este campo es obligatorio</p></div>';
-        }
-    };
-    AgregarCompradoresPage.prototype.formularioCompradores = function () {
-        if (!this.fDelContacto.get('fdcNacionalidad').hasError('required')) {
-            var contactoH = document.getElementById('compradores');
-            var financiera = document.getElementById('financiera');
-            contactoH.style.display = "none";
-            financiera.style.display = "block";
-        }
-    };
-    AgregarCompradoresPage.prototype.formularioFinanciera = function () {
-        var financiera = document.getElementById('financiera');
-        var inmueble = document.getElementById('inmueble');
-        financiera.style.display = "none";
-        inmueble.style.display = "block";
-    };
-    AgregarCompradoresPage.prototype.formularioInmueble = function () {
-        var inmueble = document.getElementById('inmueble');
-        var enlista = document.getElementById('enlista');
-        inmueble.style.display = "none";
-        enlista.style.display = "block";
-    };
-    AgregarCompradoresPage.prototype.validarDetalle = function () {
-        this.media_extra = this.fContacto.value.medioC;
-        if (this.fContacto.value.medioC == 3 || this.fContacto.value.medioC == 7) {
-            this.fContacto.addControl('Nbroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
-            this.fContacto.addControl('Ebroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
-            this.fContacto.addControl('Tbroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
-            this.fContacto.addControl('Abroker', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
-        }
-        else if (this.fContacto.value.medioC == 6) {
-            this.fContacto.addControl('otro', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
-        }
-    };
-    AgregarCompradoresPage.prototype.agregarContacto = function () {
-        if (this.datosGenerales.busca_c && this.datosGenerales.busca_r) {
-            this.datosGenerales.lookfor = 'CR';
-        }
-        else if (this.datosGenerales.busca_c) {
-            this.datosGenerales.lookfor = 'C';
-        }
-        else if (this.datosGenerales.busca_r) {
-            this.datosGenerales.lookfor = 'R';
-        }
-        if (this.datosGenerales.listar_v && this.datosGenerales.listar_r) {
-            this.datosGenerales.lookfor1 = 'VR';
-        }
-        else if (this.datosGenerales.listar_v) {
-            this.datosGenerales.lookfor1 = 'V';
-        }
-        else if (this.datosGenerales.listar_r) {
-            this.datosGenerales.lookfor1 = 'R';
-        }
-        if (this.datosGenerales.office != '' && this.datosGenerales.user != '') {
-            var UrlData = '';
-            var datos = this.datosGenerales;
-            Object.keys(datos).forEach(function (key) {
-                UrlData += '&' + key + '=' + datos[key];
-            });
-            var loader = this.loadingCtrl.create({
-                dismissOnPageChange: false
-            });
-            loader.present();
-            /*var agregarContacto = this.contactoProvider.agergarContactosComp(UrlData);
-            agregarContacto.subscribe(data => {
-              if(data.status == 200){
-                loader.dismiss();
-                const alerta = this.alertCtrl.create({
-                  title: 'EXITO',
-                  subTitle: 'El contacto ha sido agregado con éxito',
-                  buttons: ['ok']
-                });
-                alerta.present();
-                this.navCtrl.pop();
-              }
-      
-            })*/
-        }
-        else {
-            var alerta = this.alertCtrl.create({
-                title: '',
-                subTitle: 'El campo Oficina y Asesor son obligatorios',
-                buttons: ['ok']
-            });
-            alerta.present();
-        }
-    };
-    AgregarCompradoresPage.prototype.actualizarDetalle = function () {
-        var _this = this;
-        var subContactos = this.formularioProvider.subMediosDeContactos(this.fContacto.value.medioC);
-        subContactos.subscribe(function (data) {
-            _this.subMediosDeContactos = data.json().data;
-        });
-    };
-    AgregarCompradoresPage.prototype.actualizarAsesor = function () {
-        var _this = this;
-        var agentesO = this.formularioProvider.listaDeAgentes(this.fAgente.value.officinaA);
-        agentesO.subscribe(function (data) {
-            _this.agentesDeOficina = data.json().data;
-        });
-    };
-    AgregarCompradoresPage.prototype.actualizarCiudades = function () {
-    };
-    AgregarCompradoresPage.prototype.actualizarEstado = function () {
-        var _this = this;
-        var estado = this.formularioProvider.listaDeEstados(this.datosGenerales.country);
-        estado.subscribe(function (data) {
-            _this.listaDeEstados = data.json().data;
-        });
-    };
-    AgregarCompradoresPage.prototype.regresar = function (index) {
-        switch (index) {
-            case "general": {
-                break;
-            }
-            case "contact": {
-                var contactoH = document.getElementById('contacto');
-                var generalesH = document.getElementById('generales');
-                contactoH.style.display = "none";
-                generalesH.style.display = "block";
-                break;
-            }
-            case "busca": {
-                var clienteB = document.getElementById('busca');
-                var contacto = document.getElementById('contacto');
-                clienteB.style.display = "none";
-                contacto.style.display = "block";
-                break;
-            }
-            case "compradores": {
-                var compradores = document.getElementById('compradores');
-                var busca = document.getElementById('busca');
-                compradores.style.display = "none";
-                busca.style.display = "block";
-                break;
-            }
-            case "financiera": {
-                var financiera = document.getElementById('financiera');
-                var compradores = document.getElementById('compradores');
-                financiera.style.display = "none";
-                compradores.style.display = "block";
-                break;
-            }
-            case "inmueble": {
-                var inmueble = document.getElementById('inmueble');
-                var financiera = document.getElementById('financiera');
-                inmueble.style.display = "none";
-                financiera.style.display = "block";
-                break;
-            }
-            case "enlista": {
-                var enlista = document.getElementById('enlista');
-                var inmueble = document.getElementById('inmueble');
-                enlista.style.display = "none";
-                inmueble.style.display = "block";
-                break;
-            }
-        }
-    };
-    AgregarCompradoresPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-agregar-compradores',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-compradores\agregar-compradores.html"*/'<!--\n\n  Generated template for the AgregarCompradoresPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title>Agregar Comprador</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content class="fondo">\n\n<!-- Acomoda tu html -->\n\n\n\n      <!--<form (ngSubmit)="submit()" [formGroup]="datos">-->\n\n          <h1 class="cabecera" color="dark" >DATOS GENERALES</h1>\n\n      <div id="generales" padding class="generales">\n\n        <form (ngSubmit)="formularioGeneral()" [formGroup]="fGeneral">\n\n\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>Nombre <sup>*</sup></ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.nombre" type="text" formControlName="nombre"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get(\'nombre\').errors && error">\n\n              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n              <p color="danger" ion-text *ngIf="fGeneral.get(\'nombre\').hasError(\'required\')">Este campo es necesario</p>\n\n            </ion-item>\n\n            <!--<ion-item class="ErrorMensaje" *ngIf="flagN">\n\n              <p color="danger" ion-text>Este campo es necesario</p>\n\n            </ion-item>-->\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>Apellido paterno <sup>*</sup></ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.ap_paterno" type="text" formControlName="apellidoP" name="celular"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get(\'apellidoP\').errors && error">\n\n              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n              <p color="danger" ion-text *ngIf="fGeneral.get(\'apellidoP\').hasError(\'required\')">Este campo es necesario</p>\n\n            </ion-item>\n\n            <!--<ion-item class="ErrorMensaje" *ngIf="flagA">\n\n              <p color="danger" ion-text>Este campo es necesario</p>\n\n            </ion-item>-->\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>Apellido Materno</ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.ap_materno" type="text" formControlName="apellidoM" name="ap_materno"></ion-input>\n\n            </ion-item>\n\n\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>E-mail principal<sup>*</sup></ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.email" type="email" formControlName="email1" name="email1"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fGeneral.get(\'email1\').errors && error">\n\n              <p color="danger" ion-text *ngIf="fGeneral.get(\'email1\').hasError(\'required\')">Este campo es necesario</p>\n\n              <p color="danger" ion-text *ngIf="fGeneral.get(\'email1\').hasError(\'email\') && flag">Este no es un correo valido</p>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>E-mail secundario</ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.email2" type="email" formControlName="email2" name="email2"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>RFC</ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.rfc" type="text" formControlName="rfc" name="rfc"></ion-input>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel" floating>Fecha de nacimiento</ion-label>\n\n              <ion-input [(ngModel)]="datosGenerales.nacimiento" type="text" formControlName="nac" name="nac"></ion-input>\n\n            </ion-item>\n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n      </form>\n\n    </div>\n\n\n\n      <h1 class="cabecera" color="dark" >MEDIO DE CONTACTO</h1>\n\n      <div padding id="contacto" class="contacto">\n\n        <form (ngSubmit)="formularioContacto()" [formGroup]="fContacto">\n\n\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Medio de contacto <sup>*</sup></ion-label>\n\n              <ion-select [(ngModel)]="datosGenerales.contacto" name="propiedad" (ionChange)="validarDetalle()" formControlName="medioC" (ionChange)="actualizarDetalle()">\n\n                <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> \n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get(\'medioC\').errors && error">\n\n              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n              <p color="danger" ion-text *ngIf="fContacto.get(\'medioC\').hasError(\'required\')">Este campo es necesario</p>\n\n            </ion-item>\n\n            <ion-item *ngIf="subMediosDeContactos != null" class="formulario fondo">\n\n              <ion-label class="textoLabel">Detalle</ion-label>\n\n              <ion-select [(ngModel)]="datosGenerales.subcontacto" name="propiedad" formControlName="detalle">\n\n                <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> \n\n\n\n            <div *ngIf="media_extra == 3 || media_extra == 7">\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>Nombre del broker <sup>*</sup></ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.referred" type="text" formControlName="Nbroker" name="Nbroker"></ion-input>\n\n              </ion-item>\n\n              <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get(\'Nbroker\').errors && error">\n\n                <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n                <p color="danger" ion-text *ngIf="fContacto.get(\'Nbroker\').hasError(\'required\')">Este campo es necesario</p>\n\n              </ion-item>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>E-mail broker</ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.referral_email" type="text" formControlName="Ebroker" name="Ebroker"></ion-input>\n\n              </ion-item>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>Telefono broker</ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.referral_phone" type="text" formControlName="Tbroker" name="Tbroker"></ion-input>\n\n              </ion-item>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>Agencia broker</ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.referral_agency" type="text" formControlName="Abroker" name="Abroker"></ion-input>\n\n              </ion-item>\n\n            </div>\n\n            <div *ngIf="media_extra == 6">\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel" floating>Otro <sup>*</sup></ion-label>\n\n                <ion-input [(ngModel)]="datosGenerales.otro_camp" type="text" formControlName="otro"  name="otro"></ion-input>\n\n              </ion-item>\n\n              <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get(\'otro\').errors && error">\n\n                <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n                <p color="danger" ion-text *ngIf="fContacto.get(\'otro\').hasError(\'required\')">Este campo es necesario</p>\n\n              </ion-item>\n\n            </div>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label style="font-size: 13px" floating>Comentarios <sup>*</sup></ion-label>\n\n              <ion-textarea [(ngModel)]="datosGenerales.comentarios" formControlName="comentarios" style="height: 60px;" name="comentario" type="text"></ion-textarea>\n\n            </ion-item>\n\n            <ion-item class="ErrorMensaje fondo" *ngIf="fContacto.get(\'comentarios\').errors && error">\n\n              <!-- <ion-icon color="whiteImmo" name="ios-person" item-start></ion-icon> -->\n\n              <p color="danger" ion-text *ngIf="fContacto.get(\'comentarios\').hasError(\'required\')">Este campo es necesario</p>\n\n            </ion-item>\n\n          \n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n      </form>\n\n      <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'contact\')" >Regresar</button>\n\n    </div>\n\n\n\n\n\n\n\n      <h1 class="cabecera">CLIENTE BUSCA</h1>\n\n      <div id="busca" padding class="busca">\n\n        <form (ngSubmit)="formularioBusca()" novalidate>\n\n          <ion-label>\n\n            Operacion <sup>*</sup>\n\n          </ion-label>\n\n          <div>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Comprar</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.busca_c" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Rentar</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.busca_r" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n            <div id="operacionMensaje">\n\n            </div>\n\n            <ion-label>Otro</ion-label>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Listar Venta</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.listar_v" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Listar Renta</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.listar_r" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Exclusiva</ion-label>\n\n              <ion-checkbox [(ngModel)]="datosGenerales.exclusiva" [ngModelOptions]="{standalone: true}" [checked]="false"></ion-checkbox>\n\n            </ion-item>\n\n          </div>\n\n          <ion-item class="fondo">\n\n            <ion-label>Tipo</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.tipo_busca" [ngModelOptions]="{standalone: true}">\n\n              <ion-option value="C" >Casa</ion-option>\n\n              <ion-option value="D" >Depto</ion-option>\n\n              <ion-option value="T" >Terreno</ion-option>\n\n              <ion-option value="L" >Oficina</ion-option>\n\n              <ion-option value="B" >Bodega</ion-option>\n\n              <ion-option value="P" >Desarrollo</ion-option>\n\n              <ion-option value="O" >Otro</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="fondo" *ngIf="datosGenerales.tipo_busca == \'O\'">\n\n            <ion-label>Otro</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.nota_busca" [ngModelOptions]="{standalone: true}" type="text"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="fondo">\n\n            <ion-label>Monto Inversión</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.presupuesto" [ngModelOptions]="{standalone: true}">\n\n              <ion-option value="1">100,000 USD - 200,000 USD</ion-option>\n\n              <ion-option value="2">200,000 USD - 300,000 USD</ion-option>\n\n              <ion-option value="3">300,000 USD - 500,000 USD</ion-option>\n\n              <ion-option value="15">350,000 USD - 500,000 USD</ion-option>\n\n              <ion-option value="4">500,000 USD - 800,000 USD</ion-option>\n\n              <ion-option value="16">500,000 USD - 750,000 USD</ion-option>\n\n              <ion-option value="5">800,000 USD - 1 Million USD</ion-option>\n\n              <ion-option value="6">1 Million USD and Plus</ion-option>\n\n              <ion-option value="7">Otro - Other</ion-option>\n\n              <ion-option value="8">Menos de 500,000 MXN</ion-option>\n\n              <ion-option value="9">500,000 MXN - 1,000,000 MXN </ion-option>\n\n              <ion-option value="10">1,000,000 MXN - 1,500,000 MXN </ion-option>\n\n              <ion-option value="11">1,500,000 MXN - 2,000,000 MXN </ion-option>\n\n              <ion-option value="12">2,000,000 MXN - 2,500,000 MXN </ion-option>\n\n              <ion-option value="13">3,000,000 MXN - 3,500,000 MXN </ion-option>\n\n              <ion-option value="17">4,000,000 MXN - 4,500,000 MXN </ion-option>\n\n              <ion-option value="18">5,000,000 MXN - 5,500,000 MXN </ion-option>\n\n              <ion-option value="19">6,000,000 MXN - 6,500,000 MXN </ion-option>\n\n              <ion-option value="20">10 Millones MXN y Más </ion-option>\n\n              <ion-option value="14">Otro - Other </ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Otro presupuesto</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.otro_presupuesto" type="text" [ngModelOptions]="{standalone: true}"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Enganche</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.enganche" [ngModelOptions]="{standalone: true}" type="number"></ion-input>\n\n          </ion-item>\n\n\n\n            <div class="botones">\n\n              <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n            </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" ion-button type="submit" block (click)="regresar(\'busca\')" >Regresar</button>\n\n      </div>\n\n\n\n      <h1 class="cabecera">INFORMACION DEL CONTACTO</h1>\n\n      <div id="compradores" padding class="compradores">\n\n        <form (ngSubmit)="formularioCompradores()" [formGroup]="fDelContacto">\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Direccion principal</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.direccion" type="text" formControlName="fdcDir1"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo"> \n\n            <ion-label floating>Segunda direccion</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.direccion2" type="text" formControlName="fdcDir2"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Codigo postal</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.codigo_p" type="text" formControlName="fdcPostal"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Pais</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.country" (ionChange)="actualizarEstado()" formControlName="fdcPais">\n\n              <ion-option *ngFor="let pais of listaDePaises" value="{{pais.countryid}}">{{pais.country}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Estado</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.state" [ngModelOptions]="{standalone: true}" >\n\n              <ion-option *ngFor="let estado of listaDeEstados" value="{{estado.stateid}}">{{estado.state}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>ciudad</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.ciudad" (ionChange)="actualizarCiudades()" formControlName="fdcCiudad">\n\n              <ion-option *ngFor="let ciudad of listaDeCiudades" value="{{ciudad.city}}">{{ciudad.city}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Nacionalidad</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.nacionalidad" type="text" formControlName="fdcNacionalidad"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="fondo" *ngIf="fDelContacto.get(\'fdcNacionalidad\').errors && error">\n\n            <p color="danger" *ngIf="fDelContacto.get(\'fdcNacionalidad\').hasError(\'required\')">Este campo es necesario</p>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Idioma</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.idioma" formControlName="fdcIdioma">\n\n              <ion-option *ngFor="let lenguaje of listaDeLenguajes" value="{{lenguaje.languageid}}">{{lenguaje.language}}</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Telefono de casa</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.tel" type="text" formControlName="fdcTelC"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Telefono de oficina</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.oficina_tel" type="text" formControlName="fdcTelO"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Fax</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.fax_tel" type="text" formControlName="fdcFax"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Celular con lada</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.cel_tel" type="text" formControlName="fdcCelL"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Nextel</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.nextel_tel" type="text" formControlName="fdcNextel"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>No. Fam</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.num_familia" type="number" formControlName="fdcNoFam"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>profesión</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.profecion" type="text" formControlName="fdcProf"></ion-input>\n\n          </ion-item>\n\n          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.status_civil" [ngModelOptions]="{standalone: true}" >\n\n            <ion-label>Estado civil</ion-label>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel">Soltero(a)</ion-label>\n\n                <ion-checkbox value="1" checked></ion-checkbox>\n\n              </ion-item>\n\n              <ion-item class="formulario fondo">\n\n                <ion-label class="textoLabel">Casado(a)</ion-label>\n\n                <ion-checkbox value="0" ></ion-checkbox>\n\n              </ion-item>\n\n            </ion-list>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Empresa</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.empresa" type="text" formControlName="fdcEmpresa"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label floating>Website</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.sitio_web" type="text" formControlName="fdcWeb"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="formulario fondo">\n\n            <ion-label stacked>¿Cuántas veces ha visitado este destino turístico?</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.num_visitas" formControlName="fdcComentarios"></ion-input>\n\n          </ion-item>\n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'compradores\')" >Regresar</button>\n\n      </div>\n\n\n\n      <h1 class="cabecera">INFORMACION FINANCIERA</h1>\n\n      <div id="financiera" padding class="financiera">\n\n        <form (ngSubmit)="formularioFinanciera()">\n\n          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.ingreso_anual" [ngModelOptions]="{standalone: true}" >\n\n              <ion-label>Ingreso anual</ion-label>\n\n              <ion-item class="fondo">\n\n                <ion-label>50-100,000</ion-label>\n\n                <ion-radio value="50-100,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label>100-250,000</ion-label>\n\n                <ion-radio value="100-250,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label>+250,000</ion-label>\n\n                <ion-radio value="+250,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label>+1,000,000</ion-label>\n\n                <ion-radio value="+1,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+5,000,000</ion-label>\n\n                <ion-radio value="+5,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+10,000,000</ion-label>\n\n                <ion-radio value="+10,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+15,000,000</ion-label>\n\n                <ion-radio value="+15,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+20,000,000</ion-label>\n\n                <ion-radio value="+20,000,000"></ion-radio>\n\n              </ion-item>\n\n    \n\n              <ion-item class="fondo">\n\n                <ion-label >+30,000,000</ion-label>\n\n                <ion-radio value="+30,000,000"></ion-radio>\n\n              </ion-item>\n\n          </ion-list>\n\n\n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'financiera\')" >Regresar</button>\n\n      </div>\n\n\n\n      <h1 class="cabecera">USO DEL INMUEBLE</h1>\n\n      <div id="inmueble" class="inmueble">\n\n        <form (ngSubmit)="formularioInmueble()">\n\n          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.uso_propiedad" [ngModelOptions]="{standalone: true}">\n\n            <ion-label>Uso de la propiedad</ion-label>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label >Vivir</ion-label>\n\n              <ion-radio value="V"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label >Inversión</ion-label>\n\n              <ion-radio value="I"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label >Rentarla</ion-label>\n\n              <ion-radio value="R"></ion-radio>\n\n            </ion-item>\n\n          </ion-list>\n\n\n\n          <ion-list class="fondo" radio-group [(ngModel)]="datosGenerales.forma_pago" [ngModelOptions]="{standalone: true}">\n\n            <ion-label>Forma de pago</ion-label>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label>Contado</ion-label>\n\n              <ion-radio value="C"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label>Crédito bancario</ion-label>\n\n              <ion-radio value="E"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label>Crédito hipotecario</ion-label>\n\n              <ion-radio value="F"></ion-radio>\n\n            </ion-item>\n\n\n\n            <ion-item class="fondo">\n\n              <ion-label>Otro</ion-label>\n\n              <ion-radio value="O"></ion-radio>\n\n            </ion-item>\n\n          </ion-list>\n\n\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Hotel</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.num_hotel" [ngModelOptions]="{standalone: true}"></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item class="fondo">\n\n            <ion-label floating>No Hab</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.cuarto_hotel" [ngModelOptions]="{standalone: true}"></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item class="fondo">\n\n            <ion-label floating>Salida</ion-label>\n\n            <ion-input [(ngModel)]="datosGenerales.salida" [ngModelOptions]="{standalone: true}"></ion-input>\n\n          </ion-item>          \n\n\n\n          <ion-item class="fondo">\n\n            <ion-textarea [(ngModel)]="datosGenerales.coment_financiera" placeholder="Comentarios" [ngModelOptions]="{standalone: true}"></ion-textarea>\n\n          </ion-item>\n\n\n\n          <ion-item class="fondo">\n\n            <ion-label stacked>¿Le interesaría recibir información acerca de oportunidades de inversión en bienes raíces?</ion-label>\n\n            <ion-select [(ngModel)]="datosGenerales.de_acuerdo_info" [ngModelOptions]="{standalone: true}">\n\n              <ion-option value="0" slected="true">No</ion-option>\n\n              <ion-option value="1">Si</ion-option>\n\n            </ion-select>\n\n          </ion-item>\n\n\n\n          <div class="botones">\n\n            <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n          </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'inmueble\')" >Regresar</button>\n\n      </div>\n\n\n\n\n\n\n\n      <h1 class="cabecera">AGENTE QUE ENLISTA</h1>\n\n      <div id="enlista" padding class="enlista">\n\n        <form (ngSubmit)="agregarContacto()" [formGroup]="fAgente">\n\n\n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Officina <sup>*</sup></ion-label>\n\n              <ion-select [(ngModel)]="datosGenerales.office" (ionChange)="actualizarAsesor()" name="propiedad" formControlName="officinaA">\n\n                <ion-option *ngFor="let oficina of listaDeOficinas" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> \n\n            <ion-item class="formulario fondo">\n\n              <ion-label class="textoLabel">Asesor <sup>*</sup></ion-label>\n\n              <ion-select [(ngModel)]="datosGenerales.user" name="propiedad" formControlName="asesorA">\n\n                <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>\n\n              </ion-select>\n\n            </ion-item> \n\n            <div class="botones">\n\n              <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block>Agregar</button>\n\n            </div>\n\n        </form>\n\n        <button style="margin: 0px 5px" color="botones" style="margin: 5px 2px;" ion-button type="submit" block (click)="regresar(\'enlista\')" >Regresar</button>\n\n      </div>\n\n\n\n        <!--</form>-->\n\n\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-compradores\agregar-compradores.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */]])
-    ], AgregarCompradoresPage);
-    return AgregarCompradoresPage;
-}());
-
-//# sourceMappingURL=agregar-compradores.js.map
 
 /***/ }),
 
@@ -4568,30 +4592,30 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
                     links: [
+                        { loadChildren: '../pages/agregar-compradores/agregar-compradores.module#AgregarCompradoresPageModule', name: 'AgregarCompradoresPage', segment: 'agregar-compradores', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/agregar-contacto/agregar-contacto.module#AgregarContactoPageModule', name: 'AgregarContactoPage', segment: 'agregar-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/agregar-tarea/agregar-tarea.module#AgregarTareaPageModule', name: 'AgregarTareaPage', segment: 'agregar-tarea', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/buscar/buscar.module#BuscarPageModule', name: 'BuscarPage', segment: 'buscar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/calendar/calendar.module#CalendarPageModule', name: 'CalendarPage', segment: 'calendar', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/contactos/contactos.module#ContactosPageModule', name: 'ContactosPage', segment: 'contactos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/destinos/destinos.module#DestinosPageModule', name: 'DestinosPage', segment: 'destinos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/documents/documents.module#DocumentsPageModule', name: 'DocumentsPage', segment: 'documents', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/contactos/contactos.module#ContactosPageModule', name: 'ContactosPage', segment: 'contactos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/filtro-resultados/filtro-resultados.module#FiltroResultadosPageModule', name: 'FiltroResultadosPage', segment: 'filtro-resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/formulario/formulario.module#FormularioPageModule', name: 'FormularioPage', segment: 'formulario', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/general-form/general-form.module#GeneralFormPageModule', name: 'GeneralFormPage', segment: 'general-form', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/info/info.module#InfoPageModule', name: 'InfoPage', segment: 'info', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/agregar-compradores/agregar-compradores.module#AgregarCompradoresPageModule', name: 'AgregarCompradoresPage', segment: 'agregar-compradores', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/lead-pickead-pick/lead-pickead-pick.module#LeadPickeadPickPageModule', name: 'LeadPickeadPickPage', segment: 'lead-pickead-pick', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/property-pickead-pick/property-pickead-pick.module#PropertyPickeadPickPageModule', name: 'PropertyPickeadPickPage', segment: 'property-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/registrar/registrar.module#RegistrarPageModule', name: 'RegistrarPage', segment: 'registrar', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/seguimiento/seguimiento.module#SeguimientoPageModule', name: 'SeguimientoPage', segment: 'seguimiento', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sharing/sharing.module#SharingPageModule', name: 'SharingPage', segment: 'sharing', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs-usuario/tabs-usuario.module#TabsUsuarioPageModule', name: 'TabsUsuarioPage', segment: 'tabs-usuario', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/seguimiento/seguimiento.module#SeguimientoPageModule', name: 'SeguimientoPage', segment: 'seguimiento', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs2/tabs2.module#Tabs2PageModule', name: 'Tabs2Page', segment: 'tabs2', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-desarrollo/ver-desarrollo.module#VerDesarrolloPageModule', name: 'VerDesarrolloPage', segment: 'ver-desarrollo', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] }
                     ]
