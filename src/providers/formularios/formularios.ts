@@ -1,12 +1,14 @@
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { UsuarioProvider } from '../usuario/usuario';
 import { ApiProvider } from '../api/api';
 @Injectable()
 export class FormulariosProvider {
   url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
   constructor(
     public http: Http,
-    public apiProvider: ApiProvider
+    public apiProvider: ApiProvider,
+    public usuarioProvider: UsuarioProvider
     ){
 
     }
@@ -29,11 +31,10 @@ export class FormulariosProvider {
     return this.apiProvider.post(body);
   }
   //----------------------------------------------------------------------------
-  listaDeAgentes(officeId:any){
-    let body    :   string  =   'm=agents&office=' + officeId,
-        header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
-        options :   any     =   new RequestOptions({headers: header});
-    return this.http.post(this.url, body, options);
+  //Lista los agentes de la oficina seleccionada
+  listaDeAgentes(officeId:any,idUser: any,token: any){
+    var body    :   string  =   'm=agents&office=' + officeId + '&user=' + idUser + '&token=' + token;
+    return this.apiProvider.post(body);
   }
   //----------------------------------------------------------------------------
   //Lista de lenguajes disponbibles

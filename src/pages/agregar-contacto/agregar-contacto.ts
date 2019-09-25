@@ -13,10 +13,10 @@ import { UsuarioProvider } from '../../providers/usuario/usuario';
 })
 
 export class AgregarContactoPage {
-  public generalForm     : FormGroup;
-  public contactForm    : FormGroup;
+  public generalForm  : FormGroup;
+  public contactForm  : FormGroup;
   public fDelContacto : FormGroup;
-  public fAgente      : FormGroup;
+  public agentForm    : FormGroup;
   public fBusca       : FormGroup;
   public fInmueble    : FormGroup;
   look                : Boolean = false;
@@ -26,8 +26,8 @@ export class AgregarContactoPage {
   cliente_busca       : any = [];
   mediosDeContacto    : any = [];
   subMediosDeContactos: any = [];
-  listaDeOficinas     : any = [];
-  agentesDeOficina    : any = [];
+  officesList         : any = [];
+  officeAgents        : any = [];
   listaDeLenguajes    : any = [];
   listaDeCiudades     : any = [];
   listaDePaises       : any = [];
@@ -39,7 +39,7 @@ export class AgregarContactoPage {
   datosAgregar        :any  = {};
   idUsuario           :any;
   media_extra         :any;
-  generalData      :any  = [];
+  generalData         :any  = [];
   aux                 :any  = [];
   constructor(
     public navCtrl: NavController,
@@ -57,6 +57,9 @@ export class AgregarContactoPage {
       console.log(data);
     });
     //Formulario datos generales
+    ///---------------------------------
+    //CAmbiar los nombres de los formcontrol porque
+    //son los que se usan para mandar a la API
     this.generalForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       lastNameF: ['', [Validators.required]],
@@ -72,29 +75,28 @@ export class AgregarContactoPage {
       comments: ['', Validators.required]
     });
     //
-    this.fAgente = this.formBuilder.group({
-      officinaA: ['', Validators.required],
-      asesorA: ['', Validators.required]
+    this.agentForm = this.formBuilder.group({
+      officeAgent: ['', Validators.required],
+      adviseAgent: ['', Validators.required]
     });
     //Datos de Opcion: Referencias y Otro
-    this.generalData.rephId = '';
+    /*this.generalData.rephId = '';
     this.generalData.rephEmail = '';
     this.generalData.rephTel = '';
-    this.generalData.rephAgency = '';
+    this.generalData.rephAgency = '';*/
     //
     this.generalData.subcontacto = '';
     this.generalData.online = 1;
     this.generalData.office = '';
     this.generalData.user = '';
     this.generalData.companyid = this.usuarioProvider.companyid;
-
   }
   //----------------------------------------------------------------------------
   //Obtiene antes de entrar a la página
   ionViewCanEnter() {
     var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
       offices.subscribe(data=>{
-        this.listaDeOficinas = data.json().data.userOffice;
+        this.officesList = data.json().data.userOffice;
      });
      //
     var cities = this.formularioProvider.listaDeCiudad(this.usuarioProvider.datos.companyid);
@@ -172,7 +174,6 @@ export class AgregarContactoPage {
     var subContacts = this.formularioProvider.subMediosDeContactos(this.contactForm.value.contactMedia);
       subContacts.subscribe(data=>{
       this.subMediosDeContactos = data.json().data;
-      console.log(this.subMediosDeContactos);
       });
     }
   //----------------------------------------------------------------------------
@@ -180,6 +181,7 @@ export class AgregarContactoPage {
   detailValidation(){
     this.media_extra = this.contactForm.value.contactMedia
     if(this.media_extra == 3 || this.media_extra == 7){
+      this.generalData.other = '';
       this.contactForm.addControl('brokerName', new FormControl('', Validators.required));
       this.contactForm.addControl('brokerEmail', new FormControl('',Validators.email));
       this.contactForm.addControl('brokerTel', new FormControl(''));
@@ -195,6 +197,7 @@ export class AgregarContactoPage {
         this.contactForm.removeControl('brokerAgency');
         this.contactForm.addControl('Other', new FormControl('', Validators.required));
     }else{
+      this.generalData.other = '';
       this.generalData.rephId = '';
       this.generalData.rephEmail = '';
       this.generalData.rephTel = '';
@@ -211,7 +214,7 @@ export class AgregarContactoPage {
   lookingForForm(){
     var size = Object.keys(this.aux).length;
     if(size > 0){
-      if(this.aux.busca_c || this.aux.busca_r){
+      if(this.aux.lookToBuy || this.aux.lookToRent){
         var clienteB = document.getElementById('busca');
         var compradores = document.getElementById('enlista');
         clienteB.style.display = "none";
@@ -277,76 +280,75 @@ export class AgregarContactoPage {
 
   }
   //----------------------------------------------------------------------------
+  //Recopilar los datos del formulario y agregarlo
+  addContact(){
+    if(this.aux.lookToBuy && this.generalData.lookToRent){
+      this.generalData.lookfor = 'CR';
+    }else if(this.aux.lookToBuy){
+      this.generalData.lookfor = 'C';
+    }else if(this.aux.lookToRent){
+      this.generalData.lookfor = 'R';
+    }
 
-agregarContacto(){
-  if(this.aux.busca_c && this.generalData.busca_r){
-    this.generalData.lookfor = 'CR';
-  } else if(this.aux.busca_c){
-    this.generalData.lookfor = 'C';
-  }else if(this.aux.busca_r){
-    this.generalData.lookfor = 'R';
+    if(this.aux.listSales && this.aux.listRents){
+      this.generalData.lookOther = 'VR';
+    }else if(this.aux.listSales){
+      this.generalData.lookOther = 'V';
+    }else if(this.aux.listRents){
+      this.generalData.lookOther = 'R';
+    }
+
+    if(this.generalData.office != '' && this.generalData.user != ''){
+      var UrlData = '';
+      var datos = this.generalData;
+      Object.keys(datos).forEach(function(key){
+        UrlData += '&' + key + '=' + datos[key];
+      })
+      console.log(this.generalData);
+      var loader = this.loadingCtrl.create({
+        dismissOnPageChange: false
+      });
+      var agregarContacto = this.usuarioProvider.agregarPreregistro(this.generalData);
+      /*agregarContacto.subscribe(data => {
+        if(data.status == 200){
+          loader.dismiss();
+          this.successAlert();
+          this.navCtrl.pop();
+        }
+      })
+      */
+    }else{
+      this.warningAlert();
+    }
   }
-
-  if(this.aux.listar_v && this.aux.listar_r){
-    this.generalData.lookfor1 = 'VR';
-  }else if(this.aux.listar_v){
-    this.generalData.lookfor1 = 'V';
-  }else if(this.aux.listar_r){
-    this.generalData.lookfor1 = 'R';
-  }
-
-  if(this.generalData.office != '' && this.generalData.user != ''){
-
-    var UrlData = '';
-    var datos = this.generalData;
-    Object.keys(datos).forEach(function(key){
-      UrlData += '&' + key + '=' + datos[key];
-    })
-    console.log(this.generalData);
-    var loader = this.loadingCtrl.create({
-      dismissOnPageChange: false
+  //----------------------------------------------------------------------------
+  //Actualiza la lista de agentes de la oficina seleccionada
+  updateAgents(){
+    var officeAgents = this.formularioProvider.listaDeAgentes(this.agentForm.value.officeAgent,this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
+    officeAgents.subscribe(data=>{
+      this.officeAgents = data.json().data;
     });
-
-
-    /*var agregarContacto = this.usuarioProvider.agregarPreregistro(this.generalData);
-    agregarContacto.subscribe(data => {
-      if(data.status == 200){
-        loader.dismiss();
-        const alerta = this.alertCtrl.create({
-          title: 'EXITO',
-          subTitle: 'El contacto ha sido agregado con éxito',
-          buttons: ['ok']
-        });
-        alerta.present();
-        this.navCtrl.pop();
-      }
-    })
-    */
-  }else{
-
+  }
+  //------------------------------------------------------------------------------
+  //Alerta de registro exitoso
+  successAlert(){
+    const alerta = this.alertCtrl.create({
+      title: 'ÉXITO',
+      subTitle: 'El contacto ha sido agregado con éxito',
+      buttons: ['ok']
+    });
+    alerta.present();
+  }
+  //------------------------------------------------------------------------------
+  //Alerta de 'Asesor' u 'Oficina' no seleccionados
+  warningAlert(){
     const alerta = this.alertCtrl.create({
       title: '',
       subTitle: 'El campo Oficina y Asesor son obligatorios',
       buttons: ['ok']
     });
     alerta.present();
-
   }
-
-
-
-}
-
-
-
-actualizarAsesor(){
-
-  var agentesO = this.formularioProvider.listaDeAgentes(this.fAgente.value.officinaA);
-  agentesO.subscribe(data=>{
-    this.agentesDeOficina = data.json().data;
-  });
-
-}
 
 
 }

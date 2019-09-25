@@ -81,9 +81,12 @@ export class UsuarioProvider {
     var body    : string  = 'm=addBuyerPreregister';
         var datos = datos;
         Object.keys(datos).forEach(function(key){
-          body += '&' + key + '=' + datos[key];
+          if(datos[key] != ''){
+            body += '&' + key + '=' + datos[key];
+          }
         })
-    return this.apiProvider.post(body);
+      return console.log(body);
+    //return this.apiProvider.post(body);
   }
   //-------------------------------------------------------------------------------------------------------------
   //Método para enviar un mail

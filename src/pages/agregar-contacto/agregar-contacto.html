@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="header">
-    <ion-title>Agregar Visita</ion-title>
+    <ion-title> Agregar Visita </ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,7 +16,7 @@
           <ion-input [(ngModel)]="generalData.name" type="text" formControlName="name" name="name"></ion-input>
         </ion-item>
         <ion-item class="ErrorMensaje" *ngIf="generalForm.get('name').errors && error">
-          <p color="danger" ion-text *ngIf="generalForm.get('name').hasError('required')">Este campo es necesario</p>
+          <p color="danger" ion-text *ngIf="generalForm.get('name').hasError('required')"> Este campo es necesario </p>
         </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Apellido Paterno <sup>*</sup></ion-label>
@@ -39,11 +39,11 @@
           </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Celular </ion-label>
-          <ion-input [(ngModel)]="generalData.cellphone" type="text" formControlName="cellphone" name="cellphone"></ion-input>
+          <ion-input [(ngModel)]="generalData.cellphone" type="number" formControlName="cellphone" name="cellphone"></ion-input>
         </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Teléfono Casa / Oficina </ion-label>
-          <ion-input [(ngModel)]="generalData.telephone" type="text" formControlName="telephone" name="telephone"></ion-input>
+          <ion-input [(ngModel)]="generalData.telephone" type="number" formControlName="telephone" name="telephone"></ion-input>
         </ion-item>
       <div class="botones">
         <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>
@@ -91,7 +91,7 @@
           </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Teléfono broker </ion-label>
-          <ion-input [(ngModel)]="generalData.rephTel" type="text" formControlName="brokerTel" name="brokerTel"></ion-input>
+          <ion-input [(ngModel)]="generalData.rephTel" type="number" formControlName="brokerTel" name="brokerTel"></ion-input>
         </ion-item>
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Agencia broker </ion-label>
@@ -135,24 +135,24 @@
     <div>
       <ion-item class="formulario">
         <ion-label class="textoLabel"> Comprar </ion-label>
-        <ion-checkbox [(ngModel)]="aux.busca_c" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="aux.lookToBuy" [ngModelOptions]="{standalone: true}"></ion-checkbox>
       </ion-item>
       <ion-item class="formulario">
         <ion-label class="textoLabel"> Rentar </ion-label>
-        <ion-checkbox [(ngModel)]="aux.busca_r" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="aux.lookToRent" [ngModelOptions]="{standalone: true}"></ion-checkbox>
       </ion-item>
       <ion-label>Otro</ion-label>
       <ion-item class="formulario">
         <ion-label class="textoLabel"> Listar Venta </ion-label>
-        <ion-checkbox [(ngModel)]="aux.listar_v" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="aux.listSales" [ngModelOptions]="{standalone: true}"></ion-checkbox>
       </ion-item>
       <ion-item class="formulario">
         <ion-label class="textoLabel"> Listar Renta </ion-label>
-        <ion-checkbox [(ngModel)]="aux.listar_r" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="aux.listRents" [ngModelOptions]="{standalone: true}"></ion-checkbox>
       </ion-item>
       <ion-item class="formulario">
         <ion-label class="textoLabel"> Exclusiva </ion-label>
-        <ion-checkbox [(ngModel)]="aux.exclusiva" [ngModelOptions]="{standalone: true}"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="aux.exclusive" [ngModelOptions]="{standalone: true}"></ion-checkbox>
       </ion-item>
     </div>
 
@@ -167,18 +167,18 @@
 
 <h1 class="cabecera"> Agente que enlista </h1>
 <div id="enlista" padding class="enlista">
-  <form (ngSubmit)="agregarContacto()" [formGroup]="fAgente">
+  <form (ngSubmit)="addContact()" [formGroup]="agentForm">
 
       <ion-item class="formulario">
         <ion-label class="textoLabel"> Officina <sup>*</sup></ion-label>
-        <ion-select [(ngModel)]="generalData.office" (ionChange)="actualizarAsesor()" name="propiedad" formControlName="officinaA">
-          <ion-option *ngFor="let oficina of listaDeOficinas" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>
+        <ion-select [(ngModel)]="generalData.office" (ionChange)="updateAgents()" name="propiedad" formControlName="officeAgent">
+          <ion-option *ngFor="let oficina of officesList" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>
         </ion-select>
       </ion-item>
       <ion-item class="formulario">
         <ion-label class="textoLabel"> Asesor <sup>*</sup></ion-label>
-        <ion-select [(ngModel)]="generalData.user" name="propiedad" formControlName="asesorA">
-          <ion-option *ngFor="let agente of agentesDeOficina" value="{{agente.userid}}">{{agente.fullname}}</ion-option>
+        <ion-select [(ngModel)]="generalData.user" name="propiedad" formControlName="adviseAgent">
+          <ion-option *ngFor="let agente of officeAgents" value="{{agente.userid}}">{{agente.fullname}}</ion-option>
         </ion-select>
       </ion-item>
       <div class="botones">
