@@ -68,8 +68,8 @@ export class GeneralFormPage {
         this.logData = data;
         this.dateActivateBuyer.companyid = data.companyid;
         this.dateActivateBuyer.office = data.officeid;
-        var agentesO = this.formularioProvider.listaDeAgentes(this.logData.officeid);
-        agentesO.subscribe(data=>{
+        //var agentesO = this.formularioProvider.listaDeAgentes(this.logData.officeid);
+        /*agentesO.subscribe(data=>{
           this.agentesDeOficina = data.json().data;
         });
 
@@ -86,7 +86,7 @@ export class GeneralFormPage {
         var agentesO = this.formularioProvider.listaDeActividades();
         agentesO.subscribe(data=>{
           this.activities = data.json().data;
-        });
+        });*/
       });
 
     this.type = this.navParams.get('id');
@@ -202,7 +202,7 @@ export class GeneralFormPage {
             this.navCtrl.pop();
           }
 
-          
+
         })
 
       } else {
@@ -236,7 +236,7 @@ export class GeneralFormPage {
           this.navCtrl.pop();
         }
 
-        
+
       })
 
 
@@ -261,7 +261,7 @@ export class GeneralFormPage {
   }
 
   openSearch(){
-  
+
     var element = document.getElementById('search');
     element.style.display = 'block';
 
@@ -325,7 +325,7 @@ export class GeneralFormPage {
         this.navCtrl.pop();
       }
 
-      
+
     })
 
   }

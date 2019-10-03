@@ -4,384 +4,6 @@ webpackJsonp([26],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgregarContactoPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__ = __webpack_require__(69);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__ = __webpack_require__(18);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-var AgregarContactoPage = /** @class */ (function () {
-    function AgregarContactoPage(navCtrl, navParams, formBuilder, formularioProvider, storage, usuarioProvider, contactoProvider, loadingCtrl, alertCtrl) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.formBuilder = formBuilder;
-        this.formularioProvider = formularioProvider;
-        this.storage = storage;
-        this.usuarioProvider = usuarioProvider;
-        this.contactoProvider = contactoProvider;
-        this.loadingCtrl = loadingCtrl;
-        this.alertCtrl = alertCtrl;
-        this.look = false;
-        this.flag = false;
-        this.formulario = {};
-        this.error = false;
-        this.cliente_busca = [];
-        this.mediosDeContacto = [];
-        this.subMediosDeContactos = [];
-        this.officesList = [];
-        this.officeAgents = [];
-        this.listaDeLenguajes = [];
-        this.listaDeCiudades = [];
-        this.listaDePaises = [];
-        this.listaDeEstados = [];
-        this.datosFG = {};
-        this.datosMC = {};
-        this.datosCB = {};
-        this.datosAgregar = {};
-        this.generalData = [];
-        this.aux = [];
-        this.storage.get('dataUser').then(function (data) {
-            console.log(data);
-        });
-        //Formulario datos generales
-        ///---------------------------------
-        //CAmbiar los nombres de los formcontrol porque
-        //son los que se usan para mandar a la API
-        this.generalForm = this.formBuilder.group({
-            name: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
-            lastNameF: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
-            lastNameM: [''],
-            email: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-            cellphone: [''],
-            telephone: ['']
-        });
-        //Formulario Medio de Contacto
-        this.contactForm = this.formBuilder.group({
-            contactMedia: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
-            contactDetail: [''],
-            comments: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
-        });
-        //
-        this.agentForm = this.formBuilder.group({
-            officeAgent: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
-            adviseAgent: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
-        });
-        //Datos de Opcion: Referencias y Otro
-        /*this.generalData.rephId = '';
-        this.generalData.rephEmail = '';
-        this.generalData.rephTel = '';
-        this.generalData.rephAgency = '';*/
-        //
-        this.generalData.subcontacto = '';
-        this.generalData.online = 1;
-        this.generalData.office = '';
-        this.generalData.user = '';
-        this.generalData.companyid = this.usuarioProvider.companyid;
-    }
-    //----------------------------------------------------------------------------
-    //Obtiene antes de entrar a la página
-    AgregarContactoPage.prototype.ionViewCanEnter = function () {
-        var _this = this;
-        var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
-        offices.subscribe(function (data) {
-            _this.officesList = data.json().data.userOffice;
-        });
-        //
-        var cities = this.formularioProvider.listaDeCiudad(this.usuarioProvider.datos.companyid);
-        cities.subscribe(function (data) {
-            _this.listaDeCiudades = data.json().data;
-        });
-        //
-        var contacts = this.formularioProvider.mediosDeContactos();
-        contacts.subscribe(function (data) {
-            _this.mediosDeContacto = data.json().data;
-        });
-        //
-        var languages = this.formularioProvider.listaDeLenguajes();
-        languages.subscribe(function (data) {
-            _this.listaDeLenguajes = data.json().data;
-        });
-        //
-        var countries = this.formularioProvider.listaDePaises();
-        countries.subscribe(function (data) {
-            _this.listaDePaises = data.json().data;
-        });
-    };
-    //----------------------------------------------------------------------------
-    //Valida la sección "Datos Generales"
-    AgregarContactoPage.prototype.generalDataForm = function () {
-        this.error = true;
-        if (this.generalForm.get('email').hasError('required')) {
-            this.flag = false;
-        }
-        else {
-            this.flag = true;
-        }
-        if (!this.generalForm.get('name').hasError('required') && !this.generalForm.get('lastNameF').hasError('required') && this.generalForm.get('email').valid) {
-            var contactoH = document.getElementById('contacto');
-            var generalesH = document.getElementById('generales');
-            contactoH.style.display = "block";
-            generalesH.style.display = "none";
-            this.error = false;
-        }
-        else { }
-    };
-    //----------------------------------------------------------------------------
-    //Formulario Medios de contacto
-    AgregarContactoPage.prototype.contactDataForm = function () {
-        this.error = true;
-        if ((this.contactForm.value.contactMedia == 3 || this.contactForm.value.contactMedia == 7)) {
-            if (!this.contactForm.get('brokerName').hasError('required') && !this.contactForm.get('brokerEmail').hasError('email') && !this.contactForm.get('comments').hasError('required')) {
-                var contactoH = document.getElementById('contacto');
-                var clienteB = document.getElementById('busca');
-                contactoH.style.display = "none";
-                clienteB.style.display = "block";
-                this.error = false;
-            }
-        }
-        else if ((this.contactForm.value.contactMedia == 6)) {
-            if (!this.contactForm.get('Other').hasError('required')) {
-                var contactoH = document.getElementById('contacto');
-                var clienteB = document.getElementById('busca');
-                contactoH.style.display = "none";
-                clienteB.style.display = "block";
-                this.error = false;
-            }
-        }
-        else {
-            if (!this.contactForm.get('contactMedia').hasError('required') && !this.contactForm.get('contactMedia').hasError('required') && !this.contactForm.get('comments').hasError('required')) {
-                var contactoH = document.getElementById('contacto');
-                var clienteB = document.getElementById('busca');
-                contactoH.style.display = "none";
-                clienteB.style.display = "block";
-                this.error = false;
-            }
-        }
-    };
-    //----------------------------------------------------------------------------
-    //Actualiza el Select de Opciones de medio de contacto
-    AgregarContactoPage.prototype.detailUpdate = function () {
-        var _this = this;
-        var subContacts = this.formularioProvider.subMediosDeContactos(this.contactForm.value.contactMedia);
-        subContacts.subscribe(function (data) {
-            _this.subMediosDeContactos = data.json().data;
-        });
-    };
-    //----------------------------------------------------------------------------
-    //Cambia la lista de detalles dependiendo del Medio de Contacto y Elimina FormControls innecesarios
-    AgregarContactoPage.prototype.detailValidation = function () {
-        this.media_extra = this.contactForm.value.contactMedia;
-        if (this.media_extra == 3 || this.media_extra == 7) {
-            this.generalData.other = '';
-            this.contactForm.addControl('brokerName', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
-            this.contactForm.addControl('brokerEmail', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email));
-            this.contactForm.addControl('brokerTel', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
-            this.contactForm.addControl('brokerAgency', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
-        }
-        else if (this.media_extra == 6) {
-            this.generalData.rephId = '';
-            this.generalData.rephEmail = '';
-            this.generalData.rephTel = '';
-            this.generalData.rephAgency = '';
-            this.contactForm.removeControl('brokerName');
-            this.contactForm.removeControl('brokerEmail');
-            this.contactForm.removeControl('brokerTel');
-            this.contactForm.removeControl('brokerAgency');
-            this.contactForm.addControl('Other', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
-        }
-        else {
-            this.generalData.other = '';
-            this.generalData.rephId = '';
-            this.generalData.rephEmail = '';
-            this.generalData.rephTel = '';
-            this.generalData.rephAgency = '';
-            this.contactForm.removeControl('brokerName');
-            this.contactForm.removeControl('brokerEmail');
-            this.contactForm.removeControl('brokerTel');
-            this.contactForm.removeControl('brokerAgency');
-            this.contactForm.removeControl('Other');
-        }
-    };
-    //----------------------------------------------------------------------------
-    //Formulario de que busca el usuario
-    AgregarContactoPage.prototype.lookingForForm = function () {
-        var size = Object.keys(this.aux).length;
-        if (size > 0) {
-            if (this.aux.lookToBuy || this.aux.lookToRent) {
-                var clienteB = document.getElementById('busca');
-                var compradores = document.getElementById('enlista');
-                clienteB.style.display = "none";
-                compradores.style.display = "block";
-            }
-            else {
-                this.look = true;
-            }
-        }
-        else {
-            this.look = true;
-        }
-    };
-    //----------------------------------------------------------------------------
-    //Regresa a formularios anteriores
-    AgregarContactoPage.prototype.goBack = function (index) {
-        switch (index) {
-            case "general": {
-                break;
-            }
-            case "contact": {
-                var contactoH = document.getElementById('contacto');
-                var generalesH = document.getElementById('generales');
-                contactoH.style.display = "none";
-                generalesH.style.display = "block";
-                break;
-            }
-            case "busca": {
-                var clienteB = document.getElementById('busca');
-                var contacto = document.getElementById('contacto');
-                clienteB.style.display = "none";
-                contacto.style.display = "block";
-                break;
-            }
-            case "compradores": {
-                var compradores = document.getElementById('compradores');
-                var busca = document.getElementById('busca');
-                compradores.style.display = "none";
-                busca.style.display = "block";
-                break;
-            }
-            case "financiera": {
-                var financiera = document.getElementById('financiera');
-                var compradores = document.getElementById('compradores');
-                financiera.style.display = "none";
-                compradores.style.display = "block";
-                break;
-            }
-            case "inmueble": {
-                var inmueble = document.getElementById('inmueble');
-                var financiera = document.getElementById('financiera');
-                inmueble.style.display = "none";
-                financiera.style.display = "block";
-                break;
-            }
-            case "enlista": {
-                var enlista = document.getElementById('enlista');
-                var inmueble = document.getElementById('busca');
-                enlista.style.display = "none";
-                inmueble.style.display = "block";
-                break;
-            }
-        }
-    };
-    //----------------------------------------------------------------------------
-    //Recopilar los datos del formulario y agregarlo
-    AgregarContactoPage.prototype.addContact = function () {
-        if (this.aux.lookToBuy && this.generalData.lookToRent) {
-            this.generalData.lookfor = 'CR';
-        }
-        else if (this.aux.lookToBuy) {
-            this.generalData.lookfor = 'C';
-        }
-        else if (this.aux.lookToRent) {
-            this.generalData.lookfor = 'R';
-        }
-        if (this.aux.listSales && this.aux.listRents) {
-            this.generalData.lookOther = 'VR';
-        }
-        else if (this.aux.listSales) {
-            this.generalData.lookOther = 'V';
-        }
-        else if (this.aux.listRents) {
-            this.generalData.lookOther = 'R';
-        }
-        if (this.generalData.office != '' && this.generalData.user != '') {
-            var UrlData = '';
-            var datos = this.generalData;
-            Object.keys(datos).forEach(function (key) {
-                UrlData += '&' + key + '=' + datos[key];
-            });
-            console.log(this.generalData);
-            var loader = this.loadingCtrl.create({
-                dismissOnPageChange: false
-            });
-            var agregarContacto = this.usuarioProvider.agregarPreregistro(this.generalData);
-            /*agregarContacto.subscribe(data => {
-              if(data.status == 200){
-                loader.dismiss();
-                this.successAlert();
-                this.navCtrl.pop();
-              }
-            })
-            */
-        }
-        else {
-            this.warningAlert();
-        }
-    };
-    //----------------------------------------------------------------------------
-    //Actualiza la lista de agentes de la oficina seleccionada
-    AgregarContactoPage.prototype.updateAgents = function () {
-        var _this = this;
-        var officeAgents = this.formularioProvider.listaDeAgentes(this.agentForm.value.officeAgent, this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
-        officeAgents.subscribe(function (data) {
-            _this.officeAgents = data.json().data;
-        });
-    };
-    //------------------------------------------------------------------------------
-    //Alerta de registro exitoso
-    AgregarContactoPage.prototype.successAlert = function () {
-        var alerta = this.alertCtrl.create({
-            title: 'ÉXITO',
-            subTitle: 'El contacto ha sido agregado con éxito',
-            buttons: ['ok']
-        });
-        alerta.present();
-    };
-    //------------------------------------------------------------------------------
-    //Alerta de 'Asesor' u 'Oficina' no seleccionados
-    AgregarContactoPage.prototype.warningAlert = function () {
-        var alerta = this.alertCtrl.create({
-            title: '',
-            subTitle: 'El campo Oficina y Asesor son obligatorios',
-            buttons: ['ok']
-        });
-        alerta.present();
-    };
-    AgregarContactoPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-agregar-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/'<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title> Agregar Visita </ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content>\n\n\n\n  <h1 class="cabecera"> Datos Generales </h1>\n\n  <div id="generales" padding class="generales">\n\n    <form (ngSubmit)="generalDataForm()" [formGroup]="generalForm">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.name" type="text" formControlName="name" name="name"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'name\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'name\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Paterno <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.lastNameF" type="text" formControlName="lastNameF" name="lastNameF"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'lastNameF\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'lastNameF\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Materno </ion-label>\n\n          <ion-input [(ngModel)]="generalData.lastNameM" type="text" formControlName="lastNameM" name="lastNameM"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.email" type="email" formControlName="email" name="email"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'email\').errors && error">\n\n            <p color="danger" ion-text *ngIf="generalForm.get(\'email\').hasError(\'required\')"> Este campo es necesario </p>\n\n            <p color="danger" ion-text *ngIf="!generalForm.get(\'email\').valid && flag"> Este no es un correo válido </p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Celular </ion-label>\n\n          <ion-input [(ngModel)]="generalData.cellphone" type="number" formControlName="cellphone" name="cellphone"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono Casa / Oficina </ion-label>\n\n          <ion-input [(ngModel)]="generalData.telephone" type="number" formControlName="telephone" name="telephone"></ion-input>\n\n        </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n      </div>\n\n  </form>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Medio de Contacto </h1>\n\n<div padding id="contacto" class="contacto">\n\n  <form (ngSubmit)="contactDataForm()" [formGroup]="contactForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Medio de contacto <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.contacto" name="propiedad" (ionChange)="detailValidation()" formControlName="contactMedia" (ionChange)="detailUpdate()">\n\n          <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'contactMedia\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'contactMedia\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n      <ion-item *ngIf="subMediosDeContactos != 0" class="formulario">\n\n        <ion-label class="textoLabel"> Detalle </ion-label>\n\n        <ion-select [(ngModel)]="generalData.subcontacto" name="propiedad" formControlName="contactDetail">\n\n          <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <div *ngIf="media_extra == 3 || media_extra == 7">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre del broker <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.rephId" type="text" formControlName="brokerName" name="brokerName"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'brokerName\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'brokerName\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.rephEmail" type="text" formControlName="brokerEmail" name="brokerEmail"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'brokerEmail\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'brokerEmail\').hasError(\'required\')"> Este campo es necesario</p>\n\n            <p color="danger" ion-text *ngIf="!contactForm.get(\'brokerEmail\').valid && flag"> Este no es un correo válido</p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.rephTel" type="number" formControlName="brokerTel" name="brokerTel"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Agencia broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.rephAgency" type="text" formControlName="brokerAgency" name="brokerAgency"></ion-input>\n\n        </ion-item>\n\n      </div>\n\n      <div *ngIf="media_extra == 6">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Otro <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.other" type="text" formControlName="Other"  name="Other"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'Other\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'Other\').hasError(\'required\')">  Este campo es necesario </p>\n\n          </ion-item>\n\n      </div>\n\n      <ion-item>\n\n        <ion-label style="font-size: 13px" floating> Comentarios <sup>*</sup></ion-label>\n\n        <ion-textarea [(ngModel)]="generalData.comments" formControlName="comments" style="height: 60px;" name="comments" type="text"></ion-textarea>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'comments\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'comments\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n    <div class="botones">\n\n      <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n    </div>\n\n</form>\n\n<button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'contact\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera" color="dark"> Busco </h1>\n\n<div id="busca" padding class="busca">\n\n  <form (ngSubmit)="lookingForForm()" novalidate>\n\n    <ion-label>\n\n      Operación <sup>*</sup>\n\n    </ion-label>\n\n    <ion-label color="danger" *ngIf="this.look == true">\n\n      Seleccione por lo menos una Operación\n\n    </ion-label>\n\n    <div>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Comprar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.lookToBuy" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Rentar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.lookToRent" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-label>Otro</ion-label>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Venta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listSales" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Renta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listRents" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Exclusiva </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.exclusive" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n    </div>\n\n\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'busca\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Agente que enlista </h1>\n\n<div id="enlista" padding class="enlista">\n\n  <form (ngSubmit)="addContact()" [formGroup]="agentForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Officina <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.office" (ionChange)="updateAgents()" name="propiedad" formControlName="officeAgent">\n\n          <ion-option *ngFor="let oficina of officesList" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Asesor <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.user" name="propiedad" formControlName="adviseAgent">\n\n          <ion-option *ngFor="let agente of officeAgents" value="{{agente.userid}}">{{agente.fullname}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Agregar </button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'enlista\')"> Regresar </button>\n\n</div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/,
-        }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _j || Object])
-    ], AgregarContactoPage);
-    return AgregarContactoPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
-}());
-
-//# sourceMappingURL=agregar-contacto.js.map
-
-/***/ }),
-
-/***/ 148:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgregarTareaPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
@@ -554,7 +176,7 @@ var AgregarTareaPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 149:
+/***/ 148:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -563,7 +185,7 @@ var AgregarTareaPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_paginas__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__agregar_contacto_agregar_contacto__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__agregar_contacto_agregar_contacto__ = __webpack_require__(149);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_usuario_usuario__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_contactos_contactos__ = __webpack_require__(47);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -672,6 +294,7 @@ var ContactosPage = /** @class */ (function () {
         var promise = this.contactosProvider.getContactsList(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
         promise.subscribe(function (data) {
             _this.contactos = data.json().data;
+            console.log(_this.contactos);
         });
     };
     //----------------------------------------------------------------------------
@@ -706,6 +329,378 @@ var ContactosPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=contactos.js.map
+
+/***/ }),
+
+/***/ 149:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgregarContactoPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__ = __webpack_require__(18);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+var AgregarContactoPage = /** @class */ (function () {
+    function AgregarContactoPage(navCtrl, navParams, formBuilder, formularioProvider, storage, usuarioProvider, contactoProvider, loadingCtrl, alertCtrl) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.formBuilder = formBuilder;
+        this.formularioProvider = formularioProvider;
+        this.storage = storage;
+        this.usuarioProvider = usuarioProvider;
+        this.contactoProvider = contactoProvider;
+        this.loadingCtrl = loadingCtrl;
+        this.alertCtrl = alertCtrl;
+        this.look = false;
+        this.flag = false;
+        this.formulario = {};
+        this.error = false;
+        this.cliente_busca = [];
+        this.mediosDeContacto = [];
+        this.subMediosDeContactos = [];
+        this.officesList = [];
+        this.officeAgents = [];
+        this.listaDeLenguajes = [];
+        this.listaDeCiudades = [];
+        this.listaDePaises = [];
+        this.listaDeEstados = [];
+        this.datosAgregar = {};
+        this.generalData = [];
+        this.aux = [];
+        this.storage.get('dataUser').then(function (data) {
+            console.log(data);
+        });
+        //Formulario datos generales
+        this.generalForm = this.formBuilder.group({
+            nombre: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
+            ap_paterno: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
+            ap_materno: [''],
+            email: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+            cel: [''],
+            tel: ['']
+        });
+        //Formulario Medio de Contacto
+        this.contactForm = this.formBuilder.group({
+            contacto: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
+            subcontacto: [''],
+            comentarios: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
+        });
+        //Formulario Agente
+        this.agentForm = this.formBuilder.group({
+            office: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
+            user: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]
+        });
+        //Datos de Opcion: Referencias y Otro
+        /*this.generalData.rephId = '';
+        this.generalData.rephEmail = '';
+        this.generalData.rephTel = '';
+        this.generalData.rephAgency = '';*/
+        //
+        this.generalData.subcontacto = '';
+        this.generalData.online = 1;
+        this.generalData.office = '';
+        this.generalData.user = '';
+        this.generalData.companyid = this.usuarioProvider.companyid;
+    }
+    //----------------------------------------------------------------------------
+    //Obtiene antes de entrar a la página
+    AgregarContactoPage.prototype.ionViewCanEnter = function () {
+        var _this = this;
+        var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
+        offices.subscribe(function (data) {
+            _this.officesList = data.json().data.userOffice;
+        });
+        //
+        var cities = this.formularioProvider.listaDeCiudad(this.usuarioProvider.datos.companyid);
+        cities.subscribe(function (data) {
+            _this.listaDeCiudades = data.json().data;
+        });
+        //
+        var contacts = this.formularioProvider.mediosDeContactos();
+        contacts.subscribe(function (data) {
+            _this.mediosDeContacto = data.json().data;
+        });
+        //
+        var languages = this.formularioProvider.listaDeLenguajes();
+        languages.subscribe(function (data) {
+            _this.listaDeLenguajes = data.json().data;
+        });
+        //
+        var countries = this.formularioProvider.listaDePaises();
+        countries.subscribe(function (data) {
+            _this.listaDePaises = data.json().data;
+        });
+    };
+    //----------------------------------------------------------------------------
+    //Valida la sección "Datos Generales"
+    AgregarContactoPage.prototype.generalDataForm = function () {
+        this.error = true;
+        if (this.generalForm.get('email').hasError('required')) {
+            this.flag = false;
+        }
+        else {
+            this.flag = true;
+        }
+        if (!this.generalForm.get('nombre').hasError('required') && !this.generalForm.get('ap_paterno').hasError('required') && this.generalForm.get('email').valid) {
+            var contactoH = document.getElementById('contacto');
+            var generalesH = document.getElementById('generales');
+            contactoH.style.display = "block";
+            generalesH.style.display = "none";
+            this.error = false;
+        }
+        else { }
+    };
+    //----------------------------------------------------------------------------
+    //Formulario Medios de contacto
+    AgregarContactoPage.prototype.contactDataForm = function () {
+        this.error = true;
+        if ((this.contactForm.value.contacto == 3 || this.contactForm.value.contacto == 7)) {
+            if (!this.contactForm.get('referid').hasError('required') && !this.contactForm.get('referral_mail').hasError('email') && !this.contactForm.get('comentarios').hasError('required')) {
+                var contactoH = document.getElementById('contacto');
+                var clienteB = document.getElementById('busca');
+                contactoH.style.display = "none";
+                clienteB.style.display = "block";
+                this.error = false;
+            }
+        }
+        else if ((this.contactForm.value.contacto == 6)) {
+            if (!this.contactForm.get('otro_camp').hasError('required')) {
+                var contactoH = document.getElementById('contacto');
+                var clienteB = document.getElementById('busca');
+                contactoH.style.display = "none";
+                clienteB.style.display = "block";
+                this.error = false;
+            }
+        }
+        else {
+            if (!this.contactForm.get('contacto').hasError('required') && !this.contactForm.get('contacto').hasError('required') && !this.contactForm.get('comentarios').hasError('required')) {
+                var contactoH = document.getElementById('contacto');
+                var clienteB = document.getElementById('busca');
+                contactoH.style.display = "none";
+                clienteB.style.display = "block";
+                this.error = false;
+            }
+        }
+    };
+    //----------------------------------------------------------------------------
+    //Actualiza el Select de Opciones de medio de contacto
+    AgregarContactoPage.prototype.detailUpdate = function () {
+        var _this = this;
+        var subContacts = this.formularioProvider.subMediosDeContactos(this.contactForm.value.contacto);
+        subContacts.subscribe(function (data) {
+            _this.subMediosDeContactos = data.json().data;
+        });
+    };
+    //----------------------------------------------------------------------------
+    //Cambia la lista de detalles dependiendo del Medio de Contacto y Elimina FormControls innecesarios
+    AgregarContactoPage.prototype.detailValidation = function () {
+        this.media_extra = this.contactForm.value.contacto;
+        if (this.media_extra == 3 || this.media_extra == 7) {
+            this.generalData.otro_camp = '';
+            this.contactForm.addControl('referid', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
+            this.contactForm.addControl('referral_mail', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email));
+            this.contactForm.addControl('referral_phone', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
+            this.contactForm.addControl('referral_agency', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */](''));
+        }
+        else if (this.media_extra == 6) {
+            this.generalData.referid = '';
+            this.generalData.referral_email = '';
+            this.generalData.referral_phone = '';
+            this.generalData.referral_agency = '';
+            this.contactForm.removeControl('referid');
+            this.contactForm.removeControl('referral_mail');
+            this.contactForm.removeControl('referral_phone');
+            this.contactForm.removeControl('referral_agency');
+            this.contactForm.addControl('otro_camp', new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
+        }
+        else {
+            this.generalData.otro_camp = '';
+            this.generalData.referid = '';
+            this.generalData.referral_mail = '';
+            this.generalData.referral_phone = '';
+            this.generalData.referral_agency = '';
+            this.contactForm.removeControl('referid');
+            this.contactForm.removeControl('referral_mail');
+            this.contactForm.removeControl('referral_phone');
+            this.contactForm.removeControl('referral_agency');
+            this.contactForm.removeControl('otro_camp');
+        }
+    };
+    //----------------------------------------------------------------------------
+    //Formulario de que busca el usuario
+    AgregarContactoPage.prototype.lookingForForm = function () {
+        var size = Object.keys(this.aux).length;
+        if (size > 0) {
+            if (this.aux.lookToBuy || this.aux.lookToRent) {
+                var clienteB = document.getElementById('busca');
+                var compradores = document.getElementById('enlista');
+                clienteB.style.display = "none";
+                compradores.style.display = "block";
+            }
+            else {
+                this.look = true;
+            }
+        }
+        else {
+            this.look = true;
+        }
+    };
+    //----------------------------------------------------------------------------
+    //Regresa a formularios anteriores
+    AgregarContactoPage.prototype.goBack = function (index) {
+        switch (index) {
+            case "general": {
+                break;
+            }
+            case "contact": {
+                var contactoH = document.getElementById('contacto');
+                var generalesH = document.getElementById('generales');
+                contactoH.style.display = "none";
+                generalesH.style.display = "block";
+                break;
+            }
+            case "busca": {
+                var clienteB = document.getElementById('busca');
+                var contacto = document.getElementById('contacto');
+                clienteB.style.display = "none";
+                contacto.style.display = "block";
+                break;
+            }
+            case "compradores": {
+                var compradores = document.getElementById('compradores');
+                var busca = document.getElementById('busca');
+                compradores.style.display = "none";
+                busca.style.display = "block";
+                break;
+            }
+            case "financiera": {
+                var financiera = document.getElementById('financiera');
+                var compradores = document.getElementById('compradores');
+                financiera.style.display = "none";
+                compradores.style.display = "block";
+                break;
+            }
+            case "inmueble": {
+                var inmueble = document.getElementById('inmueble');
+                var financiera = document.getElementById('financiera');
+                inmueble.style.display = "none";
+                financiera.style.display = "block";
+                break;
+            }
+            case "enlista": {
+                var enlista = document.getElementById('enlista');
+                var inmueble = document.getElementById('busca');
+                enlista.style.display = "none";
+                inmueble.style.display = "block";
+                break;
+            }
+        }
+    };
+    //----------------------------------------------------------------------------
+    //Recopilar los datos del formulario y agregarlo
+    AgregarContactoPage.prototype.addContact = function () {
+        var _this = this;
+        if (this.aux.lookToBuy && this.generalData.lookToRent) {
+            this.generalData.lookfor = 'CR';
+        }
+        else if (this.aux.lookToBuy) {
+            this.generalData.lookfor = 'C';
+        }
+        else if (this.aux.lookToRent) {
+            this.generalData.lookfor = 'R';
+        }
+        if (this.aux.listSales && this.aux.listRents) {
+            this.generalData.lookfor1 = 'VR';
+        }
+        else if (this.aux.listSales) {
+            this.generalData.lookfor1 = 'V';
+        }
+        else if (this.aux.listRents) {
+            this.generalData.lookfor1 = 'R';
+        }
+        if (this.generalData.office != '' && this.generalData.user != '') {
+            var UrlData = '';
+            var datos = this.generalData;
+            Object.keys(datos).forEach(function (key) {
+                UrlData += '&' + key + '=' + datos[key];
+            });
+            console.log(this.generalData);
+            var loader = this.loadingCtrl.create({
+                dismissOnPageChange: false
+            });
+            var agregarContacto = this.usuarioProvider.agregarPreregistro(this.generalData);
+            agregarContacto.subscribe(function (data) {
+                if (data.status == 200) {
+                    loader.dismiss();
+                    _this.successAlert();
+                    _this.navCtrl.pop();
+                }
+            });
+        }
+        else {
+            this.warningAlert();
+        }
+    };
+    //----------------------------------------------------------------------------
+    //Actualiza la lista de agentes de la oficina seleccionada
+    AgregarContactoPage.prototype.updateAgents = function () {
+        var _this = this;
+        var officeAgents = this.formularioProvider.listaDeAgentes(this.agentForm.value.office, this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
+        officeAgents.subscribe(function (data) {
+            _this.officeAgents = data.json().data;
+        });
+    };
+    //------------------------------------------------------------------------------
+    //Alerta de registro exitoso
+    AgregarContactoPage.prototype.successAlert = function () {
+        var alerta = this.alertCtrl.create({
+            title: 'ÉXITO',
+            subTitle: 'El contacto ha sido agregado con éxito',
+            buttons: ['ok']
+        });
+        alerta.present();
+    };
+    //------------------------------------------------------------------------------
+    //Alerta de 'Asesor' u 'Oficina' no seleccionados
+    AgregarContactoPage.prototype.warningAlert = function () {
+        var alerta = this.alertCtrl.create({
+            title: '',
+            subTitle: 'El campo Oficina y Asesor son obligatorios',
+            buttons: ['ok']
+        });
+        alerta.present();
+    };
+    AgregarContactoPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-agregar-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/'<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title> Agregar Visita </ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content>\n\n\n\n  <h1 class="cabecera"> Datos Generales </h1>\n\n  <div id="generales" padding class="generales">\n\n    <form (ngSubmit)="generalDataForm()" [formGroup]="generalForm">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.nombre" type="text" formControlName="nombre" name="nombre"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'nombre\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'nombre\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Paterno <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.ap_paterno" type="text" formControlName="ap_paterno" name="ap_paterno"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'ap_paterno\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'ap_paterno\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Materno </ion-label>\n\n          <ion-input [(ngModel)]="generalData.ap_materno" type="text" formControlName="ap_materno" name="ap_materno"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.email" type="email" formControlName="email" name="email"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'email\').errors && error">\n\n            <p color="danger" ion-text *ngIf="generalForm.get(\'email\').hasError(\'required\')"> Este campo es necesario </p>\n\n            <p color="danger" ion-text *ngIf="!generalForm.get(\'email\').valid && flag"> Este no es un correo válido </p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Celular </ion-label>\n\n          <ion-input [(ngModel)]="generalData.cel" type="number" formControlName="cel" name="cel"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono Casa / Oficina </ion-label>\n\n          <ion-input [(ngModel)]="generalData.tel" type="number" formControlName="tel" name="tel"></ion-input>\n\n        </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n      </div>\n\n  </form>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Medio de Contacto </h1>\n\n<div padding id="contacto" class="contacto">\n\n  <form (ngSubmit)="contactDataForm()" [formGroup]="contactForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Medio de contacto <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.contacto" name="propiedad" (ionChange)="detailValidation()" formControlName="contacto" (ionChange)="detailUpdate()">\n\n          <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'contacto\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'contacto\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n      <ion-item *ngIf="subMediosDeContactos != 0" class="formulario">\n\n        <ion-label class="textoLabel"> Detalle </ion-label>\n\n        <ion-select [(ngModel)]="generalData.subcontacto" name="propiedad" formControlName="subcontacto">\n\n          <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <div *ngIf="media_extra == 3 || media_extra == 7">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre del broker <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.referid" type="text" formControlName="referid" name="referid"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'referid\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'referid\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_mail" type="text" formControlName="referral_mail" name="referral_mail"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'referral_mail\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'referral_mail\').hasError(\'required\')"> Este campo es necesario</p>\n\n            <p color="danger" ion-text *ngIf="!contactForm.get(\'referral_mail\').valid && flag"> Este no es un correo válido</p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_phone" type="number" formControlName="referral_phone" name="referral_phone"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Agencia broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_agency" type="text" formControlName="referral_agency" name="referral_agency"></ion-input>\n\n        </ion-item>\n\n      </div>\n\n      <div *ngIf="media_extra == 6">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Otro <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.otro_camp" type="text" formControlName="otro_camp"  name="otro_camp"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'otro_camp\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'otro_camp\').hasError(\'required\')">  Este campo es necesario </p>\n\n          </ion-item>\n\n      </div>\n\n      <ion-item>\n\n        <ion-label style="font-size: 13px" floating> Comentarios <sup>*</sup></ion-label>\n\n        <ion-textarea [(ngModel)]="generalData.comentarios" formControlName="comentarios" style="height: 60px;" name="comentarios" type="text"></ion-textarea>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'comentarios\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'comentarios\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n    <div class="botones">\n\n      <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n    </div>\n\n</form>\n\n<button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'contact\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera" color="dark"> Busco </h1>\n\n<div id="busca" padding class="busca">\n\n  <form (ngSubmit)="lookingForForm()" novalidate>\n\n    <ion-label>\n\n      Operación <sup>*</sup>\n\n    </ion-label>\n\n    <ion-label color="danger" *ngIf="this.look == true">\n\n      Seleccione por lo menos una Operación\n\n    </ion-label>\n\n    <div>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Comprar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.lookToBuy" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Rentar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.lookToRent" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-label>Otro</ion-label>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Venta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listSales" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Renta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listRents" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Exclusiva </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.exclusive" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n    </div>\n\n\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'busca\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Agente que enlista </h1>\n\n<div id="enlista" padding class="enlista">\n\n  <form (ngSubmit)="addContact()" [formGroup]="agentForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Officina <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.office" (ionChange)="updateAgents()" name="propiedad" formControlName="office">\n\n          <ion-option *ngFor="let oficina of officesList" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Asesor <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.user" name="user" formControlName="user">\n\n          <ion-option *ngFor="let agente of officeAgents" value="{{agente.userid}}">{{agente.fullname}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Agregar </button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'enlista\')"> Regresar </button>\n\n</div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/,
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _j || Object])
+    ], AgregarContactoPage);
+    return AgregarContactoPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+}());
+
+//# sourceMappingURL=agregar-contacto.js.map
 
 /***/ }),
 
@@ -896,22 +891,25 @@ var GeneralFormPage = /** @class */ (function () {
             _this.logData = data;
             _this.dateActivateBuyer.companyid = data.companyid;
             _this.dateActivateBuyer.office = data.officeid;
-            var agentesO = _this.formularioProvider.listaDeAgentes(_this.logData.officeid);
-            agentesO.subscribe(function (data) {
-                _this.agentesDeOficina = data.json().data;
+            //var agentesO = this.formularioProvider.listaDeAgentes(this.logData.officeid);
+            /*agentesO.subscribe(data=>{
+              this.agentesDeOficina = data.json().data;
             });
-            var agentesO = _this.formularioProvider.listaDePhases('');
-            agentesO.subscribe(function (data) {
-                _this.phases = data.json().data;
+    
+            var agentesO = this.formularioProvider.listaDePhases('');
+            agentesO.subscribe(data=>{
+              this.phases = data.json().data;
             });
-            var agentesO = _this.formularioProvider.listaDeOperaciones();
-            agentesO.subscribe(function (data) {
-                _this.operations = data.json().data;
+    
+            var agentesO = this.formularioProvider.listaDeOperaciones();
+            agentesO.subscribe(data=>{
+              this.operations = data.json().data;
             });
-            var agentesO = _this.formularioProvider.listaDeActividades();
-            agentesO.subscribe(function (data) {
-                _this.activities = data.json().data;
-            });
+    
+            var agentesO = this.formularioProvider.listaDeActividades();
+            agentesO.subscribe(data=>{
+              this.activities = data.json().data;
+            });*/
         });
         this.type = this.navParams.get('id');
         this.fullname = this.navParams.get('fullname');
@@ -1348,7 +1346,7 @@ var UsuarioProvider = /** @class */ (function () {
                     if (answerLogin == 501) {
                         resolve(false);
                     }
-                    else if ((answerLogin == 200 && dataLogin.companyid == _this.companyid) || dataLogin.companyid == 27) {
+                    else if ((answerLogin == 200 && dataLogin.companyid == _this.companyid) || dataLogin.companyid == 227) {
                         _this.storage.set('userToken', dataLogin.token);
                         _this.storage.set('dataUser', dataLogin);
                         resolve(true);
@@ -1392,15 +1390,15 @@ var UsuarioProvider = /** @class */ (function () {
     //-------------------------------------------------------------------------------------------------------------
     //Método para agregar un preregistro
     UsuarioProvider.prototype.agregarPreregistro = function (datos) {
-        var body = 'm=addBuyerPreregister';
+        var body = 'm=addBuyerPreregister&token=' + this.datos.userToken;
         var datos = datos;
         Object.keys(datos).forEach(function (key) {
             if (datos[key] != '') {
                 body += '&' + key + '=' + datos[key];
             }
         });
-        return console.log(body);
-        //return this.apiProvider.post(body);
+        //return console.log(body);
+        return this.apiProvider.post(body);
     };
     //-------------------------------------------------------------------------------------------------------------
     //Método para enviar un mail
@@ -1441,10 +1439,9 @@ var UsuarioProvider = /** @class */ (function () {
     };
     UsuarioProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__api_api__["a" /* ApiProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__api_api__["a" /* ApiProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["a" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["g" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["g" /* Events */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["o" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["o" /* LoadingController */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_0__api_api__["a" /* ApiProvider */], __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["g" /* Events */], __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["o" /* LoadingController */]])
     ], UsuarioProvider);
     return UsuarioProvider;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=usuario.js.map
@@ -1456,11 +1453,11 @@ var UsuarioProvider = /** @class */ (function () {
 
 var map = {
 	"../pages/agregar-compradores/agregar-compradores.module": [
-		453,
+		452,
 		25
 	],
 	"../pages/agregar-contacto/agregar-contacto.module": [
-		452,
+		459,
 		24
 	],
 	"../pages/agregar-tarea/agregar-tarea.module": [
@@ -1468,15 +1465,15 @@ var map = {
 		23
 	],
 	"../pages/buscar/buscar.module": [
-		455,
+		456,
 		22
 	],
 	"../pages/calendar/calendar.module": [
-		456,
+		453,
 		21
 	],
 	"../pages/contactos/contactos.module": [
-		457,
+		455,
 		20
 	],
 	"../pages/destinos/destinos.module": [
@@ -1484,23 +1481,23 @@ var map = {
 		19
 	],
 	"../pages/documents/documents.module": [
-		459,
+		457,
 		18
 	],
 	"../pages/filtro-resultados/filtro-resultados.module": [
-		460,
+		461,
 		17
 	],
 	"../pages/formulario/formulario.module": [
-		461,
+		460,
 		16
 	],
 	"../pages/general-form/general-form.module": [
-		462,
+		463,
 		15
 	],
 	"../pages/info/info.module": [
-		463,
+		462,
 		14
 	],
 	"../pages/lead-pickead-pick/lead-pickead-pick.module": [
@@ -1516,7 +1513,7 @@ var map = {
 		11
 	],
 	"../pages/registrar/registrar.module": [
-		467,
+		469,
 		10
 	],
 	"../pages/resultados/resultados.module": [
@@ -1524,23 +1521,23 @@ var map = {
 		9
 	],
 	"../pages/seguimiento/seguimiento.module": [
-		469,
+		467,
 		8
 	],
 	"../pages/sharing/sharing.module": [
-		470,
+		471,
 		7
 	],
 	"../pages/tabs-usuario/tabs-usuario.module": [
-		471,
+		470,
 		6
 	],
 	"../pages/tabs/tabs.module": [
-		472,
+		473,
 		4
 	],
 	"../pages/tabs2/tabs2.module": [
-		473,
+		472,
 		5
 	],
 	"../pages/usuario/usuario.module": [
@@ -1548,11 +1545,11 @@ var map = {
 		3
 	],
 	"../pages/ver-contacto/ver-contacto.module": [
-		475,
+		476,
 		2
 	],
 	"../pages/ver-desarrollo/ver-desarrollo.module": [
-		476,
+		475,
 		1
 	],
 	"../pages/ver-propiedad/ver-propiedad.module": [
@@ -1636,47 +1633,47 @@ var HomePage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buscar_buscar__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__buscar_buscar__ = __webpack_require__(272);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_0__buscar_buscar__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__destinos_destinos__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__destinos_destinos__ = __webpack_require__(273);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_1__destinos_destinos__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__formulario_formulario__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__formulario_formulario__ = __webpack_require__(274);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return __WEBPACK_IMPORTED_MODULE_2__formulario_formulario__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(208);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return __WEBPACK_IMPORTED_MODULE_3__home_home__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__info_info__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__info_info__ = __webpack_require__(275);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return __WEBPACK_IMPORTED_MODULE_4__info_info__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(276);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return __WEBPACK_IMPORTED_MODULE_5__login_login__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__ = __webpack_require__(277);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__ = __webpack_require__(148);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__ = __webpack_require__(278);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__ = __webpack_require__(279);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__ = __webpack_require__(280);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__ = __webpack_require__(152);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__ = __webpack_require__(281);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__ = __webpack_require__(282);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__ = __webpack_require__(149);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__ = __webpack_require__(150);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__ = __webpack_require__(283);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__ = __webpack_require__(270);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__ = __webpack_require__(283);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__ = __webpack_require__(284);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__ = __webpack_require__(271);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__ = __webpack_require__(148);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__ = __webpack_require__(147);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__lead_pickead_pick_lead_pickead_pick__ = __webpack_require__(285);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return __WEBPACK_IMPORTED_MODULE_21__lead_pickead_pick_lead_pickead_pick__["a"]; });
@@ -2121,11 +2118,10 @@ var AgregarCompradoresPage = /** @class */ (function () {
         });
     };
     AgregarCompradoresPage.prototype.actualizarAsesor = function () {
-        var _this = this;
-        var agentesO = this.formularioProvider.listaDeAgentes(this.fAgente.value.officinaA);
-        agentesO.subscribe(function (data) {
-            _this.agentesDeOficina = data.json().data;
-        });
+        /*var agentesO = this.formularioProvider.listaDeAgentes(this.fAgente.value.officinaA);
+        agentesO.subscribe(data=>{
+          this.agentesDeOficina = data.json().data;
+        });*/
     };
     AgregarCompradoresPage.prototype.actualizarCiudades = function () {
     };
@@ -2210,6 +2206,174 @@ var AgregarCompradoresPage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalendarPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_calendar__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__agregar_tarea_agregar_tarea__ = __webpack_require__(147);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(15);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+/**
+ * Generated class for the CalendarPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var CalendarPage = /** @class */ (function () {
+    function CalendarPage(navCtrl, navParams, usuarioProvider, calendar, storage) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.usuarioProvider = usuarioProvider;
+        this.calendar = calendar;
+        this.storage = storage;
+        this.eventList = [];
+        this.isSelected = true;
+        this.monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        this.date = new Date();
+    }
+    CalendarPage.prototype.ionViewDidEnter = function () {
+        var _this = this;
+        this.storage.get('usuario').then(function (data) {
+            var promise = _this.usuarioProvider.getTask(data);
+            promise.subscribe(function (data) {
+                _this.getDaysOfMonth();
+                _this.eventList = data.json().data;
+                _this.task = data.json().data;
+            });
+        });
+    };
+    CalendarPage.prototype.loadEventThisMonth = function () {
+        var _this = this;
+        this.eventList = new Array();
+        var startDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
+        var endDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
+        this.calendar.listEventsInRange(startDate, endDate).then(function (msg) {
+            msg.forEach(function (item) {
+                _this.eventList.push(item);
+            });
+        }, function (err) {
+        });
+    };
+    CalendarPage.prototype.selectDate = function (day) {
+        var _this = this;
+        var addd = '';
+        var add = '';
+        if (day < 10) {
+            addd = '0';
+        }
+        if (this.date.getMonth() < 10) {
+            add = '0';
+        }
+        this.isSelected = false;
+        this.selectedEvent = new Array();
+        var thisDate1 = this.date.getFullYear() + "-" + add + (this.date.getMonth() + 1) + "-" + addd + day + "";
+        var thisDate2 = this.date.getFullYear() + "-" + add + (this.date.getMonth() + 1) + "-" + addd + day + "";
+        this.eventList.forEach(function (event) {
+            if (((event.startdate >= thisDate1) && (event.startdate <= thisDate2)) || ((event.finishdate >= thisDate1) && (event.finishdate <= thisDate2))) {
+                _this.isSelected = true;
+                _this.selectedEvent.push(event);
+            }
+        });
+    };
+    CalendarPage.prototype.checkEvent = function (day) {
+        var hasEvent = false;
+        var add = '';
+        var addd = '';
+        if (this.date.getMonth() < 10) {
+            add = '0';
+        }
+        if (day < 10) {
+            addd = '0';
+        }
+        var thisDate1 = this.date.getFullYear() + "-" + add + (this.date.getMonth() + 1) + "-" + addd + day + "";
+        var thisDate2 = this.date.getFullYear() + "-" + add + (this.date.getMonth() + 1) + "-" + addd + day + "";
+        this.task.forEach(function (event) {
+            if (((event.startdate >= thisDate1) && (event.startdate <= thisDate2)) || ((event.finishdate >= thisDate1) && (event.finishdate <= thisDate2))) {
+                hasEvent = true;
+            }
+        });
+        return hasEvent;
+    };
+    CalendarPage.prototype.getDaysOfMonth = function () {
+        this.daysInThisMonth = new Array();
+        this.daysInLastMonth = new Array();
+        this.daysInNextMonth = new Array();
+        this.currentMonth = this.monthNames[this.date.getMonth()];
+        this.currentYear = this.date.getFullYear();
+        if (this.date.getMonth() === new Date().getMonth()) {
+            this.currentDate = new Date().getDate();
+        }
+        else {
+            this.currentDate = 999;
+        }
+        var firstDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 1).getDay();
+        var prevNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
+        for (var i = prevNumOfDays - (firstDayThisMonth - 1); i <= prevNumOfDays; i++) {
+            this.daysInLastMonth.push(i);
+        }
+        var thisNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate();
+        for (var i = 0; i < thisNumOfDays; i++) {
+            this.daysInThisMonth.push(i + 1);
+        }
+        var lastDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDay();
+        var nextNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth() + 2, 0).getDate();
+        for (var i = 0; i < (6 - lastDayThisMonth); i++) {
+            this.daysInNextMonth.push(i + 1);
+        }
+        var totalDays = this.daysInLastMonth.length + this.daysInThisMonth.length + this.daysInNextMonth.length;
+        if (totalDays < 36) {
+            for (var i = (7 - lastDayThisMonth); i < ((7 - lastDayThisMonth) + 7); i++) {
+                this.daysInNextMonth.push(i);
+            }
+        }
+    };
+    CalendarPage.prototype.goToLastMonth = function () {
+        this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
+        this.getDaysOfMonth();
+    };
+    CalendarPage.prototype.goToNextMonth = function () {
+        this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 2, 0);
+        this.getDaysOfMonth();
+    };
+    CalendarPage.prototype.addEvent = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__agregar_tarea_agregar_tarea__["a" /* AgregarTareaPage */]);
+    };
+    CalendarPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-calendar',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\calendar\calendar.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n\n\n    <ion-title>\n\n      Tareas agendadas\n\n    </ion-title>\n\n\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="addEvent()">\n\n        <ion-icon color="white" name="add-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <div class="calendar-header">\n\n    <ion-row class="calendar-month">\n\n      <ion-col col-2 (click)="goToLastMonth()">\n\n        <ion-icon name="arrow-back"></ion-icon>\n\n      </ion-col>\n\n      <ion-col col-8>{{currentMonth}} de {{currentYear}}</ion-col>\n\n      <ion-col col-2 (click)="goToNextMonth()">\n\n        <ion-icon name="arrow-forward"></ion-icon>\n\n      </ion-col>\n\n    </ion-row>\n\n  </div>\n\n\n\n  <div class="calendar-body">\n\n    <ion-grid>\n\n      <ion-row class="calendar-weekday">\n\n        <ion-col>DO</ion-col>\n\n        <ion-col>LU</ion-col>\n\n        <ion-col>MA</ion-col>\n\n        <ion-col>MI</ion-col>\n\n        <ion-col>JU</ion-col>\n\n        <ion-col>VI</ion-col>\n\n        <ion-col>SA</ion-col>\n\n      </ion-row>\n\n\n\n      <ion-row class="calendar-date">\n\n\n\n        <ion-col col-1 *ngFor="let lastDay of daysInLastMonth" class="last-month" (click)="goToLastMonth()">{{lastDay}}\n\n        </ion-col>\n\n\n\n        <ion-col col-1 *ngFor="let day of daysInThisMonth" (click)="selectDate(day)">\n\n          <span class="currentDate" *ngIf="currentDate === day; else otherDate">{{day}}</span>\n\n          <ng-template #otherDate class="otherDate">\n\n            {{day}}<br>\n\n            <div class="event-bullet" *ngIf="checkEvent(day)"></div>\n\n          </ng-template>\n\n        </ion-col>\n\n\n\n        <ion-col col-1 *ngFor="let nextDay of daysInNextMonth" class="next-month" (click)="goToNextMonth()">{{nextDay}}\n\n        </ion-col>\n\n\n\n      </ion-row>\n\n    </ion-grid>\n\n  </div>\n\n\n\n  <br>\n\n\n\n  <ion-list class="selected-event" *ngIf="isSelected">\n\n  \n\n    <ion-item *ngFor="let se of selectedEvent">\n\n  \n\n      \n\n      <h2>{{se.nameTask}} </h2>\n\n  \n\n   \n\n        <ion-item no-margin-bottom>\n\n          <span text-wrap> {{se.starTiString}} - {{se.endTiString}}</span>\n\n          <br>\n\n          <span text-wrap>Contacto #{{se.visitid}} | {{se.fullname}} {{se.apellido_pat}}</span>\n\n          <br>         \n\n          <span text-wrap>Nota: {{se.tasktext}} <br></span>\n\n          <br>\n\n        </ion-item>\n\n  \n\n  \n\n  \n\n  \n\n  \n\n    </ion-item>\n\n  \n\n  </ion-list>'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\calendar\calendar.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__["a" /* UsuarioProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__ionic_native_calendar__["a" /* Calendar */],
+            __WEBPACK_IMPORTED_MODULE_5__ionic_storage__["b" /* Storage */]])
+    ], CalendarPage);
+    return CalendarPage;
+}());
+
+//# sourceMappingURL=calendar.js.map
+
+/***/ }),
+
+/***/ 272:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BuscarPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
@@ -2273,7 +2437,7 @@ var BuscarPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 272:
+/***/ 273:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2363,7 +2527,7 @@ var DestinosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 273:
+/***/ 274:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2485,7 +2649,7 @@ var FormularioPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 274:
+/***/ 275:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2527,7 +2691,7 @@ var InfoPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 275:
+/***/ 276:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2582,7 +2746,7 @@ var LoginPage = /** @class */ (function () {
             this.usuario.login(this.username, this.password)
         ]).then(function (data) {
             if (data[0] == true) {
-                _this.events.publish('user:created', Date.now());
+                _this.events.publish('user:created');
             }
             else {
                 _this.incorrectAlert();
@@ -2622,7 +2786,7 @@ var LoginPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 276:
+/***/ 277:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2755,7 +2919,7 @@ var ResultadosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 277:
+/***/ 278:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2953,84 +3117,96 @@ var VerDesarrolloPage = /** @class */ (function () {
     
         this.emailComposer.open(email);*/
     };
-    VerDesarrolloPage.prototype.enviarCorreo = function () {
-        var _this = this;
-        if (this.fMail.value.nombre == "") {
-            this.errorM = true;
+    /*
+    enviarCorreo(){
+      if(this.fMail.value.nombre == ""){
+        this.errorM = true;
+      }
+  
+      if(this.fMail.value.telefono == ""){
+        this.errorM = true;
+      }
+  
+      if(this.fMail.value.correo == ""){
+        this.errorM = true;
+      }
+  
+      if(this.fMail.value.comentario == ""){
+        this.errorM = true;
+      }
+  
+      if(this.fMail.value.apellido == ""){
+        this.errorM = true;
+      }
+  
+      if(!this.errorM){
+        this.comentarios = {
+          'contacto':             25,
+          'nombre':               this.fMail.value.nombre,
+          'ap_paterno':           this.fMail.value.apellido,
+          'cel':                  this.fMail.value.telefono,
+          'email':                this.fMail.value.correo,
+          'comentarios':          this.fMail.value.comentario,
+          'office':               this.usuarioProvider.companyOffice,
+          'creatorid':            this.usuarioProvider.companyid,
+          'user':                 this.usuarioProvider.companyUser,
+          'companyid':            this.usuarioProvider.companyUser,
+          'online':               1,
+          'sedMailApp':          true
         }
-        if (this.fMail.value.telefono == "") {
-            this.errorM = true;
+  
+        this.comentariosMail = {
+          'development':        this.datos.folio,
+          'name':               this.fMail.value.nombre,
+          'email':              this.fMail.value.correo,
+          'phone':              this.fMail.value.telefono,
+          'message':            this.fMail.value.comentario
         }
-        if (this.fMail.value.correo == "") {
-            this.errorM = true;
-        }
-        if (this.fMail.value.comentario == "") {
-            this.errorM = true;
-        }
-        if (this.fMail.value.apellido == "") {
-            this.errorM = true;
-        }
-        if (!this.errorM) {
-            this.comentarios = {
-                'contacto': 25,
-                'nombre': this.fMail.value.nombre,
-                'ap_paterno': this.fMail.value.apellido,
-                'cel': this.fMail.value.telefono,
-                'email': this.fMail.value.correo,
-                'comentarios': this.fMail.value.comentario,
-                'office': this.usuarioProvider.companyOffice,
-                'creatorid': this.usuarioProvider.companyid,
-                'user': this.usuarioProvider.companyUser,
-                'companyid': this.usuarioProvider.companyUser,
-                'online': 1,
-                'sedMailApp': true
-            };
-            this.comentariosMail = {
-                'development': this.datos.folio,
-                'name': this.fMail.value.nombre,
-                'email': this.fMail.value.correo,
-                'phone': this.fMail.value.telefono,
-                'message': this.fMail.value.comentario
-            };
-            var promise = this.usuarioProvider.agregarPreregistro(this.comentarios);
-            promise.subscribe(function (data) {
-                if (data.status == 200) {
-                    var promiseMail = _this.usuarioProvider.enviarDesarrolloMail(_this.comentariosMail);
-                    promiseMail.subscribe(function (data) {
-                        _this.cerrarModal();
-                    });
-                    var alert_1 = _this.alertCtrl.create({
-                        title: 'Exitoso',
-                        message: 'El envio del correo fue exitoso',
-                        buttons: [
-                            {
-                                text: 'ok',
-                                role: 'cancel'
-                            }
-                        ]
-                    });
-                    alert_1.present();
-                    /*var promise2 = this.usuarioProvider.guardarMailDB(this.datosMailDB);
-                    promise2.subscribe(data=>{
-                      console.log(data);
-                    })*/
-                }
-                else {
-                    var alert_2 = _this.alertCtrl.create({
-                        title: 'problema',
-                        message: 'Hubo un problema en el envio del correo',
-                        buttons: [
-                            {
-                                text: 'ok',
-                                role: 'cancel'
-                            }
-                        ]
-                    });
-                    alert_2.present();
-                }
+  
+  
+        var promise = this.usuarioProvider.agregarPreregistro(this.comentarios);
+        promise.subscribe(data=>{
+          if(data.status == 200){
+            var promiseMail = this.usuarioProvider.enviarDesarrolloMail(this.comentariosMail);
+            promiseMail.subscribe(data=>{
+              this.cerrarModal();
             });
-        }
-    };
+            let alert = this.alertCtrl.create({
+              title: 'Exitoso',
+              message: 'El envio del correo fue exitoso',
+              buttons: [
+                {
+                  text: 'ok',
+                  role: 'cancel'
+                }
+              ]
+            });
+            alert.present();
+            /*var promise2 = this.usuarioProvider.guardarMailDB(this.datosMailDB);
+            promise2.subscribe(data=>{
+              console.log(data);
+            })
+          }else{
+            let alert = this.alertCtrl.create({
+              title: 'problema',
+              message: 'Hubo un problema en el envio del correo',
+              buttons: [
+                {
+                  text: 'ok',
+                  role: 'cancel'
+                }
+              ]
+            });
+            alert.present();
+          }
+        })
+  
+  
+      }
+  
+  
+    }
+    */
     VerDesarrolloPage.prototype.cerrarModal = function () {
         var modal = document.getElementById("modal");
         modal.style.display = "none";
@@ -3157,7 +3333,7 @@ var VerDesarrolloPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 278:
+/***/ 279:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3395,82 +3571,92 @@ var VerPropiedadPage = /** @class */ (function () {
     
         this.emailComposer.open(email);*/
     };
-    VerPropiedadPage.prototype.enviarCorreo = function () {
-        var _this = this;
-        if (this.fMail.value.nombre == "") {
-            this.errorM = true;
+    /*
+    enviarCorreo(){
+      if(this.fMail.value.nombre == ""){
+        this.errorM = true;
+      }
+  
+      if(this.fMail.value.telefono == ""){
+        this.errorM = true;
+      }
+  
+      if(this.fMail.value.correo == ""){
+        this.errorM = true;
+      }
+  
+      if(this.fMail.value.comentario == ""){
+        this.errorM = true;
+      }
+  
+      if(this.fMail.value.apellido == ""){
+        this.errorM = true;
+      }
+  
+      if(!this.errorM){
+        this.comentarios = {
+          'contacto':             25,
+          'nombre':               this.fMail.value.nombre,
+          'ap_paterno':           this.fMail.value.apellido,
+          'cel':                  this.fMail.value.telefono,
+          'email':                this.fMail.value.correo,
+          'comentarios':          this.fMail.value.comentario,
+          'creatorid':            1994,
+          'user':                 1994,
+          'companyid':            this.usuarioProvider.companyid,
+          'online':               1,
+          'sendMailApp':          true
         }
-        if (this.fMail.value.telefono == "") {
-            this.errorM = true;
+  
+        this.comentariosMail = {
+          'property':           this.datos.folio,
+          'name':               this.fMail.value.nombre,
+          'email':              this.fMail.value.correo,
+          'phone':              this.fMail.value.telefono,
+          'message':            this.fMail.value.comentario
         }
-        if (this.fMail.value.correo == "") {
-            this.errorM = true;
-        }
-        if (this.fMail.value.comentario == "") {
-            this.errorM = true;
-        }
-        if (this.fMail.value.apellido == "") {
-            this.errorM = true;
-        }
-        if (!this.errorM) {
-            this.comentarios = {
-                'contacto': 25,
-                'nombre': this.fMail.value.nombre,
-                'ap_paterno': this.fMail.value.apellido,
-                'cel': this.fMail.value.telefono,
-                'email': this.fMail.value.correo,
-                'comentarios': this.fMail.value.comentario,
-                'creatorid': 1994,
-                'user': 1994,
-                'companyid': this.usuarioProvider.companyid,
-                'online': 1,
-                'sendMailApp': true
-            };
-            this.comentariosMail = {
-                'property': this.datos.folio,
-                'name': this.fMail.value.nombre,
-                'email': this.fMail.value.correo,
-                'phone': this.fMail.value.telefono,
-                'message': this.fMail.value.comentario
-            };
-            var promise = this.usuarioProvider.agregarPreregistro(this.comentarios);
-            promise.subscribe(function (data) {
-                if (data.status == 200) {
-                    var promiseMail = _this.usuarioProvider.enviarPropiedadMail(_this.comentariosMail);
-                    promiseMail.subscribe(function (data) {
-                    });
-                    var alert_1 = _this.alertCtrl.create({
-                        title: 'Exitoso',
-                        message: 'El envio del correo fue exitoso',
-                        buttons: [
-                            {
-                                text: 'ok',
-                                role: 'cancel'
-                            }
-                        ]
-                    });
-                    alert_1.present();
-                    /*var promise2 = this.usuarioProvider.guardarMailDB(this.datosMailDB);
-                    promise2.subscribe(data=>{
-                      console.log(data);
-                    })*/
-                }
-                else {
-                    var alert_2 = _this.alertCtrl.create({
-                        title: 'problema',
-                        message: 'Hubo un problema en el envio del correo',
-                        buttons: [
-                            {
-                                text: 'ok',
-                                role: 'cancel'
-                            }
-                        ]
-                    });
-                    alert_2.present();
-                }
+  
+        var promise = this.usuarioProvider.agregarPreregistro(this.comentarios);
+        /*promise.subscribe(data=>{
+          if(data.status == 200){
+            var promiseMail = this.usuarioProvider.enviarPropiedadMail(this.comentariosMail);
+            promiseMail.subscribe(data=>{
             });
-        }
-    };
+            let alert = this.alertCtrl.create({
+              title: 'Exitoso',
+              message: 'El envio del correo fue exitoso',
+              buttons: [
+                {
+                  text: 'ok',
+                  role: 'cancel'
+                }
+              ]
+            });
+            alert.present();
+            var promise2 = this.usuarioProvider.guardarMailDB(this.datosMailDB);
+            promise2.subscribe(data=>{
+              console.log(data);
+            })
+          }else{
+            let alert = this.alertCtrl.create({
+              title: 'problema',
+              message: 'Hubo un problema en el envio del correo',
+              buttons: [
+                {
+                  text: 'ok',
+                  role: 'cancel'
+                }
+              ]
+            });
+            alert.present();
+          }
+        })
+  
+  
+      }
+      
+  
+    }*/
     VerPropiedadPage.prototype.cerrarModal = function () {
         var modal = document.getElementById("modal");
         modal.style.display = "none";
@@ -3584,7 +3770,7 @@ var VerPropiedadPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 279:
+/***/ 280:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3638,6 +3824,7 @@ var VerContactoPage = /** @class */ (function () {
             promise.subscribe(function (data) {
                 _this.datos = data.json().data.visit;
                 _this.comentarios = data.json().data.comments;
+                console.log(_this.datos);
             });
         }
         else {
@@ -3714,7 +3901,7 @@ var VerContactoPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 280:
+/***/ 281:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3845,7 +4032,7 @@ var UsuarioPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 281:
+/***/ 282:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3891,7 +4078,7 @@ var RegistrarPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 282:
+/***/ 283:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3946,7 +4133,7 @@ var FiltroResultadosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 283:
+/***/ 284:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4127,174 +4314,6 @@ var SharingPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=sharing.js.map
-
-/***/ }),
-
-/***/ 284:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalendarPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_calendar__ = __webpack_require__(112);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__agregar_tarea_agregar_tarea__ = __webpack_require__(148);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(15);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-/**
- * Generated class for the CalendarPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var CalendarPage = /** @class */ (function () {
-    function CalendarPage(navCtrl, navParams, usuarioProvider, calendar, storage) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.usuarioProvider = usuarioProvider;
-        this.calendar = calendar;
-        this.storage = storage;
-        this.eventList = [];
-        this.isSelected = true;
-        this.monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        this.date = new Date();
-    }
-    CalendarPage.prototype.ionViewDidEnter = function () {
-        var _this = this;
-        this.storage.get('usuario').then(function (data) {
-            var promise = _this.usuarioProvider.getTask(data);
-            promise.subscribe(function (data) {
-                _this.getDaysOfMonth();
-                _this.eventList = data.json().data;
-                _this.task = data.json().data;
-            });
-        });
-    };
-    CalendarPage.prototype.loadEventThisMonth = function () {
-        var _this = this;
-        this.eventList = new Array();
-        var startDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
-        var endDate = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0);
-        this.calendar.listEventsInRange(startDate, endDate).then(function (msg) {
-            msg.forEach(function (item) {
-                _this.eventList.push(item);
-            });
-        }, function (err) {
-        });
-    };
-    CalendarPage.prototype.selectDate = function (day) {
-        var _this = this;
-        var addd = '';
-        var add = '';
-        if (day < 10) {
-            addd = '0';
-        }
-        if (this.date.getMonth() < 10) {
-            add = '0';
-        }
-        this.isSelected = false;
-        this.selectedEvent = new Array();
-        var thisDate1 = this.date.getFullYear() + "-" + add + (this.date.getMonth() + 1) + "-" + addd + day + "";
-        var thisDate2 = this.date.getFullYear() + "-" + add + (this.date.getMonth() + 1) + "-" + addd + day + "";
-        this.eventList.forEach(function (event) {
-            if (((event.startdate >= thisDate1) && (event.startdate <= thisDate2)) || ((event.finishdate >= thisDate1) && (event.finishdate <= thisDate2))) {
-                _this.isSelected = true;
-                _this.selectedEvent.push(event);
-            }
-        });
-    };
-    CalendarPage.prototype.checkEvent = function (day) {
-        var hasEvent = false;
-        var add = '';
-        var addd = '';
-        if (this.date.getMonth() < 10) {
-            add = '0';
-        }
-        if (day < 10) {
-            addd = '0';
-        }
-        var thisDate1 = this.date.getFullYear() + "-" + add + (this.date.getMonth() + 1) + "-" + addd + day + "";
-        var thisDate2 = this.date.getFullYear() + "-" + add + (this.date.getMonth() + 1) + "-" + addd + day + "";
-        this.task.forEach(function (event) {
-            if (((event.startdate >= thisDate1) && (event.startdate <= thisDate2)) || ((event.finishdate >= thisDate1) && (event.finishdate <= thisDate2))) {
-                hasEvent = true;
-            }
-        });
-        return hasEvent;
-    };
-    CalendarPage.prototype.getDaysOfMonth = function () {
-        this.daysInThisMonth = new Array();
-        this.daysInLastMonth = new Array();
-        this.daysInNextMonth = new Array();
-        this.currentMonth = this.monthNames[this.date.getMonth()];
-        this.currentYear = this.date.getFullYear();
-        if (this.date.getMonth() === new Date().getMonth()) {
-            this.currentDate = new Date().getDate();
-        }
-        else {
-            this.currentDate = 999;
-        }
-        var firstDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth(), 1).getDay();
-        var prevNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth(), 0).getDate();
-        for (var i = prevNumOfDays - (firstDayThisMonth - 1); i <= prevNumOfDays; i++) {
-            this.daysInLastMonth.push(i);
-        }
-        var thisNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDate();
-        for (var i = 0; i < thisNumOfDays; i++) {
-            this.daysInThisMonth.push(i + 1);
-        }
-        var lastDayThisMonth = new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).getDay();
-        var nextNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth() + 2, 0).getDate();
-        for (var i = 0; i < (6 - lastDayThisMonth); i++) {
-            this.daysInNextMonth.push(i + 1);
-        }
-        var totalDays = this.daysInLastMonth.length + this.daysInThisMonth.length + this.daysInNextMonth.length;
-        if (totalDays < 36) {
-            for (var i = (7 - lastDayThisMonth); i < ((7 - lastDayThisMonth) + 7); i++) {
-                this.daysInNextMonth.push(i);
-            }
-        }
-    };
-    CalendarPage.prototype.goToLastMonth = function () {
-        this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
-        this.getDaysOfMonth();
-    };
-    CalendarPage.prototype.goToNextMonth = function () {
-        this.date = new Date(this.date.getFullYear(), this.date.getMonth() + 2, 0);
-        this.getDaysOfMonth();
-    };
-    CalendarPage.prototype.addEvent = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__agregar_tarea_agregar_tarea__["a" /* AgregarTareaPage */]);
-    };
-    CalendarPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-calendar',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\calendar\calendar.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n\n\n    <ion-title>\n\n      Tareas agendadas\n\n    </ion-title>\n\n\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="addEvent()">\n\n        <ion-icon color="white" name="add-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <div class="calendar-header">\n\n    <ion-row class="calendar-month">\n\n      <ion-col col-2 (click)="goToLastMonth()">\n\n        <ion-icon name="arrow-back"></ion-icon>\n\n      </ion-col>\n\n      <ion-col col-8>{{currentMonth}} de {{currentYear}}</ion-col>\n\n      <ion-col col-2 (click)="goToNextMonth()">\n\n        <ion-icon name="arrow-forward"></ion-icon>\n\n      </ion-col>\n\n    </ion-row>\n\n  </div>\n\n\n\n  <div class="calendar-body">\n\n    <ion-grid>\n\n      <ion-row class="calendar-weekday">\n\n        <ion-col>DO</ion-col>\n\n        <ion-col>LU</ion-col>\n\n        <ion-col>MA</ion-col>\n\n        <ion-col>MI</ion-col>\n\n        <ion-col>JU</ion-col>\n\n        <ion-col>VI</ion-col>\n\n        <ion-col>SA</ion-col>\n\n      </ion-row>\n\n\n\n      <ion-row class="calendar-date">\n\n\n\n        <ion-col col-1 *ngFor="let lastDay of daysInLastMonth" class="last-month" (click)="goToLastMonth()">{{lastDay}}\n\n        </ion-col>\n\n\n\n        <ion-col col-1 *ngFor="let day of daysInThisMonth" (click)="selectDate(day)">\n\n          <span class="currentDate" *ngIf="currentDate === day; else otherDate">{{day}}</span>\n\n          <ng-template #otherDate class="otherDate">\n\n            {{day}}<br>\n\n            <div class="event-bullet" *ngIf="checkEvent(day)"></div>\n\n          </ng-template>\n\n        </ion-col>\n\n\n\n        <ion-col col-1 *ngFor="let nextDay of daysInNextMonth" class="next-month" (click)="goToNextMonth()">{{nextDay}}\n\n        </ion-col>\n\n\n\n      </ion-row>\n\n    </ion-grid>\n\n  </div>\n\n\n\n  <br>\n\n\n\n  <ion-list class="selected-event" *ngIf="isSelected">\n\n  \n\n    <ion-item *ngFor="let se of selectedEvent">\n\n  \n\n      \n\n      <h2>{{se.nameTask}} </h2>\n\n  \n\n   \n\n        <ion-item no-margin-bottom>\n\n          <span text-wrap> {{se.starTiString}} - {{se.endTiString}}</span>\n\n          <br>\n\n          <span text-wrap>Contacto #{{se.visitid}} | {{se.fullname}} {{se.apellido_pat}}</span>\n\n          <br>         \n\n          <span text-wrap>Nota: {{se.tasktext}} <br></span>\n\n          <br>\n\n        </ion-item>\n\n  \n\n  \n\n  \n\n  \n\n  \n\n    </ion-item>\n\n  \n\n  </ion-list>'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\calendar\calendar.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__["a" /* UsuarioProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__ionic_native_calendar__["a" /* Calendar */],
-            __WEBPACK_IMPORTED_MODULE_5__ionic_storage__["b" /* Storage */]])
-    ], CalendarPage);
-    return CalendarPage;
-}());
-
-//# sourceMappingURL=calendar.js.map
 
 /***/ }),
 
@@ -4512,7 +4531,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(249);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_contactos_contactos__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_contactos_contactos__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(80);
@@ -4611,31 +4630,31 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
                     links: [
-                        { loadChildren: '../pages/agregar-contacto/agregar-contacto.module#AgregarContactoPageModule', name: 'AgregarContactoPage', segment: 'agregar-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/agregar-compradores/agregar-compradores.module#AgregarCompradoresPageModule', name: 'AgregarCompradoresPage', segment: 'agregar-compradores', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/agregar-tarea/agregar-tarea.module#AgregarTareaPageModule', name: 'AgregarTareaPage', segment: 'agregar-tarea', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/buscar/buscar.module#BuscarPageModule', name: 'BuscarPage', segment: 'buscar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/calendar/calendar.module#CalendarPageModule', name: 'CalendarPage', segment: 'calendar', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/agregar-tarea/agregar-tarea.module#AgregarTareaPageModule', name: 'AgregarTareaPage', segment: 'agregar-tarea', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contactos/contactos.module#ContactosPageModule', name: 'ContactosPage', segment: 'contactos', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/destinos/destinos.module#DestinosPageModule', name: 'DestinosPage', segment: 'destinos', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/buscar/buscar.module#BuscarPageModule', name: 'BuscarPage', segment: 'buscar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/documents/documents.module#DocumentsPageModule', name: 'DocumentsPage', segment: 'documents', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/filtro-resultados/filtro-resultados.module#FiltroResultadosPageModule', name: 'FiltroResultadosPage', segment: 'filtro-resultados', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/destinos/destinos.module#DestinosPageModule', name: 'DestinosPage', segment: 'destinos', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/agregar-contacto/agregar-contacto.module#AgregarContactoPageModule', name: 'AgregarContactoPage', segment: 'agregar-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/formulario/formulario.module#FormularioPageModule', name: 'FormularioPage', segment: 'formulario', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/general-form/general-form.module#GeneralFormPageModule', name: 'GeneralFormPage', segment: 'general-form', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/filtro-resultados/filtro-resultados.module#FiltroResultadosPageModule', name: 'FiltroResultadosPage', segment: 'filtro-resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/info/info.module#InfoPageModule', name: 'InfoPage', segment: 'info', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/general-form/general-form.module#GeneralFormPageModule', name: 'GeneralFormPage', segment: 'general-form', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/lead-pickead-pick/lead-pickead-pick.module#LeadPickeadPickPageModule', name: 'LeadPickeadPickPage', segment: 'lead-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/property-pickead-pick/property-pickead-pick.module#PropertyPickeadPickPageModule', name: 'PropertyPickeadPickPage', segment: 'property-pickead-pick', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/registrar/registrar.module#RegistrarPageModule', name: 'RegistrarPage', segment: 'registrar', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/seguimiento/seguimiento.module#SeguimientoPageModule', name: 'SeguimientoPage', segment: 'seguimiento', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/sharing/sharing.module#SharingPageModule', name: 'SharingPage', segment: 'sharing', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/registrar/registrar.module#RegistrarPageModule', name: 'RegistrarPage', segment: 'registrar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs-usuario/tabs-usuario.module#TabsUsuarioPageModule', name: 'TabsUsuarioPage', segment: 'tabs-usuario', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/sharing/sharing.module#SharingPageModule', name: 'SharingPage', segment: 'sharing', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs2/tabs2.module#Tabs2PageModule', name: 'Tabs2Page', segment: 'tabs2', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-desarrollo/ver-desarrollo.module#VerDesarrolloPageModule', name: 'VerDesarrolloPage', segment: 'ver-desarrollo', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] }
                     ]
                 }),
@@ -5183,10 +5202,11 @@ var FormulariosProvider = /** @class */ (function () {
     };
     FormulariosProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__api_api__["a" /* ApiProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__api_api__["a" /* ApiProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _c || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */],
+            __WEBPACK_IMPORTED_MODULE_3__api_api__["a" /* ApiProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__usuario_usuario__["a" /* UsuarioProvider */]])
     ], FormulariosProvider);
     return FormulariosProvider;
-    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=formularios.js.map

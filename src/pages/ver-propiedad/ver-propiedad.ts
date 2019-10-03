@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, 
-  NavController, 
-  NavParams, 
+import { IonicPage,
+  NavController,
+  NavParams,
   Platform,
   AlertController,
   PopoverController,
@@ -29,8 +29,8 @@ declare var google: any;
   templateUrl: 'ver-propiedad.html',
 })
 export class VerPropiedadPage {
-  public map        : any; 
-  public imageIcon  : any ; 
+  public map        : any;
+  public imageIcon  : any ;
   public mapstyle   : any;
   public mapProp    : any ;
   public mapView    = true;
@@ -63,7 +63,7 @@ export class VerPropiedadPage {
   agenteNombre:any;
   agenteMail:any;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private socialSharing: SocialSharing,
     private callNumber: CallNumber,
@@ -97,7 +97,7 @@ export class VerPropiedadPage {
     this.geolocation.getCurrentPosition().then((resp) => {
      }).catch((error) => {
      });
-     
+
      let watch = this.geolocation.watchPosition();
      watch.subscribe((data) => {
       // data can be a set of coordinates, or an error (if an error occurred).
@@ -147,10 +147,10 @@ export class VerPropiedadPage {
         this.URL = 'http://www.santarita.immosystem.com.mx/propiedad-' + this.datos.folio;
         var urlParam = this.datos.propertyNameEs.split(" ");
         /*urlParam.array.forEach(element => {
-          this.URL += '-' + element;  
+          this.URL += '-' + element;
         });*/
         for(let data of urlParam){
-          this.URL += '-' + data;  
+          this.URL += '-' + data;
         }
 
 
@@ -167,8 +167,8 @@ export class VerPropiedadPage {
       })
 
 
-      
-    
+
+
 
     //console.log(this.datos);
   }
@@ -202,9 +202,9 @@ export class VerPropiedadPage {
         }else if(plataforma == 'whatsapp'){
           this.socialSharing.shareViaWhatsApp('mensaje')
           .then(()=>{
-    
+
           }).catch(()=>{
-    
+
           })
         }else if(plataforma == 'instagram'){
           this.socialSharing.shareViaInstagram('compartir','œremtur');
@@ -257,7 +257,7 @@ export class VerPropiedadPage {
     this.emailComposer.open(email);*/
   }
 
-  
+  /*
   enviarCorreo(){
     if(this.fMail.value.nombre == ""){
       this.errorM = true;
@@ -303,7 +303,7 @@ export class VerPropiedadPage {
       }
 
       var promise = this.usuarioProvider.agregarPreregistro(this.comentarios);
-      promise.subscribe(data=>{
+      /*promise.subscribe(data=>{
         if(data.status == 200){
           var promiseMail = this.usuarioProvider.enviarPropiedadMail(this.comentariosMail);
           promiseMail.subscribe(data=>{
@@ -319,10 +319,10 @@ export class VerPropiedadPage {
             ]
           });
           alert.present();
-          /*var promise2 = this.usuarioProvider.guardarMailDB(this.datosMailDB);
+          var promise2 = this.usuarioProvider.guardarMailDB(this.datosMailDB);
           promise2.subscribe(data=>{
             console.log(data);
-          })*/
+          })
         }else{
           let alert = this.alertCtrl.create({
             title: 'problema',
@@ -340,9 +340,9 @@ export class VerPropiedadPage {
 
 
     }
+    
 
-
-  }
+  }*/
 
   cerrarModal(){
     let modal = document.getElementById("modal");
@@ -353,20 +353,20 @@ export class VerPropiedadPage {
 
 
   loadMap() {
-    
+
     if( this.datos.latitude == '0' && this.datos.longitude == '0'){
       this.mapView = false;
     }else{
-  
+
       this.mapView = true;
-  
+
       this.mapstyle = [{
         featureType: "poi.business",
         elementType: "labels",
         stylers: [{ visibility: "off" }]
       }];
       let LatLng = new google.maps.LatLng( this.datos.latitude,this.datos.longitude );
-  
+
       this.mapProp = {
         streetViewControl: false,
         zoomControl: false,
@@ -380,9 +380,9 @@ export class VerPropiedadPage {
       };
       var mapEle: HTMLElement = document.getElementById('mapa');
       this.map = new google.maps.Map(mapEle, this.mapProp);
-      new google.maps.Marker({ position: LatLng, map: this.map, title: '' });  
+      new google.maps.Marker({ position: LatLng, map: this.map, title: '' });
     }
-  
+
   }
 
   onScroll($event: any){
@@ -421,7 +421,7 @@ export class VerPropiedadPage {
               this.navCtrl.pop();
             }, 1000)
           }else{
-    
+
             setTimeout(()=>{
               loader.dismiss();
             }, 1000);
@@ -434,7 +434,7 @@ export class VerPropiedadPage {
               alerta.present();
               this.navCtrl.pop();
             }, 1000)
-    
+
           }
         })
 

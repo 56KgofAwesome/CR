@@ -22,8 +22,8 @@ export class VerDesarrolloPage {
 
 // map ----
 
-  public map        : any; 
-  public imageIcon  : any ; 
+  public map        : any;
+  public imageIcon  : any ;
   public mapstyle   : any;
   public mapProp    : any ;
   public mapView    = true;
@@ -51,7 +51,7 @@ export class VerDesarrolloPage {
   agenteNombre:any;
   agenteMail:any;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private socialSharing: SocialSharing,
     private callNumber: CallNumber,
@@ -94,7 +94,7 @@ export class VerDesarrolloPage {
 
   }
 
-  ionViewWillEnter() { 
+  ionViewWillEnter() {
     var $this = this;
     this.folio = this.navParams.get('index');
     var promise = this.propiedadesProvider.cargarDesarrollo(this.folio);
@@ -113,7 +113,7 @@ export class VerDesarrolloPage {
       var urlParam = this.datos.developmentNameEs.split(" ");
 
       for(let data of urlParam){
-        this.URL += '-' + data;  
+        this.URL += '-' + data;
       }
 
         this.loadMap();
@@ -129,14 +129,14 @@ export class VerDesarrolloPage {
             }
         })
 
-      
+
     });
 
-    
-    
-    
 
-    
+
+
+
+
   }
 
 
@@ -183,7 +183,7 @@ export class VerDesarrolloPage {
     this.callNumber.callNumber(num, true)
     .then(res => console.log('llamando', res))
     .catch(err => console.log('error de llamada', err));
-  }  
+  }
 
   mensajear(){
     let modal = document.getElementById("modal");
@@ -218,7 +218,7 @@ export class VerDesarrolloPage {
     this.emailComposer.open(email);*/
   }
 
-  
+  /*
   enviarCorreo(){
     if(this.fMail.value.nombre == ""){
       this.errorM = true;
@@ -286,7 +286,7 @@ export class VerDesarrolloPage {
           /*var promise2 = this.usuarioProvider.guardarMailDB(this.datosMailDB);
           promise2.subscribe(data=>{
             console.log(data);
-          })*/
+          })
         }else{
           let alert = this.alertCtrl.create({
             title: 'problema',
@@ -307,12 +307,13 @@ export class VerDesarrolloPage {
 
 
   }
+  */
   cerrarModal(){
     let modal = document.getElementById("modal");
     modal.style.display = "none";
     modal = document.getElementById("modalImagen");
     modal.style.display = "none";
-  }  
+  }
 
 // imo300px.png
 
@@ -347,7 +348,7 @@ loadMap() {
     };
     var mapEle: HTMLElement = document.getElementById('mapa');
     this.map = new google.maps.Map(mapEle, this.mapProp);
-    new google.maps.Marker({ position: LatLng, map: this.map, title: '' });  
+    new google.maps.Marker({ position: LatLng, map: this.map, title: '' });
   }
 
 
@@ -356,7 +357,7 @@ loadMap() {
   this.geolocation.getCurrentPosition().then((resp) => {
    }).catch((error) => {
    });
-   
+
    let watch = this.geolocation.watchPosition();
    watch.subscribe((data) => {
     // data can be a set of coordinates, or an error (if an error occurred).
@@ -407,7 +408,7 @@ sharingwhats(){
               this.navCtrl.pop();
             }, 1000)
           }else{
-    
+
             setTimeout(()=>{
               loader.dismiss();
             }, 1000);
@@ -420,10 +421,10 @@ sharingwhats(){
               alerta.present();
               this.navCtrl.pop();
             }, 1000)
-    
+
           }
         })
-        
+
       }
 
     });

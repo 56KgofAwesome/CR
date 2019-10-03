@@ -125,6 +125,7 @@ export class ContactosPage {
     var promise = this.contactosProvider.getContactsList(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
     promise.subscribe(data => {
       this.contactos = data.json().data;
+      console.log(this.contactos);
     });
   }
   //----------------------------------------------------------------------------

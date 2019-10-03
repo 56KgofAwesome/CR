@@ -381,10 +381,10 @@ export class AgregarCompradoresPage {
 
   actualizarAsesor(){
 
-    var agentesO = this.formularioProvider.listaDeAgentes(this.fAgente.value.officinaA);
+    /*var agentesO = this.formularioProvider.listaDeAgentes(this.fAgente.value.officinaA);
     agentesO.subscribe(data=>{
       this.agentesDeOficina = data.json().data;
-    });
+    });*/
 
   }
 

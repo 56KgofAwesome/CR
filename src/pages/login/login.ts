@@ -50,7 +50,7 @@ export class LoginPage {
       this.usuario.login(this.username,this.password)
     ]).then(data=>{
         if(data[0] == true){
-          this.events.publish('user:created',Date.now());
+          this.events.publish('user:created');
         }else{
           this.incorrectAlert();
         }

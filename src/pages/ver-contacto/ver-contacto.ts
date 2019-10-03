@@ -42,6 +42,7 @@ export class VerContactoPage {
         promise.subscribe(data=>{
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
+          console.log(  this.datos );
         })
       }else{
         var promise = this.contactosProvider.getReferedContactInfo(this.contactId,this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);

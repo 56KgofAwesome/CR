@@ -36,7 +36,7 @@ export class UsuarioProvider {
             if(data.status == 200){
               if(answerLogin == 501){
                 resolve(false);
-              }else if((answerLogin == 200 && dataLogin.companyid == this.companyid) || dataLogin.companyid ==27){
+              }else if((answerLogin == 200 && dataLogin.companyid == this.companyid) || dataLogin.companyid ==227){
                 this.storage.set('userToken', dataLogin.token);
                 this.storage.set('dataUser',dataLogin);
                 resolve(true);
@@ -78,15 +78,15 @@ export class UsuarioProvider {
   //-------------------------------------------------------------------------------------------------------------
   //Método para agregar un preregistro
   agregarPreregistro(datos:any){
-    var body    : string  = 'm=addBuyerPreregister';
+    var body    : string  = 'm=addBuyerPreregister&token='+this.datos.userToken;
         var datos = datos;
         Object.keys(datos).forEach(function(key){
           if(datos[key] != ''){
             body += '&' + key + '=' + datos[key];
           }
         })
-      return console.log(body);
-    //return this.apiProvider.post(body);
+      //return console.log(body);
+    return this.apiProvider.post(body);
   }
   //-------------------------------------------------------------------------------------------------------------
   //Método para enviar un mail

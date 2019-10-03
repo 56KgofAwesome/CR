@@ -15,7 +15,6 @@ import { UsuarioProvider } from '../../providers/usuario/usuario';
 export class AgregarContactoPage {
   public generalForm  : FormGroup;
   public contactForm  : FormGroup;
-  public fDelContacto : FormGroup;
   public agentForm    : FormGroup;
   public fBusca       : FormGroup;
   public fInmueble    : FormGroup;
@@ -33,14 +32,11 @@ export class AgregarContactoPage {
   listaDePaises       : any = [];
   listaDeEstados      : any = [];
   medioValor          : any;
-  datosFG             :any  = {};
-  datosMC             :any  = {};
-  datosCB             :any  = {};
-  datosAgregar        :any  = {};
-  idUsuario           :any;
-  media_extra         :any;
-  generalData         :any  = [];
-  aux                 :any  = [];
+  datosAgregar        : any  = {};
+  idUsuario           : any;
+  media_extra         : any;
+  generalData         : any  = [];
+  aux                 : any  = [];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -57,27 +53,24 @@ export class AgregarContactoPage {
       console.log(data);
     });
     //Formulario datos generales
-    ///---------------------------------
-    //CAmbiar los nombres de los formcontrol porque
-    //son los que se usan para mandar a la API
     this.generalForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      lastNameF: ['', [Validators.required]],
-      lastNameM: [''],
+      nombre: ['', [Validators.required]],
+      ap_paterno: ['', [Validators.required]],
+      ap_materno: [''],
       email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-      cellphone: [''],
-      telephone: ['']
+      cel: [''],
+      tel: ['']
     });
     //Formulario Medio de Contacto
     this.contactForm = this.formBuilder.group({
-      contactMedia: ['', Validators.required],
-      contactDetail: [''],
-      comments: ['', Validators.required]
+      contacto: ['', Validators.required],
+      subcontacto: [''],
+      comentarios: ['', Validators.required]
     });
-    //
+    //Formulario Agente
     this.agentForm = this.formBuilder.group({
-      officeAgent: ['', Validators.required],
-      adviseAgent: ['', Validators.required]
+      office: ['', Validators.required],
+      user: ['', Validators.required]
     });
     //Datos de Opcion: Referencias y Otro
     /*this.generalData.rephId = '';
@@ -129,7 +122,7 @@ export class AgregarContactoPage {
       this.flag = true;
     }
 
-    if(!this.generalForm.get('name').hasError('required') && !this.generalForm.get('lastNameF').hasError('required') && this.generalForm.get('email').valid){
+    if(!this.generalForm.get('nombre').hasError('required') && !this.generalForm.get('ap_paterno').hasError('required') && this.generalForm.get('email').valid){
       var contactoH = document.getElementById('contacto');
       var generalesH = document.getElementById('generales');
         contactoH.style.display = "block";
@@ -142,16 +135,16 @@ export class AgregarContactoPage {
   contactDataForm(){
     this.error = true;
 
-    if((this.contactForm.value.contactMedia == 3 || this.contactForm.value.contactMedia == 7)){
-      if(!this.contactForm.get('brokerName').hasError('required') && !this.contactForm.get('brokerEmail').hasError('email') && !this.contactForm.get('comments').hasError('required')){
+    if((this.contactForm.value.contacto == 3 || this.contactForm.value.contacto == 7)){
+      if(!this.contactForm.get('referid').hasError('required') && !this.contactForm.get('referral_mail').hasError('email') && !this.contactForm.get('comentarios').hasError('required')){
         var contactoH = document.getElementById('contacto');
         var clienteB = document.getElementById('busca');
         contactoH.style.display = "none";
         clienteB.style.display = "block";
         this.error = false;
       }
-    }else if((this.contactForm.value.contactMedia == 6)){
-      if(!this.contactForm.get('Other').hasError('required')){
+    }else if((this.contactForm.value.contacto == 6)){
+      if(!this.contactForm.get('otro_camp').hasError('required')){
         var contactoH = document.getElementById('contacto');
         var clienteB = document.getElementById('busca');
         contactoH.style.display = "none";
@@ -159,7 +152,7 @@ export class AgregarContactoPage {
         this.error = false;
       }
     }else{
-      if(!this.contactForm.get('contactMedia').hasError('required') && !this.contactForm.get('contactMedia').hasError('required') && !this.contactForm.get('comments').hasError('required')){
+      if(!this.contactForm.get('contacto').hasError('required') && !this.contactForm.get('contacto').hasError('required') && !this.contactForm.get('comentarios').hasError('required')){
         var contactoH = document.getElementById('contacto');
         var clienteB = document.getElementById('busca');
         contactoH.style.display = "none";
@@ -171,7 +164,7 @@ export class AgregarContactoPage {
   //----------------------------------------------------------------------------
   //Actualiza el Select de Opciones de medio de contacto
   detailUpdate(){
-    var subContacts = this.formularioProvider.subMediosDeContactos(this.contactForm.value.contactMedia);
+    var subContacts = this.formularioProvider.subMediosDeContactos(this.contactForm.value.contacto);
       subContacts.subscribe(data=>{
       this.subMediosDeContactos = data.json().data;
       });
@@ -179,34 +172,34 @@ export class AgregarContactoPage {
   //----------------------------------------------------------------------------
   //Cambia la lista de detalles dependiendo del Medio de Contacto y Elimina FormControls innecesarios
   detailValidation(){
-    this.media_extra = this.contactForm.value.contactMedia
+    this.media_extra = this.contactForm.value.contacto;
     if(this.media_extra == 3 || this.media_extra == 7){
-      this.generalData.other = '';
-      this.contactForm.addControl('brokerName', new FormControl('', Validators.required));
-      this.contactForm.addControl('brokerEmail', new FormControl('',Validators.email));
-      this.contactForm.addControl('brokerTel', new FormControl(''));
-      this.contactForm.addControl('brokerAgency', new FormControl(''));
+      this.generalData.otro_camp = '';
+      this.contactForm.addControl('referid', new FormControl('', Validators.required));
+      this.contactForm.addControl('referral_mail', new FormControl('',Validators.email));
+      this.contactForm.addControl('referral_phone', new FormControl(''));
+      this.contactForm.addControl('referral_agency', new FormControl(''));
     }else if(this.media_extra == 6){
-        this.generalData.rephId = '';
-        this.generalData.rephEmail = '';
-        this.generalData.rephTel = '';
-        this.generalData.rephAgency = '';
-        this.contactForm.removeControl('brokerName');
-        this.contactForm.removeControl('brokerEmail');
-        this.contactForm.removeControl('brokerTel');
-        this.contactForm.removeControl('brokerAgency');
-        this.contactForm.addControl('Other', new FormControl('', Validators.required));
+        this.generalData.referid = '';
+        this.generalData.referral_email = '';
+        this.generalData.referral_phone = '';
+        this.generalData.referral_agency = '';
+        this.contactForm.removeControl('referid');
+        this.contactForm.removeControl('referral_mail');
+        this.contactForm.removeControl('referral_phone');
+        this.contactForm.removeControl('referral_agency');
+        this.contactForm.addControl('otro_camp', new FormControl('', Validators.required));
     }else{
-      this.generalData.other = '';
-      this.generalData.rephId = '';
-      this.generalData.rephEmail = '';
-      this.generalData.rephTel = '';
-      this.generalData.rephAgency = '';
-      this.contactForm.removeControl('brokerName');
-      this.contactForm.removeControl('brokerEmail');
-      this.contactForm.removeControl('brokerTel');
-      this.contactForm.removeControl('brokerAgency');
-      this.contactForm.removeControl('Other');
+      this.generalData.otro_camp = '';
+      this.generalData.referid = '';
+      this.generalData.referral_mail = '';
+      this.generalData.referral_phone = '';
+      this.generalData.referral_agency = '';
+      this.contactForm.removeControl('referid');
+      this.contactForm.removeControl('referral_mail');
+      this.contactForm.removeControl('referral_phone');
+      this.contactForm.removeControl('referral_agency');
+      this.contactForm.removeControl('otro_camp');
     }
   }
   //----------------------------------------------------------------------------
@@ -291,11 +284,11 @@ export class AgregarContactoPage {
     }
 
     if(this.aux.listSales && this.aux.listRents){
-      this.generalData.lookOther = 'VR';
+      this.generalData.lookfor1 = 'VR';
     }else if(this.aux.listSales){
-      this.generalData.lookOther = 'V';
+      this.generalData.lookfor1 = 'V';
     }else if(this.aux.listRents){
-      this.generalData.lookOther = 'R';
+      this.generalData.lookfor1 = 'R';
     }
 
     if(this.generalData.office != '' && this.generalData.user != ''){
@@ -309,14 +302,14 @@ export class AgregarContactoPage {
         dismissOnPageChange: false
       });
       var agregarContacto = this.usuarioProvider.agregarPreregistro(this.generalData);
-      /*agregarContacto.subscribe(data => {
+      agregarContacto.subscribe(data => {
         if(data.status == 200){
           loader.dismiss();
           this.successAlert();
           this.navCtrl.pop();
         }
       })
-      */
+
     }else{
       this.warningAlert();
     }
@@ -324,7 +317,7 @@ export class AgregarContactoPage {
   //----------------------------------------------------------------------------
   //Actualiza la lista de agentes de la oficina seleccionada
   updateAgents(){
-    var officeAgents = this.formularioProvider.listaDeAgentes(this.agentForm.value.officeAgent,this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
+    var officeAgents = this.formularioProvider.listaDeAgentes(this.agentForm.value.office,this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
     officeAgents.subscribe(data=>{
       this.officeAgents = data.json().data;
     });
@@ -349,6 +342,4 @@ export class AgregarContactoPage {
     });
     alerta.present();
   }
-
-
 }
