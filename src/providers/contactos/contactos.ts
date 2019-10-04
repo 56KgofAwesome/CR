@@ -1,7 +1,7 @@
 import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Header } from '../../../node_modules/ionic-angular/umd';
 import { ApiProvider } from '../../providers/api/api';
+import { UsuarioProvider } from '../usuario/usuario';
 
 
 @Injectable()
@@ -9,8 +9,21 @@ export class ContactosProvider {
   url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
   constructor(
     public http : Http,
-    public apiProvider: ApiProvider
+    public apiProvider: ApiProvider,
+    public usuarioProvider: UsuarioProvider
   ){
+  }
+  //----------------------------------------------------------------------------
+  //Agregar un contacto Pre-registro(Visitas)
+  addPreRegister(datos:any){
+    var body    : string  = 'm=addBuyerPreregister&token='+this.usuarioProvider.datos.userToken;
+        var datos = datos;
+        Object.keys(datos).forEach(function(key){
+          if(datos[key] != ''){
+            body += '&' + key + '=' + datos[key];
+          }
+        })
+    return this.apiProvider.post(body);
   }
   //----------------------------------------------------------------------------
   //Método para cargar lista de contactos
@@ -41,15 +54,6 @@ export class ContactosProvider {
   getReferedContactInfo(id:any, idUsuario,token:any){
     var body = 'm=visitPreregister&user='+ idUsuario + '&visitid='+ id +'&token='+token;
     return this.apiProvider.post(body);
-  }
-  //----------------------------------------------------------------------------
-  //Método para agregar contactos referidos
-  //Modulo pendiente en la API
-  agregarContactosRef(datos){
-    let body    : string = 'm=addBuyerPreregistro' + datos,
-    header  : any    =  new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
-    options : any    =  new RequestOptions({headers: header});
-    return this.http.post(this.url, body, options);
   }
   //----------------------------------------------------------------------------
   //Módulo para agregar un comprador

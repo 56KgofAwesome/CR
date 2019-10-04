@@ -9,7 +9,7 @@ import { AlertController, Events,LoadingController } from 'ionic-angular';
 @Injectable()
 export class UsuarioProvider {
   url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
-  companyid = 4;
+  companyid = 227;
   companyurl = 'http://crrivieramaya.com';
   companycontact;
   companyUser = 1671;
@@ -73,19 +73,6 @@ export class UsuarioProvider {
   //Método para cargar los destinos
   cargarDestino(){
     var body = 'm=developments&folio='+ companyid +'&states=1';
-    return this.apiProvider.post(body);
-  }
-  //-------------------------------------------------------------------------------------------------------------
-  //Método para agregar un preregistro
-  agregarPreregistro(datos:any){
-    var body    : string  = 'm=addBuyerPreregister&token='+this.datos.userToken;
-        var datos = datos;
-        Object.keys(datos).forEach(function(key){
-          if(datos[key] != ''){
-            body += '&' + key + '=' + datos[key];
-          }
-        })
-      //return console.log(body);
     return this.apiProvider.post(body);
   }
   //-------------------------------------------------------------------------------------------------------------

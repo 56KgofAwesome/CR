@@ -16,13 +16,9 @@ export class AgregarContactoPage {
   public generalForm  : FormGroup;
   public contactForm  : FormGroup;
   public agentForm    : FormGroup;
-  public fBusca       : FormGroup;
-  public fInmueble    : FormGroup;
   look                : Boolean = false;
   flag                : Boolean = false;
-  formulario          : any = {};
   error               : Boolean = false;
-  cliente_busca       : any = [];
   mediosDeContacto    : any = [];
   subMediosDeContactos: any = [];
   officesList         : any = [];
@@ -48,10 +44,6 @@ export class AgregarContactoPage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
   ) {
-
-    this.storage.get('dataUser').then(data=>{
-      console.log(data);
-    });
     //Formulario datos generales
     this.generalForm = this.formBuilder.group({
       nombre: ['', [Validators.required]],
@@ -72,12 +64,6 @@ export class AgregarContactoPage {
       office: ['', Validators.required],
       user: ['', Validators.required]
     });
-    //Datos de Opcion: Referencias y Otro
-    /*this.generalData.rephId = '';
-    this.generalData.rephEmail = '';
-    this.generalData.rephTel = '';
-    this.generalData.rephAgency = '';*/
-    //
     this.generalData.subcontacto = '';
     this.generalData.online = 1;
     this.generalData.office = '';
@@ -91,26 +77,27 @@ export class AgregarContactoPage {
       offices.subscribe(data=>{
         this.officesList = data.json().data.userOffice;
      });
-     //
+     /*/Verificar si son necesarios
     var cities = this.formularioProvider.listaDeCiudad(this.usuarioProvider.datos.companyid);
       cities.subscribe(data => {
         this.listaDeCiudades = data.json().data;
       });
-    //
+    /*/
     var contacts = this.formularioProvider.mediosDeContactos();
       contacts.subscribe(data =>{
         this.mediosDeContacto = data.json().data;
     });
-    //
+    /*/Verificar si son necesarios
     var languages = this.formularioProvider.listaDeLenguajes();
     languages.subscribe(data => {
       this.listaDeLenguajes = data.json().data;
     });
-    //
+    //Verificar si son necesarios
     var countries = this.formularioProvider.listaDePaises();
     countries.subscribe(data => {
       this.listaDePaises = data.json().data;
     });
+    /*/
   }
   //----------------------------------------------------------------------------
   //Valida la sección "Datos Generales"
@@ -297,11 +284,10 @@ export class AgregarContactoPage {
       Object.keys(datos).forEach(function(key){
         UrlData += '&' + key + '=' + datos[key];
       })
-      console.log(this.generalData);
       var loader = this.loadingCtrl.create({
         dismissOnPageChange: false
       });
-      var agregarContacto = this.usuarioProvider.agregarPreregistro(this.generalData);
+      var agregarContacto = this.contactoProvider.addPreRegister(this.generalData);
       agregarContacto.subscribe(data => {
         if(data.status == 200){
           loader.dismiss();

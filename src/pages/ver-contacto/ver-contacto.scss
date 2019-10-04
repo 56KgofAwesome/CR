@@ -1,4 +1,8 @@
 page-ver-contacto {
+    .fecha{
+      border-style:solid;
+      border-color: white white white #bf0d2e;
+    }
     .contenedor{
         display: flex;
         flex-direction: column;
@@ -24,7 +28,15 @@ page-ver-contacto {
     }
     ion-icon{
         color: #666;
-        float: right;
+        float: none;
+        position: static;
+        font-size: 2em;
+    }
+    .icon-button{
+      color: #bf0d2e;
+      float: none;
+      position: static;
+      font-size: 2em;
     }
     .datos{
         font-size: 12px;

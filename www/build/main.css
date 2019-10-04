@@ -50198,6 +50198,11 @@ page-usuario .alinear {
   text-align: center;
 }
 
+page-ver-contacto .fecha {
+  border-style: solid;
+  border-color: white white white #bf0d2e;
+}
+
 page-ver-contacto .contenedor {
   display: -webkit-box;
   display: -webkit-flex;
@@ -50235,7 +50240,16 @@ page-ver-contacto .invisible {
 
 page-ver-contacto ion-icon {
   color: #666;
-  float: right;
+  float: none;
+  position: static;
+  font-size: 2em;
+}
+
+page-ver-contacto .icon-button {
+  color: #bf0d2e;
+  float: none;
+  position: static;
+  font-size: 2em;
 }
 
 page-ver-contacto .datos {

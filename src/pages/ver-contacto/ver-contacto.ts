@@ -23,6 +23,7 @@ export class VerContactoPage {
   comentarios : any     = {};
   tipo        : any;
   idUsuario   : any;
+  date: any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,12 +32,13 @@ export class VerContactoPage {
     public modalCtrl: ModalController,
     public contactosProvider: ContactosProvider
   ) {
+    
   }
 
   ionViewCanEnter(){
     this.contactId = this.navParams.get("id");
     this.tipo  = this.navParams.get("tipo");
-
+    //Verifica si e usuario es visita o prospecto
       if(this.tipo == 'c'){
         var promise = this.contactosProvider.getContactInfo(this.contactId, this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
         promise.subscribe(data=>{
@@ -49,6 +51,7 @@ export class VerContactoPage {
         promise.subscribe(data=>{
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
+            console.log(  this.datos );
         })
       }
   }

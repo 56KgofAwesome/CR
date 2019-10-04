@@ -1,20 +1,11 @@
-<!--
-  Generated template for the VerContactoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar color="header">
-    <ion-title>Detalles de contacto</ion-title>
+    <ion-title> Detalles de contacto </ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content class="fondo">
-  <div class="contenedor">
+  <div padding class="contenedor">
     <div class="logo">
       <img width="90" height="90" src="assets/imgs/usuario.png">
     </div>
@@ -27,138 +18,182 @@
         <ion-segment-button value="comentarios">
           SEGUIMIENTOS
         </ion-segment-button>
-        <!--<ion-segment-button value="opciones">
-          OPCIONES
-        </ion-segment-button>-->
       </ion-segment>
     </div>
-
-
     <div [ngSwitch]="seccion">
+    <!------------Sección de Datos--------------------------------------------->
       <ion-list *ngSwitchCase="'datos'">
         <ion-item class="fondo">
-          <p class="titulo">
-            <ion-icon ios="ios-contact" md="md-contact"></ion-icon>nombre completo</p>
+          <ion-avatar item-start>
+            <ion-icon ios="ios-contact" md="md-contact"></ion-icon>
+          </ion-avatar>
+          <p class="titulo"> Nombre </p>
           <p class="datos">{{datos.nombre}} {{datos.ap_paterno}}
             <span *ngIf="datos.ap_materno">{{datos.ap_materno}}</span>
           </p>
         </ion-item>
         <ion-item class="fondo">
-          <p class="titulo">
-            <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>fecha y hora de registro</p>
+          <ion-avatar item-start>
+              <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>
+          </ion-avatar>
+          <p class="titulo"> Fecha y Hora de Registro </p>
           <p class="datos">{{datos.createdate}}</p>
         </ion-item>
         <ion-item class="fondo">
-          <p class="titulo">
-            <ion-icon ios="ios-git-compare" md="md-git-compare"></ion-icon>Asesor reasignado</p>
+          <ion-avatar item-start>
+            <ion-icon ios="ios-git-compare" md="md-git-compare"></ion-icon>
+          </ion-avatar>
+          <p class="titulo"> Asesor reasignado </p>
+          <!--Pendiente el cambio de nombre desde API-->
           <p class="datos" *ngIf="datos.nameAssing != 0">{{datos.nameAssing}}</p>
           <p class="datos" *ngIf="datos.nameAssing == 0">No Disponible</p>
         </ion-item>
         <ion-item class="fondo">
+          <ion-avatar item-start>
+              <ion-icon ios="ios-call" md="md-call"></ion-icon>
+          </ion-avatar>
           <p class="titulo">Celular</p>
           <p *ngIf="datos.cellphone != 0" class="datos">{{datos.cellphone}}</p>
-          <p *ngIf="datos.cellphone == 0" class="datos">
-            <ion-icon ios="ios-call" md="md-call"></ion-icon>No Disponible</p>
+          <p *ngIf="datos.cellphone == 0" class="datos"> No Disponible </p>
           <button *ngIf="datos.cellphone != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
-            <ion-icon color="label" name="call"></ion-icon>
             Llamar
           </button>
         </ion-item>
         <ion-item class="fondo">
+          <ion-avatar item-start>
+            <ion-icon ios="ios-radio" md="md-radio"></ion-icon>
+          </ion-avatar>
           <p class="titulo">Nextel</p>
-          <p *ngIf="datos.nextel != 0" class="datos">
-            <ion-icon ios="ios-radio" md="md-radio"></ion-icon>{{datos.nextel}}</p>
-          <p *ngIf="datos.nextel == 0" class="datos">
-            <ion-icon ios="ios-radio" md="md-radio"></ion-icon>No Disponible</p>
+          <p *ngIf="datos.nextel != 0" class="datos">{{datos.nextel}}</p>
+          <p *ngIf="datos.nextel == 0" class="datos"> No Disponible </p>
           <button *ngIf="datos.nextel != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
-            <ion-icon color="label" name="call"></ion-icon>
             Llamar
           </button>
         </ion-item>
         <ion-item class="fondo">
-          <p class="titulo">primer email</p>
-          <p *ngIf="datos.email != 0" class="datos">{{datos.email}}</p>
-          <p *ngIf="datos.email == 0" class="datos">No Disponible</p>
-          <button (click)="mensajear(datos.email)" *ngIf="datos.email != 0" class="apply" color="greenImmo" clear ion-button icon-only
-            item-end small>
-            <ion-icon color="label" name="mail"></ion-icon>
-            correo
-          </button>
+          <ion-avatar item-start>
+            <ion-icon ios="ios-mail" md="md-mail"></ion-icon>
+          </ion-avatar>
+          <ion-list>
+              <p class="titulo">Correo electrónico</p>
+              <ion-item *ngIf="datos.email !== 0">
+                <p class="titulo">Principal</p>
+                <p *ngIf="datos.email !== 0" class="datos">{{datos.email}}</p>
+                <p *ngIf="datos.email === 0" class="datos">No Disponible</p>
+                <button (click)="mensajear(datos.email)" *ngIf="datos.email != 0" class="apply" color="greenImmo" clear ion-button icon-only
+                  item-end small>
+                  <ion-icon class="icon-button" name="send"></ion-icon>
+                </button>
+              </ion-item>
+              <ion-item *ngIf="tipo == 'c'">
+                <p class="titulo">Secundario</p>
+                <p *ngIf="datos.email2 != 0" class="datos">{{datos.email2}}</p>
+                <p *ngIf="datos.email2 === 0" class="datos">No registrado</p>
+                <button (click)="mensajear(datos.email_2)" *ngIf="datos.email2 != 0" class="apply" color="greenImmo" clear ion-button icon-only
+                  item-end small>
+                  <ion-icon class="icon-button" name="send"></ion-icon>
+                </button>
+              </ion-item>
+            </ion-list>
         </ion-item>
         <ion-item class="fondo">
-          <p class="titulo">segundo email</p>
-          <p *ngIf="datos.email2 != 0" class="datos">{{datos.email2}}</p>
-          <p *ngIf="datos.email2 == 0" class="datos">No Disponible</p>
-          <button (click)="mensajear(datos.email2)" *ngIf="datos.email2 != 0" class="apply" color="greenImmo" clear ion-button icon-only
-            item-end small>
-            <ion-icon color="label" name="mail"></ion-icon>
-            correo
-          </button>
-        </ion-item>
-        <ion-item class="fondo">
+          <ion-avatar item-start>
+            <ion-icon ios="ios-book" md="md-book"></ion-icon>
+          </ion-avatar>
           <p class="titulo">Ultimo Seguimiento</p>
-          <p class="datos" text-wrap>{{datos.comment}}</p>
-          <button (click)="seguimiento()" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
-            <ion-icon color="label" name="mail"></ion-icon>
+          <p *ngIf="datos.comment != 0" class="datos" text-wrap>{{datos.comment}}</p>
+          <p *ngIf="datos.comment === 0" class="datos">No registrado</p>
+          <button (click)="seguimiento()" *ngIf="datos.comment != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
             Nuevo Seguimiento
           </button>
         </ion-item>
         <ion-item class="fondo">
-          <p class="titulo">Enviar Flyer de propiedad</p>
-          <p class="datos" text-wrap>Envia por correo información de alguna propiedad</p>
-          <button (click)="sharing('propiedades')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
-            <ion-icon name="share-alt"></ion-icon>
-          </button>
-        </ion-item>
-        <ion-item class="fondo">
-          <p class="titulo">Enviar Broshure de Desarrollo</p>
-          <p class="datos" text-wrap>Envia por correo información de algún desarrollo</p>
-          <button (click)="sharing('desarrollos')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
-            <ion-icon name="share-alt"></ion-icon>
-          </button>
+          <ion-avatar item-start>
+            <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
+          </ion-avatar>
+          <ion-list>
+            <ion-item>
+              <p class="titulo">Enviar Flyer de propiedad</p>
+              <p class="datos" text-wrap>Envia por correo información de alguna propiedad</p>
+              <button (click)="sharing('propiedades')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
+                <ion-icon class="icon-button" name="map"></ion-icon>
+              </button>
+            </ion-item>
+            <ion-item class="fondo">
+              <p class="titulo">Enviar Broshure de Desarrollo</p>
+              <p class="datos" text-wrap>Envia por correo información de algún desarrollo</p>
+              <button (click)="sharing('desarrollos')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
+                <ion-icon class="icon-button" name="map"></ion-icon>
+              </button>
+            </ion-item>
+          </ion-list>
         </ion-item>
       </ion-list>
-
+    <!-------------Sección de Comentarios-------------------------------------->
       <ion-list *ngSwitchCase="'comentarios'">
-        <ion-card *ngFor="let comentario of comentarios">
-          <ion-card-header>
-            <p>
-              <ion-icon ios="ios-person" md="md-person"></ion-icon> {{comentario.fullname}}</p>
-          </ion-card-header>
-          <ion-card-content>
-            <p>
-              <ion-icon ios="ios-albums" md="md-albums"></ion-icon> DETALLES DE SEGUIMIENTO</p>
-            <br>
-            <p>{{comentario.comment}}</p>
-            <p>
-              <ion-icon ios="ios-filing" md="md-filing"></ion-icon>{{comentario.officename}}</p>
-            <p>
-              <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>{{comentario.datetime}}</p>
-          </ion-card-content>
-        </ion-card>
+        <ion-grid>
+          <ion-row *ngFor="let comentario of comentarios">
+            <ion-col col-2>
+              <div>
+                <p *ngIf="datos.lastcomment != 0">
+                  <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>{{comentario.datetime}}
+                </p>
+                <p *ngIf="datos.lastcomment === 0">
+                  <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon> Hoy
+                </p>
+              </div>
+            </ion-col>
+            <ion-col col-10>
+              <ion-card class="fecha">
+                <ion-card-header>
+                  <p class="titulo">
+                   DETALLES DE SEGUIMIENTO
+                  <br>
+                </ion-card-header>
+                <ion-card-content>
+                  <p>
+                    {{comentario.comment}}
+                  </p>
+                  <p>
+                    {{comentario.officename}}
+                    <ion-icon ios="ios-home" md="md-home"></ion-icon>
+                  </p>
+                  <p>
+                     {{comentario.fullname}}
+                  </p>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+          <!--ion-card *ngFor="let comentario of comentarios">
+            <ion-card-header>
+              <p>
+                <ion-icon ios="ios-person" md="md-person"></ion-icon> Cabecera</p>
+            </ion-card-header>
+          </ion-card>
+          <ion-card *ngFor="let comentario of comentarios">
+            <ion-card-header>
+              <p>
+                <ion-icon ios="ios-person" md="md-person"></ion-icon> {{comentario.fullname}}</p>
+            </ion-card-header>
+            <ion-card-content>
+              <p>
+                <ion-icon ios="ios-albums" md="md-albums"></ion-icon> DETALLES DE SEGUIMIENTO</p>
+              <br>
+              <p>{{comentario.comment}}</p>
+              <p>
+                <ion-icon ios="ios-filing" md="md-filing"></ion-icon>{{comentario.officename}}</p>
+              <p>
+                <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>{{comentario.datetime}}</p>
+            </ion-card-content>
+          </ion-card-->
       </ion-list>
 
-      <ion-list *ngSwitchCase="'opciones'">
-        <ion-item *ngIf="tipo == 'r'" (click)="openForm(datos.visitid, datos.nombre)">
-          <ion-icon name="leaf" item-start></ion-icon>
-          Activar visita
-          <ion-icon name="checkmark" item-end></ion-icon>
-        </ion-item>
-        <ion-item *ngIf="tipo == 'c'" (click)="openForm(datos.visitid, datos.nombre)">
-          <ion-icon name="leaf" item-start></ion-icon>
-          Convertir a potencial
-          <ion-icon name="checkmark" item-end></ion-icon>
-        </ion-item>
-        <ion-item *ngIf="tipo == 'p'" (click)="openForm(datos.visitid, datos.nombre)">
-          <ion-icon name="leaf" item-start></ion-icon>
-          Crear Control de Facturación
-          <ion-icon name="checkmark" item-end></ion-icon>
-        </ion-item>
-      </ion-list>
+
+
+
     </div>
-
-
-
   </div>
   <div id="modal" class="modal">
     <div class="modal-content">

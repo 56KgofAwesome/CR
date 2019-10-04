@@ -46,8 +46,9 @@ export class ContactosPage {
       .catch(err => console.log('error de llamada', err));
   }
 
-  verContacto(id: any, tipo) {
-    this.navCtrl.push(VerContactoPage, { 'id': id, 'tipo': tipo });
+  verContacto(id: any, tipo: any ) {
+    this.navCtrl.push(VerContactoPage, { 'id': id,
+                                         'tipo': tipo });
   }
 
   agregarContacto() {
