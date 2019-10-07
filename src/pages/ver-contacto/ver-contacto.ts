@@ -6,7 +6,8 @@ import { SeguimientoPage } from '../seguimiento/seguimiento';
 import { SharingPage } from '../index.paginas';
 import { GeneralFormPage } from '../general-form/general-form';
 import { ContactosProvider } from '../../providers/contactos/contactos';
-
+import  moment  from 'moment';
+import 'moment/locale/es';
 
 @IonicPage()
 @Component({
@@ -24,6 +25,11 @@ export class VerContactoPage {
   tipo        : any;
   idUsuario   : any;
   date: any;
+  moments: any;
+
+  registerTime: any;
+  commentTime: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -31,8 +37,8 @@ export class VerContactoPage {
     private emailComposer: EmailComposer,
     public modalCtrl: ModalController,
     public contactosProvider: ContactosProvider
-  ) {
-    
+  ){
+
   }
 
   ionViewCanEnter(){
@@ -44,18 +50,25 @@ export class VerContactoPage {
         promise.subscribe(data=>{
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
-          console.log(  this.datos );
+          this.dateAgo(this.datos.createdate);
         })
       }else{
         var promise = this.contactosProvider.getReferedContactInfo(this.contactId,this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
         promise.subscribe(data=>{
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
-            console.log(  this.datos );
+          this.dateAgo(this.datos.createdate);
         })
       }
   }
-
+  //----------------------------------------------------------------------------
+  dateAgo(dataDate: any){
+    return this.registerTime = moment(dataDate).fromNow();
+  }
+  //----------------------------------------------------------------------------
+  dateAgoComments(days: any){
+    return this.commentTime = moment(days.substring(0,10)).fromNow();
+  }
 
   mensajear(correo:any){
     this.emailComposer.isAvailable().then((available: boolean) => {

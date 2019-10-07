@@ -23,6 +23,11 @@
     <div [ngSwitch]="seccion">
     <!------------Sección de Datos--------------------------------------------->
       <ion-list *ngSwitchCase="'datos'">
+        <ion-item>
+          <button ion-button (click)="fecha()">
+            Fecha
+          </button>
+        </ion-item>
         <ion-item class="fondo">
           <ion-avatar item-start>
             <ion-icon ios="ios-contact" md="md-contact"></ion-icon>
@@ -37,6 +42,7 @@
               <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>
           </ion-avatar>
           <p class="titulo"> Fecha y Hora de Registro </p>
+          <p class="datos">{{registerTime}}</p>
           <p class="datos">{{datos.createdate}}</p>
         </ion-item>
         <ion-item class="fondo">
@@ -136,7 +142,7 @@
             <ion-col col-2>
               <div>
                 <p *ngIf="datos.lastcomment != 0">
-                  <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>{{comentario.datetime}}
+                  <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>Hace {{datos.lastcomment}} días
                 </p>
                 <p *ngIf="datos.lastcomment === 0">
                   <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon> Hoy
