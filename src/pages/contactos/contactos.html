@@ -68,7 +68,7 @@
         </ion-avatar>
       </ion-item>
       <ion-item-options class="fondo" side="right">
-        <button *ngIf="referido.cellphone != 0" ion-button color="secondary" (click)="llamar(referido.cellphone)">
+        <button *ngIf="referido.cellphone != 0" ion-button color="secondary" (click)="callContact(referido.cellphone)">
           <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>
         </button>
         <button ion-button color="botones" (click)="verContacto(referido.folio, 'r')">
@@ -99,7 +99,7 @@
         </ion-avatar>
       </ion-item>
       <ion-item-options class="fondo" side="right">
-        <button *ngIf="potencial.cellphone != 0" ion-button color="secondary" (click)="llamar(potencial.cellphone)">
+        <button *ngIf="potencial.cellphone != 0" ion-button color="secondary" (click)="callContact(potencial.cellphone)">
           <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>
         </button>
         <button ion-button color="botones" (click)="verContacto(potencial.folio, 'r')">

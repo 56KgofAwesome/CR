@@ -61,7 +61,8 @@ export class ContactosProvider {
     var body    : string = 'm=addBuyer&f=A' + datos + '&token='+token;
     return this.apiProvider.post(body);
   }
-  //
+  //----------------------------------------------------------------------------
+  //Agregar comentarios
   agregarComentario(datos){
 
     let body: string  = 'mode=visit&f='+datos,
@@ -75,7 +76,7 @@ export class ContactosProvider {
     return this.http.post(url, body, options);
 
   }
-
+  //----------------------------------------------------------------------------
   activarVisita(datos){
     let body    : string = 'm=activateReferred&jash=jas' + datos,
     header  : any    =  new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),

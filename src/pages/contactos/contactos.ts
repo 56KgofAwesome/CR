@@ -33,7 +33,7 @@ export class ContactosPage {
   ) {
 
   }
-
+  //----------------------------------------------------------------------------
   ionViewCanEnter() {
       this.showContactsList();
       this.showReferedContactsList();
@@ -145,6 +145,4 @@ export class ContactosPage {
       this.potenciales = data.json().data;
     });
   }
-
-
 }

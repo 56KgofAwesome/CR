@@ -4,59 +4,61 @@ import { Storage } from '@ionic/storage';
 import { ContactosProvider } from '../../providers/contactos/contactos';
 import { AlertController, LoadingController } from 'ionic-angular';
 
-/**
- * Generated class for the SeguimientoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-seguimiento',
   templateUrl: 'seguimiento.html',
 })
 export class SeguimientoPage {
-  datos:any;
+  datos         :   any;
   datosEnvio    :   any   = [];
   tipo          :   any;
   constructor(
-      public navCtrl: NavController, 
-      public navParams: NavParams, 
-      private storage: Storage, 
+      public navCtrl: NavController,
+      public navParams: NavParams,
+      private storage: Storage,
       private contactoProvider: ContactosProvider,
       public loadingCtrl: LoadingController,
       public alertCtrl: AlertController
   ) {
+    this.setData();
+  }
+  //----------------------------------------------------------------------------
+  //Carga previa de los datos que se necesitan para registrar un seguimiento
+  setData(){
     this.datos = this.navParams.get('contacto');
     this.tipo = this.navParams.get('tipo');
 
     this.datosEnvio.mode = 'visit';
-    if(this.tipo == 'c'){
-      this.datosEnvio.f = 'A';
-    }else{
-      this.datosEnvio.f = 'B';
-    }
-    
+      if(this.tipo == 'c'){
+        this.datosEnvio.f = 'A';
+      }else{
+        this.datosEnvio.f = 'B';
+      }
+
     this.datosEnvio.name = this.datos.fullname;
     this.datosEnvio.folio = this.datos.visitid;
     this.datosEnvio.email = this.datos.email;
     this.datosEnvio.officename = this.datos.officename;
     this.datosEnvio.office = this.datos.office;
     this.datosEnvio.type = 'lead';
-    this.storage.get('usuario').then(data=>{
-      this.datosEnvio.userid = data;
-    });
     this.storage.get('folio').then(data=>{
-      
       this.datosEnvio.company = data;
     });
-
-    
-
+    this.storage.get('dataUser').then(data=>{
+      this.datosEnvio.userid = data.userid;
+    });
   }
-
-
+  //----------------------------------------------------------------------------
+  //Nuevo Seguimiento
+  newComment(){
+    const comment = this.alertCtrl.create({
+      title: 'Nuevo Seguimiento',
+      subTitle: 'aqui',
+      buttons: ['ok']
+    });
+  }
+  //----------------------------------------------------------------------------
 
   agregarSeguimiento(){
     const loader = this.loadingCtrl.create({
@@ -69,9 +71,9 @@ export class SeguimientoPage {
     Object.keys(datos).forEach(function(key){
       UrlData += '&' + key + '=' + datos[key];
     })
-
-    
-    var promise = this.contactoProvider.agregarComentario(UrlData);
+    console.log(datos);
+    loader.dismiss();
+    /*var promise = this.contactoProvider.agregarComentario(UrlData);
 
     promise.subscribe(data=>{
       loader.dismiss();
@@ -91,7 +93,7 @@ export class SeguimientoPage {
         });
         alerta.present();
       }
-    });
+    });*/
 
 
   }

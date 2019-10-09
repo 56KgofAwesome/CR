@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController,AlertController } from 'ionic-angular';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { EmailComposer } from '../../../node_modules/@ionic-native/email-composer';
 import { SeguimientoPage } from '../seguimiento/seguimiento';
@@ -19,16 +19,15 @@ export class VerContactoPage {
   activo2     :boolean  = false;
   activo3     :boolean  = false;
   seccion     :string   = "datos";
-  contactId  :any;
+  contactId   :any;
   datos       : any     = [];
   comentarios : any     = {};
   tipo        : any;
   idUsuario   : any;
-  date: any;
-  moments: any;
+  date        : any;
+  moments     : any;
 
   registerTime: any;
-  commentTime: any;
 
   constructor(
     public navCtrl: NavController,
@@ -36,7 +35,8 @@ export class VerContactoPage {
     public usuarioProvider: UsuarioProvider,
     private emailComposer: EmailComposer,
     public modalCtrl: ModalController,
-    public contactosProvider: ContactosProvider
+    public contactosProvider: ContactosProvider,
+    public alertCtrl: AlertController
   ){
 
   }
@@ -44,7 +44,7 @@ export class VerContactoPage {
   ionViewCanEnter(){
     this.contactId = this.navParams.get("id");
     this.tipo  = this.navParams.get("tipo");
-    //Verifica si e usuario es visita o prospecto
+    //Verifica si el usuario es visita o prospecto
       if(this.tipo == 'c'){
         var promise = this.contactosProvider.getContactInfo(this.contactId, this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
         promise.subscribe(data=>{
@@ -62,13 +62,12 @@ export class VerContactoPage {
       }
   }
   //----------------------------------------------------------------------------
+  //Obtiene el tiempo estimado de registro del usuario
   dateAgo(dataDate: any){
     return this.registerTime = moment(dataDate).fromNow();
   }
   //----------------------------------------------------------------------------
-  dateAgoComments(days: any){
-    return this.commentTime = moment(days.substring(0,10)).fromNow();
-  }
+
 
   mensajear(correo:any){
     this.emailComposer.isAvailable().then((available: boolean) => {
@@ -97,18 +96,26 @@ export class VerContactoPage {
       }
     }*/
   }
-
-  seguimiento(){
-
+  //----------------------------------------------------------------------------
+  //Abre el modal de nuevo seguimiento
+  newComment(){
     if(this.tipo == 'c'){
       this.navCtrl.push(SeguimientoPage, {'contacto': this.datos, 'tipo': this.tipo});
     }else{
       this.navCtrl.push(SeguimientoPage, {'contacto': this.datos, 'tipo': this.tipo});
     }
-
-
-
   }
+  //----------------------------------------------------------------------------
+  //Nuevo Seguimiento
+  newCommentModal(){
+    const comment = this.alertCtrl.create({
+      title: 'Nuevo Seguimiento',
+      subTitle: 'aqui',
+      buttons: ['ok']
+    });
+    comment.present();
+  }
+  //----------------------------------------------------------------------------
 
 
   sharing(tipo:any){
