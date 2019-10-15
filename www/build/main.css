@@ -49985,6 +49985,23 @@ page-resultados .ocultar {
   display: none;
 }
 
+.prompt_alert .alert-head {
+  text-align: left;
+  padding-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.prompt_alert .alert-title {
+  border-bottom: solid;
+  -webkit-text-decoration-color: blackImmoH2;
+  text-decoration-color: blackImmoH2;
+  border-color: blackImmoH2;
+}
+
+.prompt_alert .alert-sub-title {
+  margin-top: 20px;
+}
+
 page-seguimiento .scroll-content {
   padding: 10px !important;
 }

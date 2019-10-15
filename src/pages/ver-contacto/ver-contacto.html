@@ -139,10 +139,10 @@
                 <p>
                   <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>
                 </p>
-                <p *ngIf="datos.lastcomment != 0">
+                <p *ngIf="comentario.lastcomment != 0">
                   Hace {{comentarios[i].lastcomment}} días
                 </p>
-                <p *ngIf="datos.lastcomment === 0">
+                <p *ngIf="comentario.lastcomment === '0'">
                   Hoy
                 </p>
               </div>
@@ -190,36 +190,10 @@
             </ion-col>
           </ion-row>
         </ion-grid>
-          <!--ion-card *ngFor="let comentario of comentarios">
-            <ion-card-header>
-              <p>
-                <ion-icon ios="ios-person" md="md-person"></ion-icon> Cabecera</p>
-            </ion-card-header>
-          </ion-card>
-          <ion-card *ngFor="let comentario of comentarios">
-            <ion-card-header>
-              <p>
-                <ion-icon ios="ios-person" md="md-person"></ion-icon> {{comentario.fullname}}</p>
-            </ion-card-header>
-            <ion-card-content>
-              <p>
-                <ion-icon ios="ios-albums" md="md-albums"></ion-icon> DETALLES DE SEGUIMIENTO</p>
-              <br>
-              <p>{{comentario.comment}}</p>
-              <p>
-                <ion-icon ios="ios-filing" md="md-filing"></ion-icon>{{comentario.officename}}</p>
-              <p>
-                <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>{{comentario.datetime}}</p>
-            </ion-card-content>
-          </ion-card-->
       </ion-list>
-
-
-
-
     </div>
   </div>
-  <div id="modal" class="modal">
+  <!--div id="modal" class="modal">
     <div class="modal-content">
       <span class="close" (click)="cerrarModal()">&times;</span>
       <form (ngSubmit)="enviarCorreo()">
@@ -229,5 +203,5 @@
         </ion-item>
       </form>
     </div>
-  </div>
+  </div-->
 </ion-content>

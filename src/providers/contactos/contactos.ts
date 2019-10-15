@@ -1,4 +1,4 @@
-import { Http, Headers, RequestOptions, RequestMethod } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { ApiProvider } from '../../providers/api/api';
 import { UsuarioProvider } from '../usuario/usuario';
@@ -62,19 +62,17 @@ export class ContactosProvider {
     return this.apiProvider.post(body);
   }
   //----------------------------------------------------------------------------
-  //Agregar comentarios
-  agregarComentario(datos){
-
-    let body: string  = 'mode=visit&f='+datos,
-    type    : string  = "application/x-www-form-urlencoded; charset=UTF-8",
-    headers : any     = new Headers({ 'Content-Type': type}),
-    options : any     = new RequestOptions({ headers: headers }),
-    url     : any     = 'http://www.immosystem.com.mx/appImmov2/immoApp.php';
-
-    var urlEnvio = url + body;
-
-    return this.http.post(url, body, options);
-
+  //Agregar comentarios de seguimiento
+  //(arreglo de datos,tipo de cliente-comprador o referido-, token del usuario)
+  addComment(datos,type:any,token: any){
+    var UrlData = '';
+    Object.keys(datos).forEach(function(key){
+      UrlData += '&' + key + '=' + datos[key];
+    })
+    //Validación del tipo de usuario para su registro en el módulo correspondiente
+    var m: string = (type == 'c') ? 'addComment' : 'addCommentRefered';
+    let body: string  = 'm='+ m +'&token='+token + UrlData;
+    return this.apiProvider.post(body);
   }
   //----------------------------------------------------------------------------
   activarVisita(datos){

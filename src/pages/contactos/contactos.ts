@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CallNumber } from '@ionic-native/call-number';
-import {
-  VerContactoPage,
-  AgregarCompradoresPage
-} from '../index.paginas';
+import { VerContactoPage, AgregarCompradoresPage } from '../index.paginas';
 import { AgregarContactoPage } from '../agregar-contacto/agregar-contacto';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { ContactosProvider } from '../../providers/contactos/contactos';
@@ -16,14 +13,14 @@ import { ContactosProvider } from '../../providers/contactos/contactos';
   templateUrl: 'contactos.html',
 })
 export class ContactosPage {
-  myInput: any;
-  id: any;
-  contactos: any[];
-  referidos: any[];
-  potenciales: any[];
-  datos: {};
-  tipo: any = 'compradores';
-  agrC: any;
+  myInput     : any;
+  id          : any;
+  contactos   : any[];
+  referidos   : any[];
+  potenciales : any[];
+  datos       : {};
+  tipo        : any = 'compradores';
+  agrC        : any;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -45,12 +42,13 @@ export class ContactosPage {
       .then(res => console.log('llamando', res))
       .catch(err => console.log('error de llamada', err));
   }
-
+  //----------------------------------------------------------------------------
+  //Abre vista con información detallada del contacto
   verContacto(id: any, tipo: any ) {
-    this.navCtrl.push(VerContactoPage, { 'id': id,
-                                         'tipo': tipo });
+    this.navCtrl.push(VerContactoPage, {  'id': id,
+                                        'tipo': tipo });
   }
-
+  //----------------------------------------------------------------------------
   agregarContacto() {
     let modal = document.getElementById("modal");
     modal.style.display = "block";
@@ -126,7 +124,6 @@ export class ContactosPage {
     var promise = this.contactosProvider.getContactsList(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
     promise.subscribe(data => {
       this.contactos = data.json().data;
-      console.log(this.contactos);
     });
   }
   //----------------------------------------------------------------------------

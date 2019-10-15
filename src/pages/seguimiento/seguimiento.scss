@@ -1,8 +1,21 @@
+.prompt_alert .alert-head{
+  text-align: left;
+  padding-bottom: 0px;
+  padding-bottom: 0px;
+}
+.prompt_alert .alert-title{
+  border-bottom: solid;
+  text-decoration-color: blackImmoH2;
+  border-color: blackImmoH2;
+}
+.prompt_alert .alert-sub-title{
+  margin-top: 20px;
+}
 page-seguimiento {
     .scroll-content{
-        padding: 10px !important; 
+        padding: 10px !important;
       }
-    
+
       ion-item{
         padding-left: 0px !important;
       }
@@ -47,12 +60,12 @@ textarea.text-input {
 
 ion-item{
     margin: 5px auto !important;
-    padding: 0px 5px !important; 
+    padding: 0px 5px !important;
     border: 1px solid #E4E4E4 !important;
-    width: 95% !important; 
+    width: 95% !important;
     height: 41px !important;
-    background-color: rgba(255, 255, 255, 0.1) !important; 
+    background-color: rgba(255, 255, 255, 0.1) !important;
     white-space: nowrap !important;
-    border-radius: 4px !important; 
+    border-radius: 4px !important;
 }
 }
