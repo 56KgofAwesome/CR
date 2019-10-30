@@ -14,7 +14,7 @@ export class ContactosProvider {
   ){
   }
   //----------------------------------------------------------------------------
-  //Agregar un contacto Pre-registro(Visitas)
+  //Agregar un contacto Pre-registro(Visitas/Referidos)
   addPreRegister(datos:any){
     var body    : string  = 'm=addBuyerPreregister&token='+this.usuarioProvider.datos.userToken;
         var datos = datos;

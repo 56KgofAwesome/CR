@@ -3,38 +3,38 @@
     <div class="contenedor">
         <div style="margin-bottom: 10%">
             <div *ngIf="datos.imagen != ''" class="logo alinear">
-                <img style="border-radius: 50px;" width="90px" src="{{datos.imagen}}">
+                <img class="logo-img" src="{{datos.imagen}}">
             </div>
             <div *ngIf="datos.imagen == ''" class="logo alinear">
-                <img width="90px" src="assets/imgs/user.png">
+                <img class="logo-img" src="assets/imgs/user.png">
             </div>
         </div>
         <div>
                 <ion-list>
                     <ion-item>
                         <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>
-                        <p style="font-size: 15px;">{{datosUsuario.nombre}}</p>
+                        <p>{{datosUsuario.nombre}}</p>
                     </ion-item>
                     <ion-item *ngIf="datos.celular != 0">
                         <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
-                        <p>celular: {{datos.celular}}</p>
+                        <p>Celular: {{datos.celular}}</p>
                     </ion-item>
                     <ion-item *ngIf="datos.celular == 0">
                         <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
-                        <p>celular: no disponible</p>
+                        <p>Celular: no disponible</p>
                     </ion-item>
                     <ion-item *ngIf="datos.telefono != 0">
                         <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
-                        <p style="font-size: 15px;">Telefono: {{datos.telefono}}</p>
+                        <p>Telefono: {{datos.telefono}}</p>
                     </ion-item>
                     <ion-item *ngIf="datos.telefono == 0">
                         <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
-                        <p style="font-size: 15px;">Telefono: {{datos.telefono}}</p>
+                        <p>Telefono: {{datos.telefono}}</p>
                     </ion-item>
                 </ion-list>
             <div>
                 <div class="logo alinear">
-                    <img width="90" src="{{datosUsuario.logo}}">
+                    <img src="{{datosUsuario.logo}}">
                 </div>
             </div>
         </div>
@@ -86,11 +86,11 @@
 
 
 
-    <button style="margin-top: 10px; font-size: 12px; color: botones;" class="center boton" ion-button color="botones" full (click)="cerrarSesion()">Cerrar Sesion</button>
+    <button ion-button class="logoutButton" full (click)="cerrarSesion()">Cerrar Sesion</button>
 
     <div text-center class="animated fadeInDown">
       <div class="logo">
-        <img class="center" width="100%" style="margin: 20px auto;" src="assets/imgs/web.gif">
+        <img class="animatedFooter" src="assets/imgs/web.gif">
       </div>
     </div>
 

@@ -36,18 +36,20 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #bf0d2e,
-  secondary:  #fede00,
-  tertiary:   #f58224,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-  tabs:       #eee,
-  botones:    #cbaa00,
-  header:     #bf0d2e,
-  botonMail:  #eee,
-  active:       green
+  primary:            #bf0d2e,
+  secondary:          #fede00,
+  tertiary:           #f58224,
+  danger:             #f53d3d,
+  light:              #f4f4f4,
+  dark:               #222,
+  tabs:               #eee,              //Color de la barra de Tabs(Datos,Buscar,Tarea,Contactos)
+  static-icons:       #686868,           //Color de los iconos estáticos
+  action-buttons:     #cbaa00,           //Color de los botones de acción
+  header:             #bf0d2e,
+  botonMail:          #eee,
+  active:             green
 );
+
 
 html,
 body {
@@ -66,7 +68,7 @@ body {
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-
+$button-md-background-color: color($colors, action-buttons) !default;    //Override del color de los botones de acción
 
 
 // App Windows Variables

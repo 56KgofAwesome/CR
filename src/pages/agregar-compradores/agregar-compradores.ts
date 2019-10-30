@@ -7,12 +7,6 @@ import { ContactosProvider } from '../../providers/contactos/contactos';
 import { AlertController } from 'ionic-angular';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 
-/**
- * Generated class for the AgregarCompradoresPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -27,8 +21,10 @@ export class AgregarCompradoresPage {
   public fBusca       : FormGroup;
   public fInmueble    : FormGroup;
   flag                : Boolean = false;
+  flagMail2           : Boolean = false;
   formulario          : any = {};
   error               : Boolean = false;
+  errorMail2          : Boolean = false;
   cliente_busca       : any = [];
   mediosDeContacto    : any = [];
   subMediosDeContactos: any = [];
@@ -39,33 +35,25 @@ export class AgregarCompradoresPage {
   listaDePaises       : any = [];
   listaDeEstados      : any = [];
   medioValor          : any;
-  datosFG             :any  = {};
-  datosMC             :any  = {};
-  datosCB             :any  = {};
-  datosAgregar        :any  = {};
-  idUsuario           :any;
-  media_extra         :any;
-  datosGenerales      :any  = [];
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private formBuilder: FormBuilder,
-    public formularioProvider: FormulariosProvider,
-    private storage: Storage,
-    public contactoProvider: ContactosProvider,
-    public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,
-    public usuarioProvider:UsuarioProvider
-  ) {
+  datosFG             : any  = {};
+  datosMC             : any  = {};
+  datosCB             : any  = {};
+  datosAgregar        : any  = {};
+  idUsuario           : any;
+  media_extra         : any;
+  datosGenerales      : any  = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, public formularioProvider: FormulariosProvider,private storage: Storage,
+              public contactoProvider: ContactosProvider,public loadingCtrl: LoadingController,public alertCtrl: AlertController,public usuarioProvider:UsuarioProvider
+  ){
+  //Datos Generales
     this.fGeneral = this.formBuilder.group({
       nombre: ['', [Validators.required]],
       apellidoP: ['', [Validators.required]],
       apellidoM: [''],
-      email1: ['', [Validators.required, Validators.email]],
-      email2: ['', [Validators.email]],
+      email1: ['', [Validators.required, Validators.email, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+      email2: ['', [Validators.email, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
       rfc: [''],
-      nac: ['']
-
+      nac: [''],
     });
 //9984069591
     this.fContacto = this.formBuilder.group({
@@ -195,7 +183,7 @@ export class AgregarCompradoresPage {
 
   }
 
-
+  //Recepcion de dato generales
   formularioGeneral(){
     this.error = true;
     if(this.fGeneral.get('email1').hasError('required')){
@@ -203,14 +191,27 @@ export class AgregarCompradoresPage {
     }else{
       this.flag = true;
     }
+    console.log(this.fGeneral.value.email2);
 
-    if(!this.fGeneral.get('nombre').hasError('required') && !this.fGeneral.get('apellidoP').hasError('required') && !this.fGeneral.get('email1').hasError('required') && !this.fGeneral.get('email1').hasError('email')){
+    if(!this.fGeneral.get('nombre').hasError('required') && !this.fGeneral.get('apellidoP').hasError('required') && !this.fGeneral.get('email1').hasError('required') && !this.fGeneral.get('email1').hasError('email') && this.fGeneral.get('email1').valid){
+
+      this.errorMail2 = true;
+
+      if(this.fGeneral.value.email2 != ''){
+        this.flagMail2 = true;
+      }else{
+        this.flagMail2 = false;
+      }
+
+
+
       var contactoH = document.getElementById('contacto');
       var generalesH = document.getElementById('generales');
       contactoH.style.display = "block";
       generalesH.style.display = "none";
       this.error = false;
     }
+
 
   }
 

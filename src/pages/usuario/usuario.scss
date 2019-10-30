@@ -1,13 +1,32 @@
 page-usuario {
-    .contenedor{
-        display: flex;
-        flex-direction: column;
-        $colors: tabs;
+  .contenedor{
+      display: flex;
+      flex-direction: column;
+      $colors: tabs;
+  }
+    .animatedFooter{
+       width: 100%;
+       margin: 20px auto;
     }
+    //Botón de cerrar sesión
+    .logoutButton{
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    //Estilo del DIV contenedor del logo
     .logo{
         margin: auto;
         margin-top: 10px;
+        $img-logos: width;
     }
+      //Estilo de la imagen del logo
+      .logo-img{
+        border-radius:  50px;
+        width:          90px;
+      }
+      .alinear{
+          text-align: center;
+      }
     .menu{
         //background-color: rgba(136, 136, 136, 0.262);
         padding: 2px 4px;
@@ -25,7 +44,7 @@ page-usuario {
         display: none;
     }
     ion-icon{
-        color: #666;
+        $colors: static-icons;
         float: right;
     }
     .datosPersonales{
@@ -36,7 +55,5 @@ page-usuario {
         display: flex;
         flex-direction: row;
     }
-    .alinear{
-        text-align: center;
-    }
+
 }
