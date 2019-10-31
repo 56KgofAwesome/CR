@@ -17,7 +17,7 @@ export class AgregarCompradoresPage {
   public fGeneral     : FormGroup;
   public fContacto    : FormGroup;
   public fDelContacto : FormGroup;
-  public fAgente      : FormGroup;
+  public agentForm    : FormGroup;
   public fBusca       : FormGroup;
   public fInmueble    : FormGroup;
   flag                : Boolean = false;
@@ -28,8 +28,8 @@ export class AgregarCompradoresPage {
   cliente_busca       : any = [];
   mediosDeContacto    : any = [];
   subMediosDeContactos: any = [];
-  listaDeOficinas     : any = [];
-  agentesDeOficina    : any = [];
+  officesList         : any = [];
+  officeAgents        : any = [];
   listaDeLenguajes    : any = [];
   listaDeCiudades     : any = [];
   listaDePaises       : any = [];
@@ -64,8 +64,8 @@ export class AgregarCompradoresPage {
 
 
 
-    this.fAgente = this.formBuilder.group({
-      officinaA: ['', Validators.required],
+    this.agentForm = this.formBuilder.group({
+      office: ['', Validators.required],
       asesorA: ['', Validators.required]
     });
 
@@ -132,58 +132,56 @@ export class AgregarCompradoresPage {
     this.datosGenerales.online        = 1;
 
   }
-
+  //Carga antes de entrar a la página
   ionViewCanEnter() {
-
-    /*this.storage.get('usuario').then(data=>{
-       this.idUsuario = data;
-
-       var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
-       oficinas.subscribe(data=>{
-         this.listaDeOficinas = data.json().data;
-       });
-    });*/
-
+    //Obtener lista de oficinas
+    var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
+      offices.subscribe(data=>{
+        this.officesList = data.json().data.userOffice;
+        console.log(this.officesList);
+     });
+     //-------------------------------------------------------------------------
+    //Obtener lista de Ciudades
     this.storage.get('folio').then(data => {
       var ciudad = this.formularioProvider.listaDeCiudad(data);
       ciudad.subscribe(data => {
         this.listaDeCiudades = data.json().data;
+        console.log(this.listaDeCiudades);
       });
     });
-
+    //-------------------------------------------------------------------------
+    //Obtener medios de Contacto
     var contactos = this.formularioProvider.mediosDeContactos();
     contactos.subscribe(data =>{
       this.mediosDeContacto = data.json().data;
     });
-
-    /*var oficinas = this.formularioProvider.listaDeOficinas(this.idUsuario);
-    oficinas.subscribe(data=>{
-      this.listaDeOficinas = data.json().data;
-    });*/
-
+    //-------------------------------------------------------------------------
+    //Obtiene los submedios de contacto
     var subContactos = this.formularioProvider.subMediosDeContactos(this.medioValor);
     subContactos.subscribe(data=> {
       this.subMediosDeContactos = data.json().data;
     });
-
+    //-------------------------------------------------------------------------
+    //Obtiene los idiomas
     var lenguajes = this.formularioProvider.listaDeLenguajes();
     lenguajes.subscribe(data => {
       this.listaDeLenguajes = data.json().data;
     });
-
+    //-------------------------------------------------------------------------
+    //Obtiene lista de Países
     var paises = this.formularioProvider.listaDePaises();
     paises.subscribe(data => {
       this.listaDePaises = data.json().data;
     });
-
+    //-------------------------------------------------------------------------
+    //Obtiene lista de ciudades
     var ciudades = this.formularioProvider.listaDeCiudad(this.idUsuario);
     ciudades.subscribe(data => {
       this.listaDeCiudades = data.json().data;
     });
-
   }
-
-  //Recepcion de dato generales
+  //----------------------------------------------------------------------------
+  //Formulario de datos generales
   formularioGeneral(){
     this.error = true;
     if(this.fGeneral.get('email1').hasError('required')){
@@ -214,11 +212,8 @@ export class AgregarCompradoresPage {
 
 
   }
-
-
-
-
-
+  //----------------------------------------------------------------------------
+  //Formulario datos de contacto
   formularioContacto(){
     this.error = true;
 
@@ -250,7 +245,8 @@ export class AgregarCompradoresPage {
     }
 
   }
-
+  //----------------------------------------------------------------------------
+  //Formularios de Preferencias de Búsqueda
   formularioBusca(){
 
 
@@ -264,7 +260,8 @@ export class AgregarCompradoresPage {
     }
 
   }
-
+  //----------------------------------------------------------------------------
+  //Formulario de preferencias de Compra
   formularioCompradores(){
 
     if(!this.fDelContacto.get('fdcNacionalidad').hasError('required')){
@@ -275,7 +272,8 @@ export class AgregarCompradoresPage {
     }
 
   }
-
+  //----------------------------------------------------------------------------
+  //Formulario de información financiera
   formularioFinanciera(){
 
     var financiera = document.getElementById('financiera');
@@ -284,7 +282,8 @@ export class AgregarCompradoresPage {
     inmueble.style.display = "block";
 
   }
-
+  //----------------------------------------------------------------------------
+  //Formulario de preferencias de inmueble
   formularioInmueble(){
 
     var inmueble = document.getElementById('inmueble');
@@ -293,8 +292,16 @@ export class AgregarCompradoresPage {
     enlista.style.display = "block";
 
   }
-
-
+  //----------------------------------------------------------------------------
+  //Actualiza la lista de agentes de la oficina seleccionada
+  updateAgents(){
+    var officeAgents = this.formularioProvider.listaDeAgentes(this.agentForm.value.office,this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
+    officeAgents.subscribe(data=>{
+      this.officeAgents = data.json().data;
+      console.log(this.officeAgents);
+    });
+  }
+  //----------------------------------------------------------------------------
   validarDetalle(){
 
     this.media_extra = this.fContacto.value.medioC
@@ -380,14 +387,6 @@ export class AgregarCompradoresPage {
 
   }
 
-  actualizarAsesor(){
-
-    /*var agentesO = this.formularioProvider.listaDeAgentes(this.fAgente.value.officinaA);
-    agentesO.subscribe(data=>{
-      this.agentesDeOficina = data.json().data;
-    });*/
-
-  }
 
   actualizarCiudades(){
 

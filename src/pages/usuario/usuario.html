@@ -1,98 +1,47 @@
 <ion-content padding>
-
-    <div class="contenedor">
-        <div style="margin-bottom: 10%">
-            <div *ngIf="datos.imagen != ''" class="logo alinear">
-                <img class="logo-img" src="{{datos.imagen}}">
-            </div>
-            <div *ngIf="datos.imagen == ''" class="logo alinear">
-                <img class="logo-img" src="assets/imgs/user.png">
-            </div>
-        </div>
-        <div>
-                <ion-list>
-                    <ion-item>
-                        <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>
-                        <p>{{datosUsuario.nombre}}</p>
-                    </ion-item>
-                    <ion-item *ngIf="datos.celular != 0">
-                        <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
-                        <p>Celular: {{datos.celular}}</p>
-                    </ion-item>
-                    <ion-item *ngIf="datos.celular == 0">
-                        <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
-                        <p>Celular: no disponible</p>
-                    </ion-item>
-                    <ion-item *ngIf="datos.telefono != 0">
-                        <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
-                        <p>Telefono: {{datos.telefono}}</p>
-                    </ion-item>
-                    <ion-item *ngIf="datos.telefono == 0">
-                        <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
-                        <p>Telefono: {{datos.telefono}}</p>
-                    </ion-item>
-                </ion-list>
-            <div>
-                <div class="logo alinear">
-                    <img src="{{datosUsuario.logo}}">
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
-
-
-
-
-
-
-        <!--<div class="datosPersonales">
-          <div>
-            <div class="o_roW">
-                <div>
-
-                </div>
-            </div>
-          </div>
-          <div>
-            <ion-card class="menu" (click)="desplegar(1)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono1" name="arrow-down"></ion-icon></p></ion-card>
-            <div id="seccion1" class="invisible" padding>
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>
-            </div>
-
-
-          </div>
-          <div>
-              <ion-card class="menu" (click)="desplegar(2)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono2" name="arrow-down"></ion-icon></p></ion-card>
-              <div id="seccion2" class="invisible" padding>
-                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>
-              </div>
-
-          </div>
-          <div>
-              <ion-card class="menu" (click)="desplegar(3)"><p style="padding-top: 5px;">nombre de la seccion<ion-icon id="icono3" rigth name="arrow-down"></ion-icon></p></ion-card>
-              <div id="seccion3" class="invisible" padding>
-                  <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis aliquid fugiat officiis ratione ducimus voluptas.</p>
-              </div>
-
-          </div>
-
-
-        </div>-->
-
-
-
-
-    <button ion-button class="logoutButton" full (click)="cerrarSesion()">Cerrar Sesion</button>
-
-    <div text-center class="animated fadeInDown">
-      <div class="logo">
-        <img class="animatedFooter" src="assets/imgs/web.gif">
+  <div class="contenedor">
+    <div style="margin-bottom: 10%">
+      <div *ngIf="datos.imagen != ''" class="logo alinear">
+        <img class="logo-img" src="{{datos.imagen}}">
+      </div>
+      <div *ngIf="datos.imagen == ''" class="logo alinear">
+        <img class="logo-img" src="assets/imgs/user.png">
       </div>
     </div>
-
-
+    <div>
+      <ion-list>
+        <ion-item>
+          <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>
+          <p>{{datosUsuario.nombre}}</p>
+        </ion-item>
+        <ion-item *ngIf="datos.celular != 0">
+          <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
+          <p>Celular: {{datos.celular}}</p>
+        </ion-item>
+        <ion-item *ngIf="datos.celular == 0">
+          <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
+          <p>Celular: no disponible</p>
+        </ion-item>
+        <ion-item *ngIf="datos.telefono != 0">
+          <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
+          <p>Telefono: {{datos.telefono}}</p>
+        </ion-item>
+        <ion-item *ngIf="datos.telefono == 0">
+          <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
+          <p>Telefono: {{datos.telefono}}</p>
+        </ion-item>
+      </ion-list>
+      <div>
+        <div class="logo alinear">
+          <img src="{{datosUsuario.logo}}">
+        </div>
+      </div>
+    </div>
+  </div>
+  <button ion-button class="logoutButton" full (click)="cerrarSesion()">Cerrar Sesion</button>
+  <div text-center class="animated fadeInDown">
+    <div class="logo">
+      <img class="animatedFooter" src="assets/imgs/web.gif">
+    </div>
+  </div>
 </ion-content>

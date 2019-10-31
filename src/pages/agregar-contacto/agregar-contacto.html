@@ -166,7 +166,7 @@
   <form (ngSubmit)="addContact()" [formGroup]="agentForm">
 
       <ion-item class="formulario">
-        <ion-label class="textoLabel"> Officina <sup>*</sup></ion-label>
+        <ion-label class="textoLabel"> Oficina <sup>*</sup></ion-label>
         <ion-select [(ngModel)]="generalData.office" (ionChange)="updateAgents()" name="propiedad" formControlName="office">
           <ion-option *ngFor="let oficina of officesList" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>
         </ion-select>
