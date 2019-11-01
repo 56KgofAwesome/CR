@@ -1,4 +1,3 @@
-//import { HttpClient } from '@angular/common/http';
 import { Http, RequestOptions,Headers} from '@angular/http';
 import { Injectable } from '@angular/core';
 
@@ -10,11 +9,14 @@ export class ApiProvider {
   header: any =  new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'});
   options: any = new RequestOptions({headers: this.header})
 
+
+
 constructor(public http: Http) {
   }
     //Método POST
     post(body){
         return this.http.post(this.url, body, this.options);
     }
+
 
 }

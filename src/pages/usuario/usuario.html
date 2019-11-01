@@ -1,45 +1,52 @@
 <ion-content padding>
+  <ion-fab top right fixed >
+    <button ion-fab mini color="action-buttons"><ion-icon name="settings"></ion-icon></button>
+    <ion-fab-list>
+      <button ion-fab (click)="cerrarSesion()"><ion-icon name="log-out"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
   <div class="contenedor">
     <div style="margin-bottom: 10%">
-      <div *ngIf="datos.imagen != ''" class="logo alinear">
-        <img class="logo-img" src="{{datos.imagen}}">
-      </div>
-      <div *ngIf="datos.imagen == ''" class="logo alinear">
-        <img class="logo-img" src="assets/imgs/user.png">
+      <div *ngIf="showElement.imageUser" class="logo alinear">
+        <img *ngIf="datosUsuario.imagen == '' || datosUsuario.imagen == 0; imageUser" class="logo-img" src="assets/imgs/user.png">
+        <ng-template #imageUser>
+          <img class="logo-img" src="{{datosUsuario.imagen}}">
+        </ng-template>
       </div>
     </div>
     <div>
       <ion-list>
-        <ion-item>
+        <ion-item *ngIf="showElement.nameTagEnabled">
           <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>
-          <p>{{datosUsuario.nombre}}</p>
+          <p *ngIf="datosUsuario.nombre != ''; else noRegistrado">{{datosUsuario.nombre}}</p>
+          <ng-template #noRegistrado>
+            <p> No Registrado </p>
+          </ng-template>
         </ion-item>
-        <ion-item *ngIf="datos.celular != 0">
+        <ion-item *ngIf="showElement.cellPhoneTagEnabled">
           <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
-          <p>Celular: {{datos.celular}}</p>
+          <p *ngIf="datosUsuario.celular != 0; else noCellphone"> Celular: {{datosUsuario.celular}}</p>
+          <ng-template #noCellphone>
+            <p> Celular: No registrado </p>
+          </ng-template>
         </ion-item>
-        <ion-item *ngIf="datos.celular == 0">
-          <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
-          <p>Celular: no disponible</p>
-        </ion-item>
-        <ion-item *ngIf="datos.telefono != 0">
+        <ion-item *ngIf="showElement.telephoneTagEnabled">
           <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
-          <p>Telefono: {{datos.telefono}}</p>
-        </ion-item>
-        <ion-item *ngIf="datos.telefono == 0">
-          <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
-          <p>Telefono: {{datos.telefono}}</p>
+          <p *ngIf="datosUsuario.telefono != '' || datosUsuario.telefono == 0; else noTelephone">Telefono: {{datosUsuario.telefono}}</p>
+          <ng-template #noTelephone>
+              <p>Telefono: No registrado </p>
+          </ng-template>
         </ion-item>
       </ion-list>
-      <div>
-        <div class="logo alinear">
+      <div *ngIf="showElement.logoEnabled">
+        <div class="logo-img alinear logo">
           <img src="{{datosUsuario.logo}}">
         </div>
       </div>
     </div>
   </div>
-  <button ion-button class="logoutButton" full (click)="cerrarSesion()">Cerrar Sesion</button>
-  <div text-center class="animated fadeInDown">
+  <!--button ion-button class="logoutButton" full (click)="cerrarSesion()">Cerrar Sesion</button-->
+  <div *ngIf="showElement.animatedFooter" text-center class="animated fadeInDown">
     <div class="logo">
       <img class="animatedFooter" src="assets/imgs/web.gif">
     </div>

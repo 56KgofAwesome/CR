@@ -5,7 +5,7 @@ import { VerContactoPage, AgregarCompradoresPage } from '../index.paginas';
 import { AgregarContactoPage } from '../agregar-contacto/agregar-contacto';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { ContactosProvider } from '../../providers/contactos/contactos';
-
+import { ElementEnablerProvider } from '../../providers/element-enabler/element-enabler';
 
 @IonicPage()
 @Component({
@@ -13,30 +13,32 @@ import { ContactosProvider } from '../../providers/contactos/contactos';
   templateUrl: 'contactos.html',
 })
 export class ContactosPage {
-  myInput     : any;
-  id          : any;
-  contactos   : any[];
-  referidos   : any[];
-  potenciales : any[];
-  datos       : {};
-  tipo        : any = 'compradores';
-  agrC        : any;
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private callNumber: CallNumber,
-    public usuarioProvider: UsuarioProvider,
-    private contactosProvider: ContactosProvider
-  ) {
+  myInput       : any;
+  id            : any;
+  contactos     : any[];
+  referidos     : any[];
+  potenciales   : any[];
+  datos         : {};
+  tipo          : any = 'compradores';
+  agrC          : any;
+  showElements  : any = {};
+
+  constructor( public navCtrl: NavController, public navParams: NavParams, private callNumber: CallNumber,
+              public usuarioProvider: UsuarioProvider, private contactosProvider: ContactosProvider, private enabler: ElementEnablerProvider
+  ){
 
   }
   //----------------------------------------------------------------------------
+  //Carga para poder entrar
   ionViewCanEnter() {
+      this.showElements = this.enabler.contactosEnabler();
+      console.log(this.showElements);
       this.showContactsList();
       this.showReferedContactsList();
       this.showPotencialContactsList();
   }
-
+  //----------------------------------------------------------------------------
+  //Función para hacer llamadas con App Nativa de teléfono
   callContact(numero: any) {
     this.callNumber.callNumber(numero, true)
       .then(res => console.log('llamando', res))
@@ -49,6 +51,7 @@ export class ContactosPage {
                                         'tipo': tipo });
   }
   //----------------------------------------------------------------------------
+  //Inicia Modal
   agregarContacto() {
     let modal = document.getElementById("modal");
     modal.style.display = "block";
@@ -59,6 +62,7 @@ export class ContactosPage {
       }
     }
   }
+  //----------------------------------------------------------------------------
   onInput($event) {
     var contactos = document.getElementsByClassName('contactos');
     for (let i = 0; i < contactos.length; i++) {

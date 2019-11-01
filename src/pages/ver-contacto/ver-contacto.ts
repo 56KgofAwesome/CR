@@ -7,6 +7,7 @@ import { SharingPage } from '../index.paginas';
 import { GeneralFormPage } from '../general-form/general-form';
 import { Storage } from '@ionic/storage';
 import { ContactosProvider } from '../../providers/contactos/contactos';
+import { ElementEnablerProvider } from '../../providers/element-enabler/element-enabler';
 import  moment  from 'moment';
 import 'moment/locale/es';
 
@@ -16,39 +17,35 @@ import 'moment/locale/es';
   templateUrl: 'ver-contacto.html',
 })
 export class VerContactoPage {
-  activo1     : boolean  = false;
-  activo2     : boolean  = false;
-  activo3     : boolean  = false;
-  seccion     : string   = "datos";
-  contactId   : any;
-  datos       : any     = [];
-  comentarios : any     = {};
-  tipo        : any;
-  idUsuario   : any;
-  date        : any;
-  moments     : any;
+  activo1       : boolean  = false;
+  activo2       : boolean  = false;
+  activo3       : boolean  = false;
+  seccion       : string   = "datos";
+  contactId     : any;
+  datos         : any     = [];
+  comentarios   : any     = {};
+  tipo          : any;
+  idUsuario     : any;
+  date          : any;
+  moments       : any;
 
-  registerTime: any;
-  datosEnvio  : any      =[];
-  token       : any;
-  officeUser  : any;
-  comment     : any;
+  registerTime  : any;
+  datosEnvio    : any      =[];
+  token         : any;
+  officeUser    : any;
+  comment       : any;
 
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public usuarioProvider: UsuarioProvider,
-    private emailComposer: EmailComposer,
-    public modalCtrl: ModalController,
-    public contactosProvider: ContactosProvider,
-    public alertCtrl: AlertController,
-    private storage: Storage,
-    public toastController: ToastController,
-    public loadingCtrl: LoadingController,
+  showElements  : any = {};
+
+  constructor(public navCtrl: NavController,public navParams: NavParams,public usuarioProvider: UsuarioProvider,private emailComposer: EmailComposer,
+              public modalCtrl: ModalController,public contactosProvider: ContactosProvider,public alertCtrl: AlertController,private storage: Storage,
+              public toastController: ToastController,public loadingCtrl: LoadingController,private enabler: ElementEnablerProvider
   ){
 
   }
   ionViewCanEnter(){
+    this.showElements = this.enabler.verContactoEnabler();
+
     this.contactId = this.navParams.get("id");
     this.tipo  = this.navParams.get("tipo");
     //Verifica si el usuario es visita o prospecto

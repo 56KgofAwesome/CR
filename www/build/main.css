@@ -53120,6 +53120,10 @@ readers do not read off random characters that represent icons */
   content: "\f007";
 }
 
+* ::-webkit-scrollbar {
+  display: none;
+}
+
 page-agregar-compradores .cabecera {
   text-align: center;
   border-radius: 10px 10px 10px 10px;

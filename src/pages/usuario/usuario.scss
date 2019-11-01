@@ -4,6 +4,9 @@ page-usuario {
       flex-direction: column;
       $colors: tabs;
   }
+    .fab-button{
+      $colors: action-buttons;
+    }
     .animatedFooter{
        width: 100%;
        margin: 20px auto;
@@ -23,6 +26,7 @@ page-usuario {
       .logo-img{
         border-radius:  50px;
         width:          90px;
+
       }
       .alinear{
           text-align: center;

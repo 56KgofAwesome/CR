@@ -56,6 +56,7 @@ import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { Calendar } from '@ionic-native/calendar';
 import { ApiProvider } from '../providers/api/api';
+import { ElementEnablerProvider } from '../providers/element-enabler/element-enabler';
 
 
 @NgModule({
@@ -144,7 +145,8 @@ import { ApiProvider } from '../providers/api/api';
     NetworkProvider,
     ContactosProvider,
     Geolocation,
-    ApiProvider
+    ApiProvider,
+    ElementEnablerProvider
   ]
 })
 export class AppModule {}
