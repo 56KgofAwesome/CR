@@ -53655,6 +53655,11 @@ page-info p {
   text-align: justify;
 }
 
+page-info div {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
 page-login ion-content {
   position: absolute;
 }

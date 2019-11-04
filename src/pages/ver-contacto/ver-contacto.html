@@ -23,7 +23,7 @@
     <div [ngSwitch]="seccion">
     <!------------Sección de Datos--------------------------------------------->
       <ion-list *ngSwitchCase="'datos'">
-        <ion-item class="fondo">
+        <ion-item *ngIf="showElements.elements.nameTag" class="fondo">
           <ion-avatar item-start>
             <ion-icon ios="ios-contact" md="md-contact"></ion-icon>
           </ion-avatar>
@@ -32,7 +32,7 @@
             <span *ngIf="datos.ap_materno">{{datos.ap_materno}}</span>
           </p>
         </ion-item>
-        <ion-item class="fondo">
+        <ion-item *ngIf="showElements.elements.dateTag" class="fondo">
           <ion-avatar item-start>
               <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>
           </ion-avatar>
@@ -40,7 +40,7 @@
           <p class="datos">{{registerTime}}</p>
           <p class="datos">{{datos.createdate}}</p>
         </ion-item>
-        <ion-item class="fondo">
+        <ion-item *ngIf="showElements.elements.assignTag" class="fondo">
           <ion-avatar item-start>
             <ion-icon ios="ios-git-compare" md="md-git-compare"></ion-icon>
           </ion-avatar>
@@ -49,29 +49,33 @@
           <p class="datos" *ngIf="datos.nameAssing != 0">{{datos.nameAssing}}</p>
           <p class="datos" *ngIf="datos.nameAssing == 0">No Disponible</p>
         </ion-item>
-        <ion-item class="fondo">
+        <ion-item *ngIf="showElements.elements.cellphoneTag" class="fondo">
           <ion-avatar item-start>
               <ion-icon ios="ios-call" md="md-call"></ion-icon>
           </ion-avatar>
           <p class="titulo">Celular</p>
-          <p *ngIf="datos.cellphone != 0" class="datos">{{datos.cellphone}}</p>
-          <p *ngIf="datos.cellphone == 0" class="datos"> No Disponible </p>
-          <button *ngIf="datos.cellphone != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
+          <p *ngIf="datos.cellphone != 0; else notCellphone" class="datos">{{datos.cellphone}}</p>
+          <ng-template #notCellphone>
+            <p class="datos"> No Registrado </p>
+          </ng-template>
+          <button *ngIf="datos.cellphone != 0 && showElements.buttons.callButton" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
             Llamar
           </button>
         </ion-item>
-        <ion-item class="fondo">
+        <ion-item *ngIf="showElements.elements.nextelTag" class="fondo">
           <ion-avatar item-start>
             <ion-icon ios="ios-radio" md="md-radio"></ion-icon>
           </ion-avatar>
           <p class="titulo">Nextel</p>
-          <p *ngIf="datos.nextel != 0" class="datos">{{datos.nextel}}</p>
-          <p *ngIf="datos.nextel == 0" class="datos"> No Disponible </p>
+          <p *ngIf="datos.nextel != 0; else notNextel" class="datos">{{datos.nextel}}</p>
+          <ng-template #notNextel>
+            <p class="datos"> No registrado </p>
+          </ng-template>
           <button *ngIf="datos.nextel != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
             Llamar
           </button>
         </ion-item>
-        <ion-item class="fondo">
+        <ion-item *ngIf="showElements.elements.mailTag" class="fondo">
           <ion-avatar item-start>
             <ion-icon ios="ios-mail" md="md-mail"></ion-icon>
           </ion-avatar>
@@ -79,17 +83,21 @@
               <p class="titulo">Correo electrónico</p>
               <ion-item *ngIf="datos.email !== 0">
                 <p class="titulo">Principal</p>
-                <p *ngIf="datos.email !== 0" class="datos">{{datos.email}}</p>
-                <p *ngIf="datos.email === 0" class="datos">No Disponible</p>
-                <button (click)="mensajear(datos.email)" *ngIf="datos.email != 0" class="apply" color="greenImmo" clear ion-button icon-only
+                <p *ngIf="datos.email !== 0, else notEmail" class="datos"> {{datos.email}} </p>
+                <ng-template #notEmail>
+                    <p *ngIf="datos.email === 0" class="datos">No registrado</p>
+                </ng-template>
+                <button (click)="mensajear(datos.email)" *ngIf="datos.email != 0 && showElements.buttons.sendMailButton" class="apply" color="greenImmo" clear ion-button icon-only
                   item-end small>
                   <ion-icon class="icon-button" name="send"></ion-icon>
                 </button>
               </ion-item>
               <ion-item *ngIf="tipo === 'c'">
                 <p class="titulo">Secundario</p>
-                <p *ngIf="datos.email2 != 0" class="datos">{{datos.email2}}</p>
-                <p *ngIf="datos.email2 === 0" class="datos">No registrado</p>
+                <p *ngIf="datos.email2 != 0; else notSecondaryEmail" class="datos">{{datos.email2}}</p>
+                <ng-template #notSecondaryEmail>
+                  <p class="datos">No registrado</p>
+                </ng-template>
                 <button (click)="mensajear(datos.email_2)" *ngIf="datos.email2 != 0" class="apply" color="greenImmo" clear ion-button icon-only
                   item-end small>
                   <ion-icon class="icon-button" name="send"></ion-icon>
@@ -97,18 +105,18 @@
               </ion-item>
             </ion-list>
         </ion-item>
-        <ion-item class="fondo">
+        <ion-item *ngIf="showElements.elements.commentTag" class="fondo">
           <ion-avatar item-start>
             <ion-icon ios="ios-book" md="md-book"></ion-icon>
           </ion-avatar>
           <p class="titulo">Ultimo Seguimiento</p>
           <p *ngIf="datos.comment != 0" class="datos" text-wrap>{{datos.comment}}</p>
           <p *ngIf="datos.comment === 0" class="datos">No registrado</p>
-          <button (click)="newCommentModal()" *ngIf="datos.comment != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
+          <button (click)="newCommentModal()" *ngIf="showElements.buttons.newComentButton" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
             Nuevo Seguimiento
           </button>
         </ion-item>
-        <ion-item class="fondo">
+        <ion-item *ngIf="showElements.elements.sendTag" class="fondo">
           <ion-avatar item-start>
             <ion-icon ios="ios-copy" md="md-copy"></ion-icon>
           </ion-avatar>
@@ -116,14 +124,14 @@
             <ion-item>
               <p class="titulo">Enviar Flyer de propiedad</p>
               <p class="datos" text-wrap>Envia por correo información de alguna propiedad</p>
-              <button (click)="sharing('propiedades')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
+              <button *ngIf="showElements.buttons.sendFlyerButton" (click)="sharing('propiedades')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
                 <ion-icon class="icon-button" name="map"></ion-icon>
               </button>
             </ion-item>
             <ion-item class="fondo">
               <p class="titulo">Enviar Broshure de Desarrollo</p>
               <p class="datos" text-wrap>Envia por correo información de algún desarrollo</p>
-              <button (click)="sharing('desarrollos')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
+              <button *ngIf="showElements.buttons.sendBroshureButton" (click)="sharing('desarrollos')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>
                 <ion-icon class="icon-button" name="map"></ion-icon>
               </button>
             </ion-item>
@@ -193,15 +201,4 @@
       </ion-list>
     </div>
   </div>
-  <!--div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close" (click)="cerrarModal()">&times;</span>
-      <form (ngSubmit)="enviarCorreo()">
-        <ion-item>
-          <ion-label style="font-size: 13px" floating>Comentario</ion-label>
-          <ion-textarea style="height: 60px;" name="comentario" [(ngModel)]="comentarios.comentario" type="text"></ion-textarea>
-        </ion-item>
-      </form>
-    </div>
-  </div-->
 </ion-content>

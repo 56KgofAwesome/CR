@@ -1,16 +1,8 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
-import {
-  IonicPage,
-  NavController,
-  NavParams,
-  Events,
-  LoadingController,
-  ModalController
-} from 'ionic-angular';
-//import { RegistrarPage } from "../index.paginas";
- import { UsuarioProvider } from '../../providers/usuario/usuario';
+import { IonicPage, NavController, NavParams, Events, LoadingController, ModalController } from 'ionic-angular';
+import { UsuarioProvider } from '../../providers/usuario/usuario';
 import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 @IonicPage()
@@ -19,21 +11,15 @@ import { Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms'
   templateUrl: 'login.html'
 })
 export class LoginPage {
+
   username    : any;
-  password  : any;
+  password    : any;
   datos       : any = [];
   loginForm: FormGroup;
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public events: Events,
-    public loadingCtrl: LoadingController,
-    public modalCtrl: ModalController,
-    public usuario: UsuarioProvider,
-    private storage: Storage,
-    public alertCtrl: AlertController,
-    public formBuilder: FormBuilder
-  ) {
+constructor( public navCtrl: NavController, public navParams: NavParams, public events: Events,public loadingCtrl: LoadingController,
+              public modalCtrl: ModalController, public usuario: UsuarioProvider, private storage: Storage,public alertCtrl: AlertController,
+              public formBuilder: FormBuilder
+) {
     //Valida el formato del formulario
      this.loginForm = this.formBuilder.group({
        username: new FormControl('', Validators.compose([
@@ -55,10 +41,6 @@ export class LoginPage {
           this.incorrectAlert();
         }
     })
-  }
-  //----------------------------------------------------------------------------
-  irABuscar(){
-
   }
   //---------------------------------------------------------------------------------------------------------------
   //Alerta de Datos incorrectos

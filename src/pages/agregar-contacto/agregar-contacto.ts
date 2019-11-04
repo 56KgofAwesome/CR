@@ -5,6 +5,7 @@ import { FormulariosProvider } from '../../providers/formularios/formularios';
 import { Storage } from '@ionic/storage';
 import { ContactosProvider } from '../../providers/contactos/contactos';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
+import { ElementEnablerProvider } from '../../providers/element-enabler/element-enabler';
 
 @IonicPage()
 @Component({
@@ -33,26 +34,13 @@ export class AgregarContactoPage {
   media_extra         : any;
   generalData         : any  = [];
   aux                 : any  = [];
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private formBuilder: FormBuilder,
-    public formularioProvider: FormulariosProvider,
-    private storage: Storage,
-    public usuarioProvider:UsuarioProvider,
-    public contactoProvider: ContactosProvider,
-    public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController
+  activeElements      : any  = {};
+
+  constructor(  public navCtrl: NavController,public navParams: NavParams,private formBuilder: FormBuilder,public formularioProvider: FormulariosProvider,
+                private storage: Storage, public usuarioProvider:UsuarioProvider,public contactoProvider: ContactosProvider,public loadingCtrl: LoadingController,
+                public alertCtrl: AlertController, public enabler: ElementEnablerProvider
   ) {
-    //Formulario datos generales
-    this.generalForm = this.formBuilder.group({
-      nombre: ['', [Validators.required]],
-      ap_paterno: ['', [Validators.required]],
-      ap_materno: [''],
-      email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-      cel: [''],
-      tel: ['']
-    });
+    this.createFormGroup();
     //Formulario Medio de Contacto
     this.contactForm = this.formBuilder.group({
       contacto: ['', Validators.required],
@@ -73,6 +61,11 @@ export class AgregarContactoPage {
   //----------------------------------------------------------------------------
   //Obtiene antes de entrar a la página
   ionViewCanEnter() {
+    this.loadActiveElements ();
+    this.createFormGroup();
+
+
+
     var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
       offices.subscribe(data=>{
         this.officesList = data.json().data.userOffice;
@@ -103,15 +96,15 @@ export class AgregarContactoPage {
   //Valida la sección "Datos Generales"
   generalDataForm(){
     this.error = true;
-      if(this.generalForm.get('email').hasError('required')){
+      /*if(this.generalForm.get('email').hasError('required')){
         this.flag = false;
     }else{
       this.flag = true;
-    }
+    }*/
 
-    if(!this.generalForm.get('nombre').hasError('required') && !this.generalForm.get('ap_paterno').hasError('required') && this.generalForm.get('email').valid){
-      var contactoH = document.getElementById('contacto');
-      var generalesH = document.getElementById('generales');
+    if(!this.generalForm.get('nombre').hasError('required') /*&& !this.generalForm.get('ap_paterno').hasError('required') && this.generalForm.get('email').valid*/){
+        var contactoH = document.getElementById('contacto');
+        var generalesH = document.getElementById('generales');
         contactoH.style.display = "block";
         generalesH.style.display = "none";
         this.error = false;
@@ -308,7 +301,7 @@ export class AgregarContactoPage {
       this.officeAgents = data.json().data;
     });
   }
-  //------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   //Alerta de registro exitoso
   successAlert(){
     const alerta = this.alertCtrl.create({
@@ -318,7 +311,7 @@ export class AgregarContactoPage {
     });
     alerta.present();
   }
-  //------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------
   //Alerta de 'Asesor' u 'Oficina' no seleccionados
   warningAlert(){
     const alerta = this.alertCtrl.create({
@@ -327,5 +320,33 @@ export class AgregarContactoPage {
       buttons: ['ok']
     });
     alerta.present();
+  }
+  //Carga elementos activos
+  loadActiveElements(){
+    this.activeElements = this.enabler.addReferedEnabler();
+    console.log(this.activeElements);
+  }
+  //----------------------------------------------------------------------------
+  //
+  createFormGroup(){
+    this.generalForm = this.formBuilder.group({
+      /*nombre: ['', [Validators.required]],
+      ap_paterno: ['', [Validators.required]],
+      ap_materno: [''],
+      email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+      cel: [''],
+      tel: ['']*/
+    });
+
+    var elementos = this.activeElements;
+      var $this = this;
+    Object.keys(elementos).forEach(function(key,value){
+      if(key){
+        $this.generalForm.addControl(key, new FormControl('', Validators.required));
+      }else{
+      }
+
+    })
+    console.log(this.generalForm);
   }
 }

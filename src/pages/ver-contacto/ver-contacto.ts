@@ -45,6 +45,7 @@ export class VerContactoPage {
   }
   ionViewCanEnter(){
     this.showElements = this.enabler.verContactoEnabler();
+    console.log(this.showElements);
 
     this.contactId = this.navParams.get("id");
     this.tipo  = this.navParams.get("tipo");

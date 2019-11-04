@@ -11,14 +11,14 @@
   <h1 class="cabecera"> Datos Generales </h1>
   <div id="generales" padding class="generales">
     <form (ngSubmit)="generalDataForm()" [formGroup]="generalForm">
-        <ion-item class="formulario">
+        <ion-item class="formulario" *ngIf="activeElements.nombre">
           <ion-label class="textoLabel" floating> Nombre <sup>*</sup></ion-label>
           <ion-input [(ngModel)]="generalData.nombre" type="text" formControlName="nombre" name="nombre"></ion-input>
         </ion-item>
         <ion-item class="ErrorMensaje" *ngIf="generalForm.get('nombre').errors && error">
           <p color="danger" ion-text *ngIf="generalForm.get('nombre').hasError('required')"> Este campo es necesario </p>
         </ion-item>
-        <ion-item class="formulario">
+        <!--ion-item class="formulario">
           <ion-label class="textoLabel" floating> Apellido Paterno <sup>*</sup></ion-label>
           <ion-input [(ngModel)]="generalData.ap_paterno" type="text" formControlName="ap_paterno" name="ap_paterno"></ion-input>
         </ion-item>
@@ -44,7 +44,7 @@
         <ion-item class="formulario">
           <ion-label class="textoLabel" floating> Teléfono Casa / Oficina </ion-label>
           <ion-input [(ngModel)]="generalData.tel" type="number" formControlName="tel" name="tel"></ion-input>
-        </ion-item>
+        </ion-item-->
       <div class="botones">
         <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>
       </div>

@@ -8,6 +8,7 @@ export class ElementEnablerProvider {
   public usuarioPages       : any = {};
   public contactosPages     : any = {};
   public verContactoPages   : any = {};
+  public addReferedPages    : any = {};
 
 
   constructor(){
@@ -32,7 +33,7 @@ export class ElementEnablerProvider {
     this.contactosPages.botones = {};
     this.contactosPages.elementos = {};
     //Elementos Secundarios
-    this.contactosPages.botones.addContactButton = true;
+    this.contactosPages.botones.addContactButton = false;
     this.contactosPages.botones.addReferedOption = true;
     this.contactosPages.botones.addBuyerOption = true;
     //
@@ -43,17 +44,34 @@ export class ElementEnablerProvider {
   //Página Ver Contacto
   verContactoEnabler(){
     //Objetos Primarios
-    this.verContactoPages.botones = {};
-    this.verContactoPages.elementos = {};
+    this.verContactoPages.buttons = {};
+    this.verContactoPages.elements = {};
     //Objetos Secundarios
-    this.contactosPages.botones.sendMailButton = false;
-    this.contactosPages.botones.newComentButton = false;
-    this.contactosPages.botones.sendFlyerButton = false;
-    this.contactosPages.botones.sendBroshureButton = false;
+    this.verContactoPages.buttons.sendMailButton = true;
+    this.verContactoPages.buttons.newComentButton = true;
+    this.verContactoPages.buttons.sendFlyerButton = true;
+    this.verContactoPages.buttons.sendBroshureButton = true;
+    this.verContactoPages.buttons.callButton = true;
     //
+    this.verContactoPages.elements.nameTag = true;
+    this.verContactoPages.elements.dateTag = true;
+    this.verContactoPages.elements.assignTag = true;
+    this.verContactoPages.elements.cellphoneTag = true;
+    this.verContactoPages.elements.nextelTag = true;
+    this.verContactoPages.elements.mailTag = true;
+    this.verContactoPages.elements.commentTag =true;
+    this.verContactoPages.elements.sendTag = true;
 
-
-
-    return this.contactosPages;
+    return this.verContactoPages;
   }
+  //----------------------------------------------------------------------------
+  //Formulario Añadir visita
+  addReferedEnabler(){
+    //Formulario separado en FormGroups
+    this.addReferedPages.nombre = true;
+    this.addReferedPages.ap_paterno = true;
+
+    return this.addReferedPages;
+  }
+  //----------------------------------------------------------------------------
 }

@@ -1,408 +1,6 @@
 webpackJsonp([26],{
 
-/***/ 115:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ElementEnablerProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-/*Provider que se encarga de habilitar o desabilitar elementos*/
-
-var ElementEnablerProvider = /** @class */ (function () {
-    function ElementEnablerProvider() {
-        //Página principal del usuario
-        // nombre_de_la_paginaPages: any = {}
-        this.usuarioPages = {};
-        this.contactosPages = {};
-    }
-    //----------------------------------------------------------------------------
-    //Una función por página
-    //Página Usuario
-    ElementEnablerProvider.prototype.usuarioEnabler = function () {
-        this.usuarioPages.imageUser = true;
-        this.usuarioPages.nameTagEnabled = true;
-        this.usuarioPages.cellPhoneTagEnabled = true;
-        this.usuarioPages.telephoneTagEnabled = true;
-        this.usuarioPages.logoEnabled = true;
-        this.usuarioPages.animatedFooter = true;
-        return this.usuarioPages;
-    };
-    //----------------------------------------------------------------------------
-    //Página Contactos
-    ElementEnablerProvider.prototype.contactosEnabler = function () {
-        //Objetos Primarios
-        this.contactosPages.botones = {};
-        this.contactosPages.elementos = {};
-        //Elementos Secundarios
-        this.contactosPages.botones.addContactButton = true;
-        this.contactosPages.elementos.searchBar = true;
-        return this.contactosPages;
-    };
-    ElementEnablerProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [])
-    ], ElementEnablerProvider);
-    return ElementEnablerProvider;
-}());
-
-//# sourceMappingURL=element-enabler.js.map
-
-/***/ }),
-
 /***/ 149:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgregarTareaPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_calendar__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__index_paginas__ = __webpack_require__(22);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var AgregarTareaPage = /** @class */ (function () {
-    function AgregarTareaPage(navCtrl, navParams, storage, alertCtrl, calendar, platform, usuarioProvider, viewCtrl) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.storage = storage;
-        this.alertCtrl = alertCtrl;
-        this.calendar = calendar;
-        this.platform = platform;
-        this.usuarioProvider = usuarioProvider;
-        this.viewCtrl = viewCtrl;
-        this.event = { user: 0, folio: 0, subject: "", startDate: "", startTime: "", endDate: "", endTime: "", reDate: "", reTime: "", descripcion: "" };
-        this.client = false;
-        this.nameClient = '';
-        this.subjet = [];
-        this.calendarId = 2;
-        this.phoneCalendar = false;
-        this.storage.get('usuario').then(function (data) {
-            _this.event.user = data;
-        });
-        this.myDate = new Date().toISOString();
-        this.date = this.myDate.substring(0, 10);
-        this.time = this.myDate.substring(11, 16);
-        this.event.startDate = this.myDate.substring(0, 10);
-        this.monthName = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        this.shortMonthName = ['Ene.', 'Feb.', 'Mar.', 'Abr.', 'May.', 'Jun.', 'Jul.', 'Ago.', 'Sep.', 'Oct.', 'Nov.', 'Dic.'];
-        this.subjet = ['0', 'Cita', 'Llamada', 'Guardia', 'Vista de la Propiedad', 'Inspección', 'Domiciliaria', 'Otros', 'Seguimiento'];
-        this.platform.ready().then(function () {
-            _this.calendar.listCalendars().then(function (data) {
-                _this.calendars = data;
-                _this.calendars.forEach(function (value, key, index) {
-                    if (value.isPrimary) {
-                        _this.calendarId = value.id;
-                    }
-                });
-            });
-        });
-    }
-    AgregarTareaPage.prototype.save = function () {
-        var _this = this;
-        var body = '';
-        var $this = this;
-        Object.keys(this.event).forEach(function (key) {
-            body += key + '=' + $this.event[key] + '&';
-        });
-        body += 'm=addTask';
-        var promise = this.usuarioProvider.addTask(body);
-        promise.subscribe(function (data) {
-            if (data.json().status == 200) {
-                var opt = {
-                    calendarId: _this.calendarId,
-                    firstReminderMinutes: 60,
-                    id: _this.calendarId + ""
-                };
-                var opts = { calendarId: _this.calendarId, firstReminderMinutes: 120, id: _this.calendarId + "" };
-                if (_this.phoneCalendar) {
-                    _this.calendar.createEventInteractivelyWithOptions(_this.subjet[_this.event.subject], _this.nameClient, _this.event.descripcion, new Date(_this.event.startDate), new Date(_this.event.endDate), opts).then(function (msg) {
-                        var alert = _this.alertCtrl.create({
-                            title: 'Exito',
-                            subTitle: 'La tarea se agendo correctamente',
-                            buttons: ['OK']
-                        });
-                        alert.present();
-                        _this.navCtrl.pop();
-                    }, function (err) {
-                        var alert = _this.alertCtrl.create({
-                            title: 'Exito',
-                            subTitle: 'La tarea se agendo correctamente en el sistema, pero tuvimos problemas al sincronizar con el calendario de tu telefono.',
-                            buttons: ['OK']
-                        });
-                        alert.present();
-                        _this.navCtrl.pop();
-                    });
-                }
-                else {
-                    var alert_1 = _this.alertCtrl.create({
-                        title: 'Exito',
-                        subTitle: 'La tarea se agendo correctamente',
-                        buttons: ['OK']
-                    });
-                    alert_1.present();
-                    _this.navCtrl.pop();
-                }
-            }
-            else {
-                var alert_2 = _this.alertCtrl.create({
-                    title: 'Error',
-                    subTitle: 'Ocurrio un problema, intenta mas tarde.',
-                    buttons: ['OK']
-                });
-                alert_2.present();
-                _this.navCtrl.pop();
-            }
-        });
-    };
-    AgregarTareaPage.prototype.close = function () {
-        var _this = this;
-        var alert = this.alertCtrl.create({
-            title: 'Atención',
-            message: 'Se perderá la información del formulario',
-            buttons: [
-                {
-                    text: 'Cancelar',
-                    role: 'cancel',
-                },
-                {
-                    text: 'Salir',
-                    handler: function () {
-                        _this.viewCtrl.dismiss();
-                    }
-                }
-            ]
-        });
-        alert.present();
-    };
-    AgregarTareaPage.prototype.goCliente = function () {
-        var _this = this;
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__index_paginas__["n" /* LeadPickeadPickPage */], 'lead').then(function () {
-            _this.navCtrl.getActive().onDidDismiss(function (data) {
-                if (data) {
-                    _this.client = true;
-                    _this.nameClient = data.fullname;
-                    _this.event.folio = data.folio;
-                }
-                else {
-                    _this.client = false;
-                }
-            });
-        });
-    };
-    AgregarTareaPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-agregar-tarea',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-tarea\agregar-tarea.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n\n\n    <ion-title>Agendar tarea</ion-title>\n\n\n\n    <ion-buttons right>\n\n      <button *ngIf="!steps" ion-button icon-only (click)="close()">\n\n        <ion-icon color="whiteImmo" name="ios-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n\n\n\n\n  <ion-item no-padding>\n\n    <h2>Agendar actividad</h2>\n\n    <p text-wrap>Desde aqui podras agendar una actividad con tus contactos</p>\n\n  </ion-item>\n\n  <br><br>\n\n\n\n\n\n  <ion-list class="slideTest" margin>\n\n    <form class="iform">\n\n      <ion-item>\n\n        <h2 *ngIf="client">{{nameClient}}</h2>\n\n        <h2 *ngIf="!client">Contacto <sup> *</sup></h2>\n\n\n\n        <button color="twitter" *ngIf="!client" ion-button item-end (click)="goCliente()"> Seleccionar</button>\n\n        <button color="twitter" *ngIf="client" ion-button item-end (click)="goCliente()"> Cambiar</button>\n\n\n\n      </ion-item>\n\n\n\n\n\n   \n\n          <ion-item>\n\n          \n\n            <ion-label>Asunto <sup> *</sup></ion-label>\n\n            <ion-select [(ngModel)]="event.subject" name="event.subject">\n\n              <ion-option value="1">Cita</ion-option>\n\n              <ion-option value="2">Llamada</ion-option>\n\n              <ion-option value="3">Guardia</ion-option>\n\n              <ion-option value="4">Vista de la Propiedad</ion-option>\n\n              <ion-option value="5">Inspección Domiciliaria</ion-option>\n\n              <ion-option value="7">Seguimiento</ion-option>\n\n              <ion-option value="6">Otros</ion-option>\n\n            </ion-select>\n\n          \n\n          </ion-item>\n\n\n\n            <ion-item>            \n\n              <ion-label>Sincronizar con el calendario del telefono </ion-label>\n\n              <ion-checkbox  [(ngModel)]="phoneCalendar" name="phoneCalendar"></ion-checkbox>            \n\n            </ion-item>\n\n\n\n\n\n\n\n\n\n\n\n\n\n      <ion-row>\n\n        <ion-col col-12>   \n\n            <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Fecha inicio <sup> *</sup></p>         \n\n        </ion-col>\n\n\n\n        <ion-col col-6 no-padding-top>\n\n          <ion-item>\n\n            <ion-label>Dia</ion-label>\n\n            <ion-datetime [min]="date" [monthShortNames]="monthName" [monthNames]="monthName"  max="2030-12-31" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"\n\n              [(ngModel)]="event.startDate" name="event.startDate" value="event.startDate" ></ion-datetime>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-6 no-padding>\n\n\n\n\n\n          <ion-item no-padding-left>\n\n            <ion-label>Hora</ion-label>\n\n            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.startTime" name="event.startTime"></ion-datetime>\n\n          </ion-item>\n\n\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Fecha Fin <sup> *</sup></p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-item>\n\n            <ion-label>Dia </ion-label>\n\n            <ion-datetime [min]="event.startDate" [monthShortNames]="monthName" [monthNames]="monthName"  max="2030-12-31" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"\n\n              [(ngModel)]="event.endDate" name="event.endDate">\n\n            </ion-datetime>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n\n\n\n\n          <ion-item >\n\n            <ion-label>Hora</ion-label>\n\n            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.endTime" name="event.endTime">\n\n            </ion-datetime>\n\n          </ion-item>\n\n\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Recordatorio <sup> *</sup></p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-item>\n\n            <ion-label>Dia</ion-label>\n\n            <ion-datetime [max]="event.startDate" [monthShortNames]="monthName" [monthNames]="monthName"  [min]="date" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"\n\n              [(ngModel)]="event.reDate" name="event.endDate">\n\n            </ion-datetime>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n\n\n\n\n          <ion-item >\n\n            <ion-label>Hora</ion-label>\n\n            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.reTime" name="event.reTime">\n\n            </ion-datetime>\n\n          </ion-item>\n\n\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n\n\n\n\n\n\n      <ion-item>\n\n        <ion-label >Descripcion <sup> *</sup></ion-label>\n\n        <ion-textarea type="text" [(ngModel)]="event.descripcion" name="event.descripcion"></ion-textarea>\n\n      </ion-item>\n\n\n\n\n\n      <ion-item>\n\n        <button color="green" ion-button (click)="save()" full>Guardar</button>\n\n      </ion-item>\n\n    </form>\n\n\n\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-tarea\agregar-tarea.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_2__ionic_native_calendar__["a" /* Calendar */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* Platform */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["x" /* ViewController */]])
-    ], AgregarTareaPage);
-    return AgregarTareaPage;
-}());
-
-//# sourceMappingURL=agregar-tarea.js.map
-
-/***/ }),
-
-/***/ 150:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactosPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_paginas__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__agregar_contacto_agregar_contacto__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_usuario_usuario__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_contactos_contactos__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_element_enabler_element_enabler__ = __webpack_require__(115);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-var ContactosPage = /** @class */ (function () {
-    function ContactosPage(navCtrl, navParams, callNumber, usuarioProvider, contactosProvider, enabler) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.callNumber = callNumber;
-        this.usuarioProvider = usuarioProvider;
-        this.contactosProvider = contactosProvider;
-        this.enabler = enabler;
-        this.tipo = 'compradores';
-        this.showElements = {};
-    }
-    //----------------------------------------------------------------------------
-    //Carga para poder entrar
-    ContactosPage.prototype.ionViewCanEnter = function () {
-        this.showElements = this.enabler.contactosEnabler();
-        console.log(this.showElements);
-        this.showContactsList();
-        this.showReferedContactsList();
-        this.showPotencialContactsList();
-    };
-    //----------------------------------------------------------------------------
-    //Función para hacer llamadas con App Nativa de teléfono
-    ContactosPage.prototype.callContact = function (numero) {
-        this.callNumber.callNumber(numero, true)
-            .then(function (res) { return console.log('llamando', res); })
-            .catch(function (err) { return console.log('error de llamada', err); });
-    };
-    //----------------------------------------------------------------------------
-    //Abre vista con información detallada del contacto
-    ContactosPage.prototype.verContacto = function (id, tipo) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__index_paginas__["w" /* VerContactoPage */], { 'id': id,
-            'tipo': tipo });
-    };
-    //----------------------------------------------------------------------------
-    //Inicia Modal
-    ContactosPage.prototype.agregarContacto = function () {
-        var modal = document.getElementById("modal");
-        modal.style.display = "block";
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        };
-    };
-    //----------------------------------------------------------------------------
-    ContactosPage.prototype.onInput = function ($event) {
-        var contactos = document.getElementsByClassName('contactos');
-        for (var i = 0; i < contactos.length; i++) {
-            var item = contactos[i].getAttribute('name');
-            if (item == this.myInput) {
-            }
-        }
-    };
-    ContactosPage.prototype.onCancel = function ($event) {
-    };
-    ContactosPage.prototype.refreshPage = function (refresher) {
-        this.showContactsList();
-        this.showReferedContactsList();
-        this.showPotencialContactsList();
-        setTimeout(function () {
-            refresher.complete();
-        }, 2000);
-    };
-    ContactosPage.prototype.buscar = function (palabra) {
-        var filtro, palabras, item;
-        filtro = palabra.target.value.toUpperCase();
-        item = document.getElementById("myUL");
-        palabras = item.getElementsByTagName("ion-item");
-        for (var i = 0; i < palabras.length; i++) {
-            if (palabras[i].innerText.toUpperCase().indexOf(filtro) > -1) {
-                palabras[i].style.display = "";
-            }
-            else {
-                palabras[i].style.display = "none";
-            }
-        }
-    };
-    ContactosPage.prototype.onSearch = function (event) {
-    };
-    ContactosPage.prototype.agregarTipo = function () {
-        if (this.agrC == 1) {
-            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__agregar_contacto_agregar_contacto__["a" /* AgregarContactoPage */]);
-            var modal = document.getElementById("modal");
-            modal.style.display = "none";
-            this.agrC = 0;
-        }
-        else {
-            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__index_paginas__["a" /* AgregarCompradoresPage */]);
-            var modal = document.getElementById("modal");
-            modal.style.display = "none";
-            this.agrC = 0;
-        }
-    };
-    ContactosPage.prototype.cerrarModal = function () {
-        var modal = document.getElementById("modal");
-        modal.style.display = "none";
-    };
-    //----------------------------------------------------------------------------
-    //Método para obtener la lista de contactos
-    ContactosPage.prototype.showContactsList = function () {
-        var _this = this;
-        var promise = this.contactosProvider.getContactsList(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
-        promise.subscribe(function (data) {
-            _this.contactos = data.json().data;
-        });
-    };
-    //----------------------------------------------------------------------------
-    //Método para obtener la lista de contactos referidos
-    ContactosPage.prototype.showReferedContactsList = function () {
-        var _this = this;
-        var promise = this.contactosProvider.getReferedContactsList(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
-        promise.subscribe(function (data) {
-            _this.referidos = data.json().data;
-        });
-    };
-    //----------------------------------------------------------------------------
-    //Método para obtener la lista potenciales compradores
-    ContactosPage.prototype.showPotencialContactsList = function () {
-        var _this = this;
-        var promise = this.contactosProvider.getPotencialContactsList(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
-        promise.subscribe(function (data) {
-            _this.potenciales = data.json().data;
-        });
-    };
-    ContactosPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-contactos',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\contactos\contactos.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n    <div class="header">\n\n      <ion-searchbar *ngIf="showElements.elementos.searchBar" class="buscador" (keyup)="buscar($event)">\n\n      </ion-searchbar>\n\n      <ion-icon *ngIf="showElements.botones.addContactButton" name="add" class="agregar" (click)="agregarContacto()"></ion-icon>\n\n    </div>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content class="fondo">\n\n  <ion-refresher (ionRefresh)="refreshPage($event)">\n\n    <ion-refresher-content></ion-refresher-content>\n\n  </ion-refresher>\n\n  <ion-segment [(ngModel)]="tipo">\n\n    <ion-segment-button value="referidos">\n\n      Referidos\n\n    </ion-segment-button>\n\n    <ion-segment-button value="compradores">\n\n      Compradores\n\n    </ion-segment-button>\n\n  </ion-segment>\n\n\n\n  <div [(ngSwitch)]="tipo">\n\n    <ion-list *ngSwitchCase="\'compradores\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let contacto of contactos" class="contactos">\n\n        <ion-item class="fondo" (click)="verContacto(contacto.folio, \'c\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{contacto.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="contacto.email != 0">{{contacto.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="contacto.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{contacto.folio}} -\n\n            <span *ngIf="contacto.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{contacto.lastcomment}} días</span>\n\n            <span *ngIf="contacto.lastcomment >= 3 && contacto.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{contacto.lastcomment}} días</span>\n\n            <span *ngIf="contacto.lastcomment >= 0 && contacto.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{contacto.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n            <button *ngIf="contacto.cellphone != 0" ion-button color="secondary" (click)="callContact(contacto.cellphone)">\n\n              <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n            </button>\n\n            <button ion-button color="botones" (click)="verContacto(contacto.folio, \'c\')">\n\n              <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n            </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'referidos\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let referido of referidos" class="contactos fondo">\n\n        <ion-item class="fondo" (click)="verContacto(referido.folio, \'r\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{referido.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="referido.email != 0">{{referido.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="referido.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{referido.folio}} -\n\n            <span *ngIf="referido.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{referido.lastcomment}} días</span>\n\n            <span *ngIf="referido.lastcomment >= 3 && referido.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{referido.lastcomment}} días</span>\n\n            <span *ngIf="referido.lastcomment >= 0 && referido.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{referido.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n          <button *ngIf="referido.cellphone != 0" ion-button color="secondary" (click)="callContact(referido.cellphone)">\n\n            <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n          </button>\n\n          <button ion-button color="botones" (click)="verContacto(referido.folio, \'r\')">\n\n            <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n          </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'potenciales\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let potencial of potenciales" class="contactos fondo">\n\n        <ion-item class="fondo" (click)="verContacto(potencial.folio, \'p\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{potencial.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="potencial.email != 0">{{potencial.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="potencial.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{potencial.folio}} -\n\n            <span *ngIf="potencial.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{potencial.lastcomment}} días</span>\n\n            <span *ngIf="potencial.lastcomment >= 3 && potencial.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{potencial.lastcomment}} días</span>\n\n            <span *ngIf="potencial.lastcomment >= 0 && potencial.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{potencial.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n          <button *ngIf="potencial.cellphone != 0" ion-button color="secondary" (click)="callContact(potencial.cellphone)">\n\n            <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n          </button>\n\n          <button ion-button color="botones" (click)="verContacto(potencial.folio, \'r\')">\n\n            <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n          </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n    \n\n  </div>\n\n</ion-content>\n\n<!--Modal con las opciones para agrear un contacto-->\n\n<div id="modal" class="modal">\n\n  <div class="modal-content">\n\n    <span class="close" (click)="cerrarModal($event)">&times;</span>\n\n    <ion-list radio-group [(ngModel)]="agrC">\n\n      <ion-item *ngIf="showElements.botones.addReferedOption">\n\n        <ion-label>Agregar Visita</ion-label>\n\n        <ion-radio (ionSelect)="agregarTipo()" value="1"></ion-radio>\n\n      </ion-item>\n\n      <ion-item  *ngIf="showElements.botones.addBuyerOption">\n\n        <ion-label>Agregar Compradores</ion-label>\n\n        <ion-radio (ionSelect)="agregarTipo()" value="2"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n  </div>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\contactos\contactos.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__["a" /* CallNumber */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_6__providers_contactos_contactos__["a" /* ContactosProvider */], __WEBPACK_IMPORTED_MODULE_7__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]])
-    ], ContactosPage);
-    return ContactosPage;
-}());
-
-//# sourceMappingURL=contactos.js.map
-
-/***/ }),
-
-/***/ 151:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -410,10 +8,11 @@ var ContactosPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_element_enabler_element_enabler__ = __webpack_require__(60);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -423,6 +22,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -431,7 +31,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var AgregarContactoPage = /** @class */ (function () {
-    function AgregarContactoPage(navCtrl, navParams, formBuilder, formularioProvider, storage, usuarioProvider, contactoProvider, loadingCtrl, alertCtrl) {
+    function AgregarContactoPage(navCtrl, navParams, formBuilder, formularioProvider, storage, usuarioProvider, contactoProvider, loadingCtrl, alertCtrl, enabler) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.formBuilder = formBuilder;
@@ -441,6 +41,7 @@ var AgregarContactoPage = /** @class */ (function () {
         this.contactoProvider = contactoProvider;
         this.loadingCtrl = loadingCtrl;
         this.alertCtrl = alertCtrl;
+        this.enabler = enabler;
         this.look = false;
         this.flag = false;
         this.error = false;
@@ -455,15 +56,8 @@ var AgregarContactoPage = /** @class */ (function () {
         this.datosAgregar = {};
         this.generalData = [];
         this.aux = [];
-        //Formulario datos generales
-        this.generalForm = this.formBuilder.group({
-            nombre: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
-            ap_paterno: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required]],
-            ap_materno: [''],
-            email: ['', [__WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].email, __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-            cel: [''],
-            tel: ['']
-        });
+        this.activeElements = {};
+        this.createFormGroup();
         //Formulario Medio de Contacto
         this.contactForm = this.formBuilder.group({
             contacto: ['', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required],
@@ -485,6 +79,8 @@ var AgregarContactoPage = /** @class */ (function () {
     //Obtiene antes de entrar a la página
     AgregarContactoPage.prototype.ionViewCanEnter = function () {
         var _this = this;
+        this.loadActiveElements();
+        this.createFormGroup();
         var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
         offices.subscribe(function (data) {
             _this.officesList = data.json().data.userOffice;
@@ -515,13 +111,12 @@ var AgregarContactoPage = /** @class */ (function () {
     //Valida la sección "Datos Generales"
     AgregarContactoPage.prototype.generalDataForm = function () {
         this.error = true;
-        if (this.generalForm.get('email').hasError('required')) {
-            this.flag = false;
-        }
-        else {
-            this.flag = true;
-        }
-        if (!this.generalForm.get('nombre').hasError('required') && !this.generalForm.get('ap_paterno').hasError('required') && this.generalForm.get('email').valid) {
+        /*if(this.generalForm.get('email').hasError('required')){
+          this.flag = false;
+      }else{
+        this.flag = true;
+      }*/
+        if (!this.generalForm.get('nombre').hasError('required') /*&& !this.generalForm.get('ap_paterno').hasError('required') && this.generalForm.get('email').valid*/) {
             var contactoH = document.getElementById('contacto');
             var generalesH = document.getElementById('generales');
             contactoH.style.display = "block";
@@ -729,7 +324,7 @@ var AgregarContactoPage = /** @class */ (function () {
             _this.officeAgents = data.json().data;
         });
     };
-    //------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------
     //Alerta de registro exitoso
     AgregarContactoPage.prototype.successAlert = function () {
         var alerta = this.alertCtrl.create({
@@ -739,7 +334,7 @@ var AgregarContactoPage = /** @class */ (function () {
         });
         alerta.present();
     };
-    //------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------
     //Alerta de 'Asesor' u 'Oficina' no seleccionados
     AgregarContactoPage.prototype.warningAlert = function () {
         var alerta = this.alertCtrl.create({
@@ -749,24 +344,382 @@ var AgregarContactoPage = /** @class */ (function () {
         });
         alerta.present();
     };
+    //Carga elementos activos
+    AgregarContactoPage.prototype.loadActiveElements = function () {
+        this.activeElements = this.enabler.addReferedEnabler();
+        console.log(this.activeElements);
+    };
+    //----------------------------------------------------------------------------
+    //
+    AgregarContactoPage.prototype.createFormGroup = function () {
+        this.generalForm = this.formBuilder.group({});
+        var elementos = this.activeElements;
+        var $this = this;
+        Object.keys(elementos).forEach(function (key, value) {
+            if (key) {
+                $this.generalForm.addControl(key, new __WEBPACK_IMPORTED_MODULE_2__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_2__angular_forms__["g" /* Validators */].required));
+            }
+            else {
+            }
+        });
+        console.log(this.generalForm);
+    };
     AgregarContactoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-agregar-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/'<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title> Agregar Visita </ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content>\n\n\n\n  <h1 class="cabecera"> Datos Generales </h1>\n\n  <div id="generales" padding class="generales">\n\n    <form (ngSubmit)="generalDataForm()" [formGroup]="generalForm">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.nombre" type="text" formControlName="nombre" name="nombre"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'nombre\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'nombre\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Paterno <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.ap_paterno" type="text" formControlName="ap_paterno" name="ap_paterno"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'ap_paterno\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'ap_paterno\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Materno </ion-label>\n\n          <ion-input [(ngModel)]="generalData.ap_materno" type="text" formControlName="ap_materno" name="ap_materno"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.email" type="email" formControlName="email" name="email"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'email\').errors && error">\n\n            <p color="danger" ion-text *ngIf="generalForm.get(\'email\').hasError(\'required\')"> Este campo es necesario </p>\n\n            <p color="danger" ion-text *ngIf="!generalForm.get(\'email\').valid && flag"> Este no es un correo válido </p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Celular </ion-label>\n\n          <ion-input [(ngModel)]="generalData.cel" type="number" formControlName="cel" name="cel"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono Casa / Oficina </ion-label>\n\n          <ion-input [(ngModel)]="generalData.tel" type="number" formControlName="tel" name="tel"></ion-input>\n\n        </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n      </div>\n\n  </form>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Medio de Contacto </h1>\n\n<div padding id="contacto" class="contacto">\n\n  <form (ngSubmit)="contactDataForm()" [formGroup]="contactForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Medio de contacto <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.contacto" name="propiedad" (ionChange)="detailValidation()" formControlName="contacto" (ionChange)="detailUpdate()">\n\n          <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'contacto\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'contacto\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n      <ion-item *ngIf="subMediosDeContactos != 0" class="formulario">\n\n        <ion-label class="textoLabel"> Detalle </ion-label>\n\n        <ion-select [(ngModel)]="generalData.subcontacto" name="propiedad" formControlName="subcontacto">\n\n          <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <div *ngIf="media_extra == 3 || media_extra == 7">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre del broker <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.referid" type="text" formControlName="referid" name="referid"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'referid\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'referid\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_mail" type="text" formControlName="referral_mail" name="referral_mail"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'referral_mail\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'referral_mail\').hasError(\'required\')"> Este campo es necesario</p>\n\n            <p color="danger" ion-text *ngIf="!contactForm.get(\'referral_mail\').valid && flag"> Este no es un correo válido</p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_phone" type="number" formControlName="referral_phone" name="referral_phone"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Agencia broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_agency" type="text" formControlName="referral_agency" name="referral_agency"></ion-input>\n\n        </ion-item>\n\n      </div>\n\n      <div *ngIf="media_extra == 6">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Otro <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.otro_camp" type="text" formControlName="otro_camp"  name="otro_camp"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'otro_camp\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'otro_camp\').hasError(\'required\')">  Este campo es necesario </p>\n\n          </ion-item>\n\n      </div>\n\n      <ion-item>\n\n        <ion-label style="font-size: 13px" floating> Comentarios <sup>*</sup></ion-label>\n\n        <ion-textarea [(ngModel)]="generalData.comentarios" formControlName="comentarios" style="height: 60px;" name="comentarios" type="text"></ion-textarea>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'comentarios\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'comentarios\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n    <div class="botones">\n\n      <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n    </div>\n\n</form>\n\n<button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'contact\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera" color="dark"> Busco </h1>\n\n<div id="busca" padding class="busca">\n\n  <form (ngSubmit)="lookingForForm()" novalidate>\n\n    <ion-label>\n\n      Operación <sup>*</sup>\n\n    </ion-label>\n\n    <ion-label color="danger" *ngIf="this.look == true">\n\n      Seleccione por lo menos una Operación\n\n    </ion-label>\n\n    <div>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Comprar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.lookToBuy" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Rentar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.lookToRent" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-label>Otro</ion-label>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Venta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listSales" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Renta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listRents" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n    </div>\n\n\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'busca\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Agente que enlista </h1>\n\n<div id="enlista" padding class="enlista">\n\n  <form (ngSubmit)="addContact()" [formGroup]="agentForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Oficina <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.office" (ionChange)="updateAgents()" name="propiedad" formControlName="office">\n\n          <ion-option *ngFor="let oficina of officesList" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Asesor <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.user" name="user" formControlName="user">\n\n          <ion-option *ngFor="let agente of officeAgents" value="{{agente.userid}}">{{agente.fullname}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Agregar </button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'enlista\')"> Regresar </button>\n\n</div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/,
+            selector: 'page-agregar-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/'<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title> Agregar Visita </ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content>\n\n\n\n  <h1 class="cabecera"> Datos Generales </h1>\n\n  <div id="generales" padding class="generales">\n\n    <form (ngSubmit)="generalDataForm()" [formGroup]="generalForm">\n\n        <ion-item class="formulario" *ngIf="activeElements.nombre">\n\n          <ion-label class="textoLabel" floating> Nombre <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.nombre" type="text" formControlName="nombre" name="nombre"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'nombre\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'nombre\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <!--ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Paterno <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.ap_paterno" type="text" formControlName="ap_paterno" name="ap_paterno"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'ap_paterno\').errors && error">\n\n          <p color="danger" ion-text *ngIf="generalForm.get(\'ap_paterno\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Apellido Materno </ion-label>\n\n          <ion-input [(ngModel)]="generalData.ap_materno" type="text" formControlName="ap_materno" name="ap_materno"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.email" type="email" formControlName="email" name="email"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="generalForm.get(\'email\').errors && error">\n\n            <p color="danger" ion-text *ngIf="generalForm.get(\'email\').hasError(\'required\')"> Este campo es necesario </p>\n\n            <p color="danger" ion-text *ngIf="!generalForm.get(\'email\').valid && flag"> Este no es un correo válido </p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Celular </ion-label>\n\n          <ion-input [(ngModel)]="generalData.cel" type="number" formControlName="cel" name="cel"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono Casa / Oficina </ion-label>\n\n          <ion-input [(ngModel)]="generalData.tel" type="number" formControlName="tel" name="tel"></ion-input>\n\n        </ion-item-->\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n      </div>\n\n  </form>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Medio de Contacto </h1>\n\n<div padding id="contacto" class="contacto">\n\n  <form (ngSubmit)="contactDataForm()" [formGroup]="contactForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Medio de contacto <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.contacto" name="propiedad" (ionChange)="detailValidation()" formControlName="contacto" (ionChange)="detailUpdate()">\n\n          <ion-option *ngFor="let medio of mediosDeContacto" value="{{medio.contactmediaid}}" ([ngModel])="medioValor">{{medio.contactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'contacto\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'contacto\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n      <ion-item *ngIf="subMediosDeContactos != 0" class="formulario">\n\n        <ion-label class="textoLabel"> Detalle </ion-label>\n\n        <ion-select [(ngModel)]="generalData.subcontacto" name="propiedad" formControlName="subcontacto">\n\n          <ion-option *ngFor="let subMedio of subMediosDeContactos" value="{{subMedio.subcontactmediaid}}">{{subMedio.subcontactmedia}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n\n\n      <div *ngIf="media_extra == 3 || media_extra == 7">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Nombre del broker <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.referid" type="text" formControlName="referid" name="referid"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'referid\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'referid\').hasError(\'required\')">Este campo es necesario</p>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Correo electrónico broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_mail" type="text" formControlName="referral_mail" name="referral_mail"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'referral_mail\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'referral_mail\').hasError(\'required\')"> Este campo es necesario</p>\n\n            <p color="danger" ion-text *ngIf="!contactForm.get(\'referral_mail\').valid && flag"> Este no es un correo válido</p>\n\n          </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Teléfono broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_phone" type="number" formControlName="referral_phone" name="referral_phone"></ion-input>\n\n        </ion-item>\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Agencia broker </ion-label>\n\n          <ion-input [(ngModel)]="generalData.referral_agency" type="text" formControlName="referral_agency" name="referral_agency"></ion-input>\n\n        </ion-item>\n\n      </div>\n\n      <div *ngIf="media_extra == 6">\n\n        <ion-item class="formulario">\n\n          <ion-label class="textoLabel" floating> Otro <sup>*</sup></ion-label>\n\n          <ion-input [(ngModel)]="generalData.otro_camp" type="text" formControlName="otro_camp"  name="otro_camp"></ion-input>\n\n        </ion-item>\n\n          <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'otro_camp\').errors && error">\n\n            <p color="danger" ion-text *ngIf="contactForm.get(\'otro_camp\').hasError(\'required\')">  Este campo es necesario </p>\n\n          </ion-item>\n\n      </div>\n\n      <ion-item>\n\n        <ion-label style="font-size: 13px" floating> Comentarios <sup>*</sup></ion-label>\n\n        <ion-textarea [(ngModel)]="generalData.comentarios" formControlName="comentarios" style="height: 60px;" name="comentarios" type="text"></ion-textarea>\n\n      </ion-item>\n\n        <ion-item class="ErrorMensaje" *ngIf="contactForm.get(\'comentarios\').errors && error">\n\n          <p color="danger" ion-text *ngIf="contactForm.get(\'comentarios\').hasError(\'required\')"> Este campo es necesario </p>\n\n        </ion-item>\n\n    <div class="botones">\n\n      <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Siguiente </button>\n\n    </div>\n\n</form>\n\n<button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'contact\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera" color="dark"> Busco </h1>\n\n<div id="busca" padding class="busca">\n\n  <form (ngSubmit)="lookingForForm()" novalidate>\n\n    <ion-label>\n\n      Operación <sup>*</sup>\n\n    </ion-label>\n\n    <ion-label color="danger" *ngIf="this.look == true">\n\n      Seleccione por lo menos una Operación\n\n    </ion-label>\n\n    <div>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Comprar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.lookToBuy" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Rentar </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.lookToRent" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-label>Otro</ion-label>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Venta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listSales" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Listar Renta </ion-label>\n\n        <ion-checkbox [(ngModel)]="aux.listRents" [ngModelOptions]="{standalone: true}"></ion-checkbox>\n\n      </ion-item>\n\n    </div>\n\n\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block>Siguiente</button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'busca\')"> Regresar </button>\n\n</div>\n\n\n\n<!--____________________________________________________________-->\n\n\n\n<h1 class="cabecera"> Agente que enlista </h1>\n\n<div id="enlista" padding class="enlista">\n\n  <form (ngSubmit)="addContact()" [formGroup]="agentForm">\n\n\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Oficina <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.office" (ionChange)="updateAgents()" name="propiedad" formControlName="office">\n\n          <ion-option *ngFor="let oficina of officesList" value="{{oficina.officeid}}">{{oficina.officename}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <ion-item class="formulario">\n\n        <ion-label class="textoLabel"> Asesor <sup>*</sup></ion-label>\n\n        <ion-select [(ngModel)]="generalData.user" name="user" formControlName="user">\n\n          <ion-option *ngFor="let agente of officeAgents" value="{{agente.userid}}">{{agente.fullname}}</ion-option>\n\n        </ion-select>\n\n      </ion-item>\n\n      <div class="botones">\n\n        <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block> Agregar </button>\n\n      </div>\n\n  </form>\n\n  <button style="margin: 0px 5px" style="background-color: #44774d; margin: 5px 2px;" ion-button type="submit" block (click)="goBack(\'enlista\')"> Regresar </button>\n\n</div>\n\n\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-contacto\agregar-contacto.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */],
-            __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__["a" /* FormulariosProvider */],
+            __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__["a" /* ContactosProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_7__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]])
     ], AgregarContactoPage);
     return AgregarContactoPage;
 }());
 
 //# sourceMappingURL=agregar-contacto.js.map
+
+/***/ }),
+
+/***/ 150:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AgregarTareaPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_calendar__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__index_paginas__ = __webpack_require__(22);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var AgregarTareaPage = /** @class */ (function () {
+    function AgregarTareaPage(navCtrl, navParams, storage, alertCtrl, calendar, platform, usuarioProvider, viewCtrl) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.storage = storage;
+        this.alertCtrl = alertCtrl;
+        this.calendar = calendar;
+        this.platform = platform;
+        this.usuarioProvider = usuarioProvider;
+        this.viewCtrl = viewCtrl;
+        this.event = { user: 0, folio: 0, subject: "", startDate: "", startTime: "", endDate: "", endTime: "", reDate: "", reTime: "", descripcion: "" };
+        this.client = false;
+        this.nameClient = '';
+        this.subjet = [];
+        this.calendarId = 2;
+        this.phoneCalendar = false;
+        this.storage.get('usuario').then(function (data) {
+            _this.event.user = data;
+        });
+        this.myDate = new Date().toISOString();
+        this.date = this.myDate.substring(0, 10);
+        this.time = this.myDate.substring(11, 16);
+        this.event.startDate = this.myDate.substring(0, 10);
+        this.monthName = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        this.shortMonthName = ['Ene.', 'Feb.', 'Mar.', 'Abr.', 'May.', 'Jun.', 'Jul.', 'Ago.', 'Sep.', 'Oct.', 'Nov.', 'Dic.'];
+        this.subjet = ['0', 'Cita', 'Llamada', 'Guardia', 'Vista de la Propiedad', 'Inspección', 'Domiciliaria', 'Otros', 'Seguimiento'];
+        this.platform.ready().then(function () {
+            _this.calendar.listCalendars().then(function (data) {
+                _this.calendars = data;
+                _this.calendars.forEach(function (value, key, index) {
+                    if (value.isPrimary) {
+                        _this.calendarId = value.id;
+                    }
+                });
+            });
+        });
+    }
+    AgregarTareaPage.prototype.save = function () {
+        var _this = this;
+        var body = '';
+        var $this = this;
+        Object.keys(this.event).forEach(function (key) {
+            body += key + '=' + $this.event[key] + '&';
+        });
+        body += 'm=addTask';
+        var promise = this.usuarioProvider.addTask(body);
+        promise.subscribe(function (data) {
+            if (data.json().status == 200) {
+                var opt = {
+                    calendarId: _this.calendarId,
+                    firstReminderMinutes: 60,
+                    id: _this.calendarId + ""
+                };
+                var opts = { calendarId: _this.calendarId, firstReminderMinutes: 120, id: _this.calendarId + "" };
+                if (_this.phoneCalendar) {
+                    _this.calendar.createEventInteractivelyWithOptions(_this.subjet[_this.event.subject], _this.nameClient, _this.event.descripcion, new Date(_this.event.startDate), new Date(_this.event.endDate), opts).then(function (msg) {
+                        var alert = _this.alertCtrl.create({
+                            title: 'Exito',
+                            subTitle: 'La tarea se agendo correctamente',
+                            buttons: ['OK']
+                        });
+                        alert.present();
+                        _this.navCtrl.pop();
+                    }, function (err) {
+                        var alert = _this.alertCtrl.create({
+                            title: 'Exito',
+                            subTitle: 'La tarea se agendo correctamente en el sistema, pero tuvimos problemas al sincronizar con el calendario de tu telefono.',
+                            buttons: ['OK']
+                        });
+                        alert.present();
+                        _this.navCtrl.pop();
+                    });
+                }
+                else {
+                    var alert_1 = _this.alertCtrl.create({
+                        title: 'Exito',
+                        subTitle: 'La tarea se agendo correctamente',
+                        buttons: ['OK']
+                    });
+                    alert_1.present();
+                    _this.navCtrl.pop();
+                }
+            }
+            else {
+                var alert_2 = _this.alertCtrl.create({
+                    title: 'Error',
+                    subTitle: 'Ocurrio un problema, intenta mas tarde.',
+                    buttons: ['OK']
+                });
+                alert_2.present();
+                _this.navCtrl.pop();
+            }
+        });
+    };
+    AgregarTareaPage.prototype.close = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: 'Atención',
+            message: 'Se perderá la información del formulario',
+            buttons: [
+                {
+                    text: 'Cancelar',
+                    role: 'cancel',
+                },
+                {
+                    text: 'Salir',
+                    handler: function () {
+                        _this.viewCtrl.dismiss();
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    AgregarTareaPage.prototype.goCliente = function () {
+        var _this = this;
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__index_paginas__["n" /* LeadPickeadPickPage */], 'lead').then(function () {
+            _this.navCtrl.getActive().onDidDismiss(function (data) {
+                if (data) {
+                    _this.client = true;
+                    _this.nameClient = data.fullname;
+                    _this.event.folio = data.folio;
+                }
+                else {
+                    _this.client = false;
+                }
+            });
+        });
+    };
+    AgregarTareaPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-agregar-tarea',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-tarea\agregar-tarea.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n\n\n    <ion-title>Agendar tarea</ion-title>\n\n\n\n    <ion-buttons right>\n\n      <button *ngIf="!steps" ion-button icon-only (click)="close()">\n\n        <ion-icon color="whiteImmo" name="ios-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n\n\n\n\n  <ion-item no-padding>\n\n    <h2>Agendar actividad</h2>\n\n    <p text-wrap>Desde aqui podras agendar una actividad con tus contactos</p>\n\n  </ion-item>\n\n  <br><br>\n\n\n\n\n\n  <ion-list class="slideTest" margin>\n\n    <form class="iform">\n\n      <ion-item>\n\n        <h2 *ngIf="client">{{nameClient}}</h2>\n\n        <h2 *ngIf="!client">Contacto <sup> *</sup></h2>\n\n\n\n        <button color="twitter" *ngIf="!client" ion-button item-end (click)="goCliente()"> Seleccionar</button>\n\n        <button color="twitter" *ngIf="client" ion-button item-end (click)="goCliente()"> Cambiar</button>\n\n\n\n      </ion-item>\n\n\n\n\n\n   \n\n          <ion-item>\n\n          \n\n            <ion-label>Asunto <sup> *</sup></ion-label>\n\n            <ion-select [(ngModel)]="event.subject" name="event.subject">\n\n              <ion-option value="1">Cita</ion-option>\n\n              <ion-option value="2">Llamada</ion-option>\n\n              <ion-option value="3">Guardia</ion-option>\n\n              <ion-option value="4">Vista de la Propiedad</ion-option>\n\n              <ion-option value="5">Inspección Domiciliaria</ion-option>\n\n              <ion-option value="7">Seguimiento</ion-option>\n\n              <ion-option value="6">Otros</ion-option>\n\n            </ion-select>\n\n          \n\n          </ion-item>\n\n\n\n            <ion-item>            \n\n              <ion-label>Sincronizar con el calendario del telefono </ion-label>\n\n              <ion-checkbox  [(ngModel)]="phoneCalendar" name="phoneCalendar"></ion-checkbox>            \n\n            </ion-item>\n\n\n\n\n\n\n\n\n\n\n\n\n\n      <ion-row>\n\n        <ion-col col-12>   \n\n            <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Fecha inicio <sup> *</sup></p>         \n\n        </ion-col>\n\n\n\n        <ion-col col-6 no-padding-top>\n\n          <ion-item>\n\n            <ion-label>Dia</ion-label>\n\n            <ion-datetime [min]="date" [monthShortNames]="monthName" [monthNames]="monthName"  max="2030-12-31" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"\n\n              [(ngModel)]="event.startDate" name="event.startDate" value="event.startDate" ></ion-datetime>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-6 no-padding>\n\n\n\n\n\n          <ion-item no-padding-left>\n\n            <ion-label>Hora</ion-label>\n\n            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.startTime" name="event.startTime"></ion-datetime>\n\n          </ion-item>\n\n\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Fecha Fin <sup> *</sup></p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-item>\n\n            <ion-label>Dia </ion-label>\n\n            <ion-datetime [min]="event.startDate" [monthShortNames]="monthName" [monthNames]="monthName"  max="2030-12-31" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"\n\n              [(ngModel)]="event.endDate" name="event.endDate">\n\n            </ion-datetime>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n\n\n\n\n          <ion-item >\n\n            <ion-label>Hora</ion-label>\n\n            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.endTime" name="event.endTime">\n\n            </ion-datetime>\n\n          </ion-item>\n\n\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <p text-left no-margin-bottom no-padding-bottom style="margin-bottom: 0px">Recordatorio <sup> *</sup></p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-item>\n\n            <ion-label>Dia</ion-label>\n\n            <ion-datetime [max]="event.startDate" [monthShortNames]="monthName" [monthNames]="monthName"  [min]="date" displayFormat="DD MMM YYYY" pickerFormat="DD/MMM/YYYY"\n\n              [(ngModel)]="event.reDate" name="event.endDate">\n\n            </ion-datetime>\n\n          </ion-item>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n\n\n\n\n          <ion-item >\n\n            <ion-label>Hora</ion-label>\n\n            <ion-datetime pickerFormat="h:mm a" [(ngModel)]="event.reTime" name="event.reTime">\n\n            </ion-datetime>\n\n          </ion-item>\n\n\n\n        </ion-col>\n\n      </ion-row>\n\n\n\n\n\n\n\n\n\n      <ion-item>\n\n        <ion-label >Descripcion <sup> *</sup></ion-label>\n\n        <ion-textarea type="text" [(ngModel)]="event.descripcion" name="event.descripcion"></ion-textarea>\n\n      </ion-item>\n\n\n\n\n\n      <ion-item>\n\n        <button color="green" ion-button (click)="save()" full>Guardar</button>\n\n      </ion-item>\n\n    </form>\n\n\n\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\agregar-tarea\agregar-tarea.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_4__ionic_storage__["b" /* Storage */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_2__ionic_native_calendar__["a" /* Calendar */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["t" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["x" /* ViewController */]])
+    ], AgregarTareaPage);
+    return AgregarTareaPage;
+}());
+
+//# sourceMappingURL=agregar-tarea.js.map
+
+/***/ }),
+
+/***/ 151:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ContactosPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_paginas__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__agregar_contacto_agregar_contacto__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_usuario_usuario__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_contactos_contactos__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_element_enabler_element_enabler__ = __webpack_require__(60);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var ContactosPage = /** @class */ (function () {
+    function ContactosPage(navCtrl, navParams, callNumber, usuarioProvider, contactosProvider, enabler) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.callNumber = callNumber;
+        this.usuarioProvider = usuarioProvider;
+        this.contactosProvider = contactosProvider;
+        this.enabler = enabler;
+        this.tipo = 'compradores';
+        this.showElements = {};
+    }
+    //----------------------------------------------------------------------------
+    //Carga para poder entrar
+    ContactosPage.prototype.ionViewCanEnter = function () {
+        this.showElements = this.enabler.contactosEnabler();
+        console.log(this.showElements);
+        this.showContactsList();
+        this.showReferedContactsList();
+        this.showPotencialContactsList();
+    };
+    //----------------------------------------------------------------------------
+    //Función para hacer llamadas con App Nativa de teléfono
+    ContactosPage.prototype.callContact = function (numero) {
+        this.callNumber.callNumber(numero, true)
+            .then(function (res) { return console.log('llamando', res); })
+            .catch(function (err) { return console.log('error de llamada', err); });
+    };
+    //----------------------------------------------------------------------------
+    //Abre vista con información detallada del contacto
+    ContactosPage.prototype.verContacto = function (id, tipo) {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__index_paginas__["w" /* VerContactoPage */], { 'id': id,
+            'tipo': tipo });
+    };
+    //----------------------------------------------------------------------------
+    //Inicia Modal
+    ContactosPage.prototype.agregarContacto = function () {
+        var modal = document.getElementById("modal");
+        modal.style.display = "block";
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+    };
+    //----------------------------------------------------------------------------
+    ContactosPage.prototype.onInput = function ($event) {
+        var contactos = document.getElementsByClassName('contactos');
+        for (var i = 0; i < contactos.length; i++) {
+            var item = contactos[i].getAttribute('name');
+            if (item == this.myInput) {
+            }
+        }
+    };
+    ContactosPage.prototype.onCancel = function ($event) {
+    };
+    ContactosPage.prototype.refreshPage = function (refresher) {
+        this.showContactsList();
+        this.showReferedContactsList();
+        this.showPotencialContactsList();
+        setTimeout(function () {
+            refresher.complete();
+        }, 2000);
+    };
+    ContactosPage.prototype.buscar = function (palabra) {
+        var filtro, palabras, item;
+        filtro = palabra.target.value.toUpperCase();
+        item = document.getElementById("myUL");
+        palabras = item.getElementsByTagName("ion-item");
+        for (var i = 0; i < palabras.length; i++) {
+            if (palabras[i].innerText.toUpperCase().indexOf(filtro) > -1) {
+                palabras[i].style.display = "";
+            }
+            else {
+                palabras[i].style.display = "none";
+            }
+        }
+    };
+    ContactosPage.prototype.onSearch = function (event) {
+    };
+    ContactosPage.prototype.agregarTipo = function () {
+        if (this.agrC == 1) {
+            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__agregar_contacto_agregar_contacto__["a" /* AgregarContactoPage */]);
+            var modal = document.getElementById("modal");
+            modal.style.display = "none";
+            this.agrC = 0;
+        }
+        else {
+            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__index_paginas__["a" /* AgregarCompradoresPage */]);
+            var modal = document.getElementById("modal");
+            modal.style.display = "none";
+            this.agrC = 0;
+        }
+    };
+    ContactosPage.prototype.cerrarModal = function () {
+        var modal = document.getElementById("modal");
+        modal.style.display = "none";
+    };
+    //----------------------------------------------------------------------------
+    //Método para obtener la lista de contactos
+    ContactosPage.prototype.showContactsList = function () {
+        var _this = this;
+        var promise = this.contactosProvider.getContactsList(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
+        promise.subscribe(function (data) {
+            _this.contactos = data.json().data;
+        });
+    };
+    //----------------------------------------------------------------------------
+    //Método para obtener la lista de contactos referidos
+    ContactosPage.prototype.showReferedContactsList = function () {
+        var _this = this;
+        var promise = this.contactosProvider.getReferedContactsList(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
+        promise.subscribe(function (data) {
+            _this.referidos = data.json().data;
+        });
+    };
+    //----------------------------------------------------------------------------
+    //Método para obtener la lista potenciales compradores
+    ContactosPage.prototype.showPotencialContactsList = function () {
+        var _this = this;
+        var promise = this.contactosProvider.getPotencialContactsList(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken);
+        promise.subscribe(function (data) {
+            _this.potenciales = data.json().data;
+        });
+    };
+    ContactosPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-contactos',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\contactos\contactos.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n    <div class="header">\n\n      <ion-searchbar *ngIf="showElements.elementos.searchBar" class="buscador" (keyup)="buscar($event)">\n\n      </ion-searchbar>\n\n      <ion-icon *ngIf="showElements.botones.addContactButton" name="add" class="agregar" (click)="agregarContacto()"></ion-icon>\n\n    </div>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content class="fondo">\n\n  <ion-refresher (ionRefresh)="refreshPage($event)">\n\n    <ion-refresher-content></ion-refresher-content>\n\n  </ion-refresher>\n\n  <ion-segment [(ngModel)]="tipo">\n\n    <ion-segment-button value="referidos">\n\n      Referidos\n\n    </ion-segment-button>\n\n    <ion-segment-button value="compradores">\n\n      Compradores\n\n    </ion-segment-button>\n\n  </ion-segment>\n\n\n\n  <div [(ngSwitch)]="tipo">\n\n    <ion-list *ngSwitchCase="\'compradores\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let contacto of contactos" class="contactos">\n\n        <ion-item class="fondo" (click)="verContacto(contacto.folio, \'c\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{contacto.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="contacto.email != 0">{{contacto.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="contacto.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{contacto.folio}} -\n\n            <span *ngIf="contacto.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{contacto.lastcomment}} días</span>\n\n            <span *ngIf="contacto.lastcomment >= 3 && contacto.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{contacto.lastcomment}} días</span>\n\n            <span *ngIf="contacto.lastcomment >= 0 && contacto.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{contacto.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n            <button *ngIf="contacto.cellphone != 0" ion-button color="secondary" (click)="callContact(contacto.cellphone)">\n\n              <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n            </button>\n\n            <button ion-button color="botones" (click)="verContacto(contacto.folio, \'c\')">\n\n              <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n            </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'referidos\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let referido of referidos" class="contactos fondo">\n\n        <ion-item class="fondo" (click)="verContacto(referido.folio, \'r\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{referido.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="referido.email != 0">{{referido.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="referido.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{referido.folio}} -\n\n            <span *ngIf="referido.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{referido.lastcomment}} días</span>\n\n            <span *ngIf="referido.lastcomment >= 3 && referido.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{referido.lastcomment}} días</span>\n\n            <span *ngIf="referido.lastcomment >= 0 && referido.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{referido.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n          <button *ngIf="referido.cellphone != 0" ion-button color="secondary" (click)="callContact(referido.cellphone)">\n\n            <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n          </button>\n\n          <button ion-button color="botones" (click)="verContacto(referido.folio, \'r\')">\n\n            <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n          </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'potenciales\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let potencial of potenciales" class="contactos fondo">\n\n        <ion-item class="fondo" (click)="verContacto(potencial.folio, \'p\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{potencial.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="potencial.email != 0">{{potencial.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="potencial.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{potencial.folio}} -\n\n            <span *ngIf="potencial.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{potencial.lastcomment}} días</span>\n\n            <span *ngIf="potencial.lastcomment >= 3 && potencial.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{potencial.lastcomment}} días</span>\n\n            <span *ngIf="potencial.lastcomment >= 0 && potencial.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{potencial.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n          <button *ngIf="potencial.cellphone != 0" ion-button color="secondary" (click)="callContact(potencial.cellphone)">\n\n            <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n          </button>\n\n          <button ion-button color="botones" (click)="verContacto(potencial.folio, \'r\')">\n\n            <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n          </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n    \n\n  </div>\n\n</ion-content>\n\n<!--Modal con las opciones para agrear un contacto-->\n\n<div id="modal" class="modal">\n\n  <div class="modal-content">\n\n    <span class="close" (click)="cerrarModal($event)">&times;</span>\n\n    <ion-list radio-group [(ngModel)]="agrC">\n\n      <ion-item *ngIf="showElements.botones.addReferedOption">\n\n        <ion-label>Agregar Visita</ion-label>\n\n        <ion-radio (ionSelect)="agregarTipo()" value="1"></ion-radio>\n\n      </ion-item>\n\n      <ion-item  *ngIf="showElements.botones.addBuyerOption">\n\n        <ion-label>Agregar Compradores</ion-label>\n\n        <ion-radio (ionSelect)="agregarTipo()" value="2"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n  </div>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\contactos\contactos.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__["a" /* CallNumber */],
+            __WEBPACK_IMPORTED_MODULE_5__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_6__providers_contactos_contactos__["a" /* ContactosProvider */], __WEBPACK_IMPORTED_MODULE_7__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]])
+    ], ContactosPage);
+    return ContactosPage;
+}());
+
+//# sourceMappingURL=contactos.js.map
 
 /***/ }),
 
@@ -902,8 +855,8 @@ var SeguimientoPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_contactos_contactos__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_formularios_formularios__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__documents_documents__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_formularios_formularios__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__documents_documents__ = __webpack_require__(81);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1224,7 +1177,7 @@ var GeneralFormPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_paginas__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabs_tabs__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__tabs_tabs__ = __webpack_require__(82);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1285,7 +1238,7 @@ var TabsUsuarioPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__index_paginas__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tabs_tabs__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tabs_tabs__ = __webpack_require__(82);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1520,35 +1473,35 @@ var map = {
 		25
 	],
 	"../pages/agregar-contacto/agregar-contacto.module": [
-		591,
+		584,
 		24
 	],
 	"../pages/agregar-tarea/agregar-tarea.module": [
-		584,
+		585,
 		23
 	],
 	"../pages/buscar/buscar.module": [
-		585,
+		586,
 		22
 	],
 	"../pages/calendar/calendar.module": [
-		586,
+		587,
 		21
 	],
 	"../pages/contactos/contactos.module": [
-		589,
+		588,
 		20
 	],
 	"../pages/destinos/destinos.module": [
-		587,
+		589,
 		19
 	],
 	"../pages/documents/documents.module": [
-		588,
+		590,
 		18
 	],
 	"../pages/filtro-resultados/filtro-resultados.module": [
-		590,
+		591,
 		17
 	],
 	"../pages/formulario/formulario.module": [
@@ -1556,67 +1509,67 @@ var map = {
 		16
 	],
 	"../pages/general-form/general-form.module": [
-		594,
+		593,
 		15
 	],
 	"../pages/info/info.module": [
-		598,
+		594,
 		14
 	],
 	"../pages/lead-pickead-pick/lead-pickead-pick.module": [
-		593,
+		595,
 		13
 	],
 	"../pages/login/login.module": [
-		595,
+		596,
 		12
 	],
 	"../pages/property-pickead-pick/property-pickead-pick.module": [
-		596,
+		597,
 		11
 	],
 	"../pages/registrar/registrar.module": [
-		597,
+		598,
 		10
 	],
 	"../pages/resultados/resultados.module": [
-		602,
+		599,
 		9
 	],
 	"../pages/seguimiento/seguimiento.module": [
-		599,
+		600,
 		8
 	],
 	"../pages/sharing/sharing.module": [
-		600,
+		601,
 		7
 	],
 	"../pages/tabs-usuario/tabs-usuario.module": [
-		601,
+		602,
 		6
 	],
 	"../pages/tabs/tabs.module": [
-		604,
+		603,
 		4
 	],
 	"../pages/tabs2/tabs2.module": [
-		603,
+		604,
 		5
 	],
 	"../pages/usuario/usuario.module": [
-		608,
+		605,
 		3
 	],
 	"../pages/ver-contacto/ver-contacto.module": [
-		605,
+		606,
 		2
 	],
 	"../pages/ver-desarrollo/ver-desarrollo.module": [
-		606,
+		607,
 		1
 	],
 	"../pages/ver-propiedad/ver-propiedad.module": [
-		607,
+		608,
 		0
 	]
 };
@@ -1710,7 +1663,7 @@ var HomePage = /** @class */ (function () {
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return __WEBPACK_IMPORTED_MODULE_5__login_login__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__ = __webpack_require__(405);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__ = __webpack_require__(151);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__ = __webpack_require__(406);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__["a"]; });
@@ -1724,7 +1677,7 @@ var HomePage = /** @class */ (function () {
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__ = __webpack_require__(410);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__ = __webpack_require__(149);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__ = __webpack_require__(152);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__["a"]; });
@@ -1736,11 +1689,11 @@ var HomePage = /** @class */ (function () {
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__ = __webpack_require__(413);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__ = __webpack_require__(150);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__lead_pickead_pick_lead_pickead_pick__ = __webpack_require__(414);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return __WEBPACK_IMPORTED_MODULE_21__lead_pickead_pick_lead_pickead_pick__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__documents_documents__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__documents_documents__ = __webpack_require__(81);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_22__documents_documents__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__general_form_general_form__ = __webpack_require__(153);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_23__general_form_general_form__["a"]; });
@@ -1855,7 +1808,7 @@ var NetworkProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_formularios_formularios__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_contactos_contactos__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_usuario_usuario__ = __webpack_require__(18);
@@ -2585,20 +2538,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-/**
- * Generated class for the InfoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 var InfoPage = /** @class */ (function () {
     function InfoPage(navCtrl, navParams) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
+        this.title = "Desde 1972";
+        this.subtitle = "CONSTRUYENDO CONFIANZA";
+        this.content = "  Nuestras labores se orientan al diseño, la construcción, operación y comercialización de desarrollos inmobiliarios de carácter habitacional, comercial, industrial y de almacenamiento. Damos valor especial a cada proyecto, al realizar un estudio detallado del entorno para descubrir la auténtica vocación del desarrollo a construir, así mismo cuidamos las características del suelo, su localización, vías de acceso, servicios y principalmente el armonizar con el paisaje y concepto arquitectónico de las privadas y sus casas.   De igual manera compaginamos los espacios, diseños y detalles a las necesidades, deseos y gustos del mercado, procurando sobrepasar sus expectativas.   Donde construye Grupo Santa Rita está el desarrollo... frase que confirma, el ser pioneros en la construcción de polos habitacionales, que se han convertido en centros productivos para el crecimiento social y económico de la población y de la ciudad misma.";
     }
     InfoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-info',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\info\info.html"*/'<!--\n\n  Generated template for the InfoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title>info</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <h2>\n\n    Desde 1972\n\n  </h2>\n\n  <h2>\n\n    CONSTRUYENDO CONFIANZA\n\n  </h2>\n\n  <p>\n\n    Nuestras labores se orientan al diseño, la construcción, operación y comercialización de desarrollos inmobiliarios de carácter habitacional, comercial, industrial y de almacenamiento\n\n  </p>\n\n  <p>\n\n    Damos valor especial a cada proyecto, al realizar un estudio detallado del entorno para descubrir la auténtica vocación del desarrollo a construir, así mismo cuidamos las características del suelo, su localización, vías de acceso, servicios y principalmente el armonizar con el paisaje y concepto arquitectónico de las privadas y sus casas.\n\n  </p>\n\n  <p>\n\n    De igual manera compaginamos los espacios, diseños y detalles a las necesidades, deseos y gustos del mercado, procurando sobrepasar sus expectativas.\n\n  </p>\n\n  <p>\n\n    Donde construye Grupo Santa Rita está el desarrollo... frase que confirma, el ser pioneros en la construcción de polos habitacionales, que se han convertido en centros productivos para el crecimiento social y económico de la población y de la ciudad misma.\n\n  </p>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\info\info.html"*/,
+            selector: 'page-info',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\info\info.html"*/'<ion-header>\n\n\n\n  <ion-navbar color="header">\n\n    <ion-title> Sobre Nosotros </ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n  <div>\n\n    <h2>\n\n      {{ title }}\n\n    </h2>\n\n    <h2>\n\n      {{ subtitle }}\n\n    </h2>\n\n    <div class="content">\n\n      {{ content }}\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\info\info.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */]])
     ], InfoPage);
@@ -2632,7 +2582,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-//import { RegistrarPage } from "../index.paginas";
 
 
 var LoginPage = /** @class */ (function () {
@@ -2671,9 +2620,6 @@ var LoginPage = /** @class */ (function () {
             }
         });
     };
-    //----------------------------------------------------------------------------
-    LoginPage.prototype.irABuscar = function () {
-    };
     //---------------------------------------------------------------------------------------------------------------
     //Alerta de Datos incorrectos
     LoginPage.prototype.incorrectAlert = function () {
@@ -2687,14 +2633,8 @@ var LoginPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-login',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\login\login.html"*/'<ion-content padding class="animated fadeIn login auth-page">\n\n  <div class="login-content">\n\n      <!-- Logo -->\n\n    <div padding-horizontal text-center class="animated fadeInDown">\n\n      <div class="logo">\n\n        <img class="center" width="100%" style="margin: 10px auto;" src="assets/imgs/logoN.png">\n\n      </div>\n\n    </div>\n\n      <!-- Login form -->\n\n    <div>\n\n      <form [formGroup]="loginForm">\n\n          <ion-item>\n\n            <ion-label floating>\n\n              <ion-icon name="mail" item-start class="text-primary"></ion-icon>\n\n              Email\n\n            </ion-label>\n\n            <ion-input type="email" formControlName="username" [(ngModel)]="username" value="hponce@immosystem.com.mx"></ion-input>\n\n          </ion-item>\n\n\n\n          <ion-item>\n\n            <ion-label floating>\n\n              <ion-icon name="lock" item-start class="text-primary"></ion-icon>\n\n              Password\n\n            </ion-label>\n\n            <ion-input type="password" formControlName="password" [(ngModel)]="password" value="RgxOfmci48"></ion-input>\n\n          </ion-item>\n\n        <div>\n\n          <button ion-button icon-start block color="botones" tappable [disabled]="!loginForm.valid" (click)="loginUser()">\n\n            <ion-icon name="log-in"></ion-icon>\n\n            INICIAR SESIÓN\n\n          </button>\n\n        </div>\n\n      </form>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\login\login.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* LoadingController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */],
-            __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["o" /* LoadingController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["p" /* ModalController */], __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["a" /* AlertController */],
             __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]])
     ], LoginPage);
     return LoginPage;
@@ -2714,7 +2654,7 @@ var LoginPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__index_paginas__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_propiedades_propiedades__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__documents_documents__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__documents_documents__ = __webpack_require__(81);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2844,8 +2784,8 @@ var ResultadosPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerDesarrolloPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_social_sharing__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__node_modules_ionic_native_email_composer__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__node_modules_ionic_native_email_composer__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_propiedades_propiedades__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(19);
@@ -3259,8 +3199,8 @@ var VerDesarrolloPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_social_sharing__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_call_number__ = __webpack_require__(71);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_ionic_native_email_composer__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_call_number__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__node_modules_ionic_native_email_composer__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_propiedades_propiedades__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__(19);
@@ -3696,13 +3636,13 @@ var VerPropiedadPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__node_modules_ionic_native_email_composer__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__node_modules_ionic_native_email_composer__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__seguimiento_seguimiento__ = __webpack_require__(152);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__index_paginas__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__general_form_general_form__ = __webpack_require__(153);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_contactos_contactos__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_element_enabler_element_enabler__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_element_enabler_element_enabler__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_moment_locale_es__ = __webpack_require__(118);
@@ -3788,6 +3728,7 @@ var VerContactoPage = /** @class */ (function () {
     VerContactoPage.prototype.ionViewCanEnter = function () {
         var _this = this;
         this.showElements = this.enabler.verContactoEnabler();
+        console.log(this.showElements);
         this.contactId = this.navParams.get("id");
         this.tipo = this.navParams.get("tipo");
         //Verifica si el usuario es visita o prospecto
@@ -3994,12 +3935,13 @@ var VerContactoPage = /** @class */ (function () {
     };
     VerContactoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ver-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\ver-contacto\ver-contacto.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n    <ion-title> Detalles de contacto </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="fondo">\n\n  <div padding class="contenedor">\n\n    <div class="logo">\n\n      <img width="90" height="90" src="assets/imgs/usuario.png">\n\n    </div>\n\n\n\n    <div padding>\n\n      <ion-segment [(ngModel)]="seccion">\n\n        <ion-segment-button value="datos">\n\n          DATOS\n\n        </ion-segment-button>\n\n        <ion-segment-button value="comentarios">\n\n          SEGUIMIENTOS\n\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n\n    <div [ngSwitch]="seccion">\n\n    <!------------Sección de Datos--------------------------------------------->\n\n      <ion-list *ngSwitchCase="\'datos\'">\n\n        <ion-item class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-contact" md="md-contact"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Nombre </p>\n\n          <p class="datos">{{datos.nombre}} {{datos.ap_paterno}}\n\n            <span *ngIf="datos.ap_materno">{{datos.ap_materno}}</span>\n\n          </p>\n\n        </ion-item>\n\n        <ion-item class="fondo">\n\n          <ion-avatar item-start>\n\n              <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Fecha y Hora de Registro </p>\n\n          <p class="datos">{{registerTime}}</p>\n\n          <p class="datos">{{datos.createdate}}</p>\n\n        </ion-item>\n\n        <ion-item class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-git-compare" md="md-git-compare"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Asesor reasignado </p>\n\n          <!--Pendiente el cambio de nombre desde API-->\n\n          <p class="datos" *ngIf="datos.nameAssing != 0">{{datos.nameAssing}}</p>\n\n          <p class="datos" *ngIf="datos.nameAssing == 0">No Disponible</p>\n\n        </ion-item>\n\n        <ion-item class="fondo">\n\n          <ion-avatar item-start>\n\n              <ion-icon ios="ios-call" md="md-call"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Celular</p>\n\n          <p *ngIf="datos.cellphone != 0" class="datos">{{datos.cellphone}}</p>\n\n          <p *ngIf="datos.cellphone == 0" class="datos"> No Disponible </p>\n\n          <button *ngIf="datos.cellphone != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Llamar\n\n          </button>\n\n        </ion-item>\n\n        <ion-item class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-radio" md="md-radio"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Nextel</p>\n\n          <p *ngIf="datos.nextel != 0" class="datos">{{datos.nextel}}</p>\n\n          <p *ngIf="datos.nextel == 0" class="datos"> No Disponible </p>\n\n          <button *ngIf="datos.nextel != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Llamar\n\n          </button>\n\n        </ion-item>\n\n        <ion-item class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-mail" md="md-mail"></ion-icon>\n\n          </ion-avatar>\n\n          <ion-list>\n\n              <p class="titulo">Correo electrónico</p>\n\n              <ion-item *ngIf="datos.email !== 0">\n\n                <p class="titulo">Principal</p>\n\n                <p *ngIf="datos.email !== 0" class="datos">{{datos.email}}</p>\n\n                <p *ngIf="datos.email === 0" class="datos">No Disponible</p>\n\n                <button (click)="mensajear(datos.email)" *ngIf="datos.email != 0" class="apply" color="greenImmo" clear ion-button icon-only\n\n                  item-end small>\n\n                  <ion-icon class="icon-button" name="send"></ion-icon>\n\n                </button>\n\n              </ion-item>\n\n              <ion-item *ngIf="tipo === \'c\'">\n\n                <p class="titulo">Secundario</p>\n\n                <p *ngIf="datos.email2 != 0" class="datos">{{datos.email2}}</p>\n\n                <p *ngIf="datos.email2 === 0" class="datos">No registrado</p>\n\n                <button (click)="mensajear(datos.email_2)" *ngIf="datos.email2 != 0" class="apply" color="greenImmo" clear ion-button icon-only\n\n                  item-end small>\n\n                  <ion-icon class="icon-button" name="send"></ion-icon>\n\n                </button>\n\n              </ion-item>\n\n            </ion-list>\n\n        </ion-item>\n\n        <ion-item class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-book" md="md-book"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Ultimo Seguimiento</p>\n\n          <p *ngIf="datos.comment != 0" class="datos" text-wrap>{{datos.comment}}</p>\n\n          <p *ngIf="datos.comment === 0" class="datos">No registrado</p>\n\n          <button (click)="newCommentModal()" *ngIf="datos.comment != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Nuevo Seguimiento\n\n          </button>\n\n        </ion-item>\n\n        <ion-item class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-copy" md="md-copy"></ion-icon>\n\n          </ion-avatar>\n\n          <ion-list>\n\n            <ion-item>\n\n              <p class="titulo">Enviar Flyer de propiedad</p>\n\n              <p class="datos" text-wrap>Envia por correo información de alguna propiedad</p>\n\n              <button (click)="sharing(\'propiedades\')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n                <ion-icon class="icon-button" name="map"></ion-icon>\n\n              </button>\n\n            </ion-item>\n\n            <ion-item class="fondo">\n\n              <p class="titulo">Enviar Broshure de Desarrollo</p>\n\n              <p class="datos" text-wrap>Envia por correo información de algún desarrollo</p>\n\n              <button (click)="sharing(\'desarrollos\')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n                <ion-icon class="icon-button" name="map"></ion-icon>\n\n              </button>\n\n            </ion-item>\n\n          </ion-list>\n\n        </ion-item>\n\n      </ion-list>\n\n    <!-------------Sección de Comentarios-------------------------------------->\n\n      <ion-list *ngSwitchCase="\'comentarios\'">\n\n        <ion-grid>\n\n          <ion-row *ngFor="let comentario of comentarios,let i=index">\n\n            <ion-col col-2>\n\n              <div>\n\n                <p>\n\n                  <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>\n\n                </p>\n\n                <p *ngIf="comentario.lastcomment != 0">\n\n                  Hace {{comentarios[i].lastcomment}} días\n\n                </p>\n\n                <p *ngIf="comentario.lastcomment === \'0\'">\n\n                  Hoy\n\n                </p>\n\n              </div>\n\n            </ion-col>\n\n            <ion-col col-10>\n\n              <ion-card class="fecha">\n\n                <ion-card-header>\n\n                  <p class="titulo">\n\n                   DETALLES DE SEGUIMIENTO\n\n                  <br>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-book" md="md-book"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                        {{comentario.comment}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-home" md="md-home"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                        {{comentario.officename}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-person" md="md-person"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                         {{comentario.fullname}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            </ion-col>\n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-list>\n\n    </div>\n\n  </div>\n\n  <!--div id="modal" class="modal">\n\n    <div class="modal-content">\n\n      <span class="close" (click)="cerrarModal()">&times;</span>\n\n      <form (ngSubmit)="enviarCorreo()">\n\n        <ion-item>\n\n          <ion-label style="font-size: 13px" floating>Comentario</ion-label>\n\n          <ion-textarea style="height: 60px;" name="comentario" [(ngModel)]="comentarios.comentario" type="text"></ion-textarea>\n\n        </ion-item>\n\n      </form>\n\n    </div>\n\n  </div-->\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\ver-contacto\ver-contacto.html"*/,
+            selector: 'page-ver-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\ver-contacto\ver-contacto.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n    <ion-title> Detalles de contacto </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="fondo">\n\n  <div padding class="contenedor">\n\n    <div class="logo">\n\n      <img width="90" height="90" src="assets/imgs/usuario.png">\n\n    </div>\n\n\n\n    <div padding>\n\n      <ion-segment [(ngModel)]="seccion">\n\n        <ion-segment-button value="datos">\n\n          DATOS\n\n        </ion-segment-button>\n\n        <ion-segment-button value="comentarios">\n\n          SEGUIMIENTOS\n\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n\n    <div [ngSwitch]="seccion">\n\n    <!------------Sección de Datos--------------------------------------------->\n\n      <ion-list *ngSwitchCase="\'datos\'">\n\n        <ion-item *ngIf="showElements.elements.nameTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-contact" md="md-contact"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Nombre </p>\n\n          <p class="datos">{{datos.nombre}} {{datos.ap_paterno}}\n\n            <span *ngIf="datos.ap_materno">{{datos.ap_materno}}</span>\n\n          </p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.dateTag" class="fondo">\n\n          <ion-avatar item-start>\n\n              <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Fecha y Hora de Registro </p>\n\n          <p class="datos">{{registerTime}}</p>\n\n          <p class="datos">{{datos.createdate}}</p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.assignTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-git-compare" md="md-git-compare"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Asesor reasignado </p>\n\n          <!--Pendiente el cambio de nombre desde API-->\n\n          <p class="datos" *ngIf="datos.nameAssing != 0">{{datos.nameAssing}}</p>\n\n          <p class="datos" *ngIf="datos.nameAssing == 0">No Disponible</p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.cellphoneTag" class="fondo">\n\n          <ion-avatar item-start>\n\n              <ion-icon ios="ios-call" md="md-call"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Celular</p>\n\n          <p *ngIf="datos.cellphone != 0; else notCellphone" class="datos">{{datos.cellphone}}</p>\n\n          <ng-template #notCellphone>\n\n            <p class="datos"> No Registrado </p>\n\n          </ng-template>\n\n          <button *ngIf="datos.cellphone != 0 && showElements.buttons.callButton" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Llamar\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.nextelTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-radio" md="md-radio"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Nextel</p>\n\n          <p *ngIf="datos.nextel != 0; else notNextel" class="datos">{{datos.nextel}}</p>\n\n          <ng-template #notNextel>\n\n            <p class="datos"> No registrado </p>\n\n          </ng-template>\n\n          <button *ngIf="datos.nextel != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Llamar\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.mailTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-mail" md="md-mail"></ion-icon>\n\n          </ion-avatar>\n\n          <ion-list>\n\n              <p class="titulo">Correo electrónico</p>\n\n              <ion-item *ngIf="datos.email !== 0">\n\n                <p class="titulo">Principal</p>\n\n                <p *ngIf="datos.email !== 0, else notEmail" class="datos"> {{datos.email}} </p>\n\n                <ng-template #notEmail>\n\n                    <p *ngIf="datos.email === 0" class="datos">No registrado</p>\n\n                </ng-template>\n\n                <button (click)="mensajear(datos.email)" *ngIf="datos.email != 0 && showElements.buttons.sendMailButton" class="apply" color="greenImmo" clear ion-button icon-only\n\n                  item-end small>\n\n                  <ion-icon class="icon-button" name="send"></ion-icon>\n\n                </button>\n\n              </ion-item>\n\n              <ion-item *ngIf="tipo === \'c\'">\n\n                <p class="titulo">Secundario</p>\n\n                <p *ngIf="datos.email2 != 0; else notSecondaryEmail" class="datos">{{datos.email2}}</p>\n\n                <ng-template #notSecondaryEmail>\n\n                  <p class="datos">No registrado</p>\n\n                </ng-template>\n\n                <button (click)="mensajear(datos.email_2)" *ngIf="datos.email2 != 0" class="apply" color="greenImmo" clear ion-button icon-only\n\n                  item-end small>\n\n                  <ion-icon class="icon-button" name="send"></ion-icon>\n\n                </button>\n\n              </ion-item>\n\n            </ion-list>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.commentTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-book" md="md-book"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Ultimo Seguimiento</p>\n\n          <p *ngIf="datos.comment != 0" class="datos" text-wrap>{{datos.comment}}</p>\n\n          <p *ngIf="datos.comment === 0" class="datos">No registrado</p>\n\n          <button (click)="newCommentModal()" *ngIf="showElements.buttons.newComentButton" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Nuevo Seguimiento\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.sendTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-copy" md="md-copy"></ion-icon>\n\n          </ion-avatar>\n\n          <ion-list>\n\n            <ion-item>\n\n              <p class="titulo">Enviar Flyer de propiedad</p>\n\n              <p class="datos" text-wrap>Envia por correo información de alguna propiedad</p>\n\n              <button *ngIf="showElements.buttons.sendFlyerButton" (click)="sharing(\'propiedades\')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n                <ion-icon class="icon-button" name="map"></ion-icon>\n\n              </button>\n\n            </ion-item>\n\n            <ion-item class="fondo">\n\n              <p class="titulo">Enviar Broshure de Desarrollo</p>\n\n              <p class="datos" text-wrap>Envia por correo información de algún desarrollo</p>\n\n              <button *ngIf="showElements.buttons.sendBroshureButton" (click)="sharing(\'desarrollos\')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n                <ion-icon class="icon-button" name="map"></ion-icon>\n\n              </button>\n\n            </ion-item>\n\n          </ion-list>\n\n        </ion-item>\n\n      </ion-list>\n\n    <!-------------Sección de Comentarios-------------------------------------->\n\n      <ion-list *ngSwitchCase="\'comentarios\'">\n\n        <ion-grid>\n\n          <ion-row *ngFor="let comentario of comentarios,let i=index">\n\n            <ion-col col-2>\n\n              <div>\n\n                <p>\n\n                  <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>\n\n                </p>\n\n                <p *ngIf="comentario.lastcomment != 0">\n\n                  Hace {{comentarios[i].lastcomment}} días\n\n                </p>\n\n                <p *ngIf="comentario.lastcomment === \'0\'">\n\n                  Hoy\n\n                </p>\n\n              </div>\n\n            </ion-col>\n\n            <ion-col col-10>\n\n              <ion-card class="fecha">\n\n                <ion-card-header>\n\n                  <p class="titulo">\n\n                   DETALLES DE SEGUIMIENTO\n\n                  <br>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-book" md="md-book"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                        {{comentario.comment}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-home" md="md-home"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                        {{comentario.officename}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-person" md="md-person"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                         {{comentario.fullname}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            </ion-col>\n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-list>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\ver-contacto\ver-contacto.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__node_modules_ionic_native_email_composer__["a" /* EmailComposer */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__node_modules_ionic_native_email_composer__["a" /* EmailComposer */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ModalController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__providers_contactos_contactos__["a" /* ContactosProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__providers_contactos_contactos__["a" /* ContactosProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["v" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["v" /* ToastController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_9__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]) === "function" && _l || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_3__node_modules_ionic_native_email_composer__["a" /* EmailComposer */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ModalController */], __WEBPACK_IMPORTED_MODULE_8__providers_contactos_contactos__["a" /* ContactosProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["v" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_9__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]])
     ], VerContactoPage);
     return VerContactoPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 }());
 
 //# sourceMappingURL=ver-contacto.js.map
@@ -4015,7 +3957,7 @@ var VerContactoPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_element_enabler_element_enabler__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_element_enabler_element_enabler__ = __webpack_require__(60);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4426,8 +4368,8 @@ var SharingPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_calendar__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__agregar_tarea_agregar_tarea__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_calendar__ = __webpack_require__(114);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__agregar_tarea_agregar_tarea__ = __webpack_require__(150);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(15);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -4593,7 +4535,7 @@ var CalendarPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LeadPickeadPickPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_ionic_angular_components_loading_loading_controller__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__node_modules_ionic_angular_components_loading_loading_controller__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(15);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4800,30 +4742,30 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(377);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(378);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_contactos_contactos__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_contactos_contactos__ = __webpack_require__(151);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(473);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_tabs2_tabs2__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_email_composer__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_email_composer__ = __webpack_require__(73);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_geolocation__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_social_sharing__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_call_number__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_call_number__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_usuario_usuario__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__angular_http__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_propiedades_propiedades__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_common_http__ = __webpack_require__(474);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_formularios_formularios__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_formularios_formularios__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_network__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_network_network__ = __webpack_require__(379);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_contactos_contactos__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_ionic_gallery_modal__ = __webpack_require__(477);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_ionic_img_viewer__ = __webpack_require__(478);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_calendar__ = __webpack_require__(113);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_calendar__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_api_api__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__providers_element_enabler_element_enabler__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__providers_element_enabler_element_enabler__ = __webpack_require__(60);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4902,31 +4844,31 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */], {}, {
                     links: [
                         { loadChildren: '../pages/agregar-compradores/agregar-compradores.module#AgregarCompradoresPageModule', name: 'AgregarCompradoresPage', segment: 'agregar-compradores', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/agregar-contacto/agregar-contacto.module#AgregarContactoPageModule', name: 'AgregarContactoPage', segment: 'agregar-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/agregar-tarea/agregar-tarea.module#AgregarTareaPageModule', name: 'AgregarTareaPage', segment: 'agregar-tarea', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/buscar/buscar.module#BuscarPageModule', name: 'BuscarPage', segment: 'buscar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/calendar/calendar.module#CalendarPageModule', name: 'CalendarPage', segment: 'calendar', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/contactos/contactos.module#ContactosPageModule', name: 'ContactosPage', segment: 'contactos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/destinos/destinos.module#DestinosPageModule', name: 'DestinosPage', segment: 'destinos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/documents/documents.module#DocumentsPageModule', name: 'DocumentsPage', segment: 'documents', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/contactos/contactos.module#ContactosPageModule', name: 'ContactosPage', segment: 'contactos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/filtro-resultados/filtro-resultados.module#FiltroResultadosPageModule', name: 'FiltroResultadosPage', segment: 'filtro-resultados', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/agregar-contacto/agregar-contacto.module#AgregarContactoPageModule', name: 'AgregarContactoPage', segment: 'agregar-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/formulario/formulario.module#FormularioPageModule', name: 'FormularioPage', segment: 'formulario', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/lead-pickead-pick/lead-pickead-pick.module#LeadPickeadPickPageModule', name: 'LeadPickeadPickPage', segment: 'lead-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/general-form/general-form.module#GeneralFormPageModule', name: 'GeneralFormPage', segment: 'general-form', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/info/info.module#InfoPageModule', name: 'InfoPage', segment: 'info', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/lead-pickead-pick/lead-pickead-pick.module#LeadPickeadPickPageModule', name: 'LeadPickeadPickPage', segment: 'lead-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/property-pickead-pick/property-pickead-pick.module#PropertyPickeadPickPageModule', name: 'PropertyPickeadPickPage', segment: 'property-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/registrar/registrar.module#RegistrarPageModule', name: 'RegistrarPage', segment: 'registrar', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/info/info.module#InfoPageModule', name: 'InfoPage', segment: 'info', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/seguimiento/seguimiento.module#SeguimientoPageModule', name: 'SeguimientoPage', segment: 'seguimiento', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/sharing/sharing.module#SharingPageModule', name: 'SharingPage', segment: 'sharing', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs-usuario/tabs-usuario.module#TabsUsuarioPageModule', name: 'TabsUsuarioPage', segment: 'tabs-usuario', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/tabs2/tabs2.module#Tabs2PageModule', name: 'Tabs2Page', segment: 'tabs2', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/tabs2/tabs2.module#Tabs2PageModule', name: 'Tabs2Page', segment: 'tabs2', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-desarrollo/ver-desarrollo.module#VerDesarrolloPageModule', name: 'VerDesarrolloPage', segment: 'ver-desarrollo', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_11__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
@@ -5293,7 +5235,7 @@ webpackContext.id = 456;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_storage__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_network__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_network_network__ = __webpack_require__(379);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ionic_angular_components_loading_loading_controller__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ionic_angular_components_loading_loading_controller__ = __webpack_require__(70);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__providers_usuario_usuario__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_api_api__ = __webpack_require__(59);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -5675,7 +5617,101 @@ var ApiProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 70:
+/***/ 60:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ElementEnablerProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+/*Provider que se encarga de habilitar o desabilitar elementos*/
+
+var ElementEnablerProvider = /** @class */ (function () {
+    function ElementEnablerProvider() {
+        //Página principal del usuario
+        // nombre_de_la_paginaPages: any = {}
+        this.usuarioPages = {};
+        this.contactosPages = {};
+        this.verContactoPages = {};
+        this.addReferedPages = {};
+    }
+    //----------------------------------------------------------------------------
+    //Una función por página
+    //Página Usuario
+    ElementEnablerProvider.prototype.usuarioEnabler = function () {
+        this.usuarioPages.imageUser = true;
+        this.usuarioPages.nameTagEnabled = true;
+        this.usuarioPages.cellPhoneTagEnabled = true;
+        this.usuarioPages.telephoneTagEnabled = true;
+        this.usuarioPages.logoEnabled = true;
+        this.usuarioPages.animatedFooter = true;
+        return this.usuarioPages;
+    };
+    //----------------------------------------------------------------------------
+    //Página Contactos
+    ElementEnablerProvider.prototype.contactosEnabler = function () {
+        //Objetos Primarios
+        this.contactosPages.botones = {};
+        this.contactosPages.elementos = {};
+        //Elementos Secundarios
+        this.contactosPages.botones.addContactButton = false;
+        this.contactosPages.botones.addReferedOption = true;
+        this.contactosPages.botones.addBuyerOption = true;
+        //
+        this.contactosPages.elementos.searchBar = true;
+        return this.contactosPages;
+    };
+    //----------------------------------------------------------------------------
+    //Página Ver Contacto
+    ElementEnablerProvider.prototype.verContactoEnabler = function () {
+        //Objetos Primarios
+        this.verContactoPages.buttons = {};
+        this.verContactoPages.elements = {};
+        //Objetos Secundarios
+        this.verContactoPages.buttons.sendMailButton = true;
+        this.verContactoPages.buttons.newComentButton = true;
+        this.verContactoPages.buttons.sendFlyerButton = true;
+        this.verContactoPages.buttons.sendBroshureButton = true;
+        this.verContactoPages.buttons.callButton = true;
+        //
+        this.verContactoPages.elements.nameTag = true;
+        this.verContactoPages.elements.dateTag = true;
+        this.verContactoPages.elements.assignTag = true;
+        this.verContactoPages.elements.cellphoneTag = true;
+        this.verContactoPages.elements.nextelTag = true;
+        this.verContactoPages.elements.mailTag = true;
+        this.verContactoPages.elements.commentTag = true;
+        this.verContactoPages.elements.sendTag = true;
+        return this.verContactoPages;
+    };
+    //----------------------------------------------------------------------------
+    //Formulario Añadir visita
+    ElementEnablerProvider.prototype.addReferedEnabler = function () {
+        //Formulario separado en FormGroups
+        this.addReferedPages.nombre = true;
+        this.addReferedPages.ap_paterno = true;
+        return this.addReferedPages;
+    };
+    ElementEnablerProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], ElementEnablerProvider);
+    return ElementEnablerProvider;
+}());
+
+//# sourceMappingURL=element-enabler.js.map
+
+/***/ }),
+
+/***/ 71:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5778,7 +5814,7 @@ var FormulariosProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 80:
+/***/ 81:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5859,7 +5895,7 @@ var DocumentsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 81:
+/***/ 82:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
