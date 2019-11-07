@@ -9,6 +9,7 @@ export class ElementEnablerProvider {
   public contactosPages     : any = {};
   public verContactoPages   : any = {};
   public addReferedPages    : any = {};
+  public addBuyer    : any = {};
 
 
   constructor(){
@@ -33,7 +34,7 @@ export class ElementEnablerProvider {
     this.contactosPages.botones = {};
     this.contactosPages.elementos = {};
     //Elementos Secundarios
-    this.contactosPages.botones.addContactButton = false;
+    this.contactosPages.botones.addContactButton = true;
     this.contactosPages.botones.addReferedOption = true;
     this.contactosPages.botones.addBuyerOption = true;
     //
@@ -67,11 +68,8 @@ export class ElementEnablerProvider {
   //----------------------------------------------------------------------------
   //Formulario Añadir visita
   addReferedEnabler(){
-    //Formulario separado en FormGroups
-    this.addReferedPages.nombre = true;
-    this.addReferedPages.ap_paterno = true;
+    this.addBuyer.elements.nombre = {required: false, enabled: true };
 
-    return this.addReferedPages;
   }
   //----------------------------------------------------------------------------
 }

@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import { ContactosProvider } from '../../providers/contactos/contactos';
 import { AlertController } from 'ionic-angular';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
+import { ElementEnablerProvider } from  '../../providers/element-enabler/element-enabler';
 
 
 @IonicPage()
@@ -43,7 +44,7 @@ export class AgregarCompradoresPage {
   media_extra         : any;
   datosGenerales      : any  = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder, public formularioProvider: FormulariosProvider,private storage: Storage,
-              public contactoProvider: ContactosProvider,public loadingCtrl: LoadingController,public alertCtrl: AlertController,public usuarioProvider:UsuarioProvider
+              public enabler: ElementEnablerProvider, public contactoProvider: ContactosProvider,public loadingCtrl: LoadingController,public alertCtrl: AlertController,public usuarioProvider:UsuarioProvider
   ){
   //Datos Generales
     this.fGeneral = this.formBuilder.group({
@@ -66,7 +67,7 @@ export class AgregarCompradoresPage {
 
     this.agentForm = this.formBuilder.group({
       office: ['', Validators.required],
-      asesorA: ['', Validators.required]
+      agent: ['', Validators.required]
     });
 
     this.fDelContacto = this.formBuilder.group({
@@ -90,11 +91,9 @@ export class AgregarCompradoresPage {
       fdcComentarios: ['']
     });
 
-    this.storage.get('usuario').then(data=>{
-      this.datosGenerales.user = data;
-    });
-
+    this.datosGenerales.user = this.usuarioProvider.datos.id;
     this.datosGenerales.ap_materno    = '';
+    this.datosGenerales.agent         = '';
     this.datosGenerales.ap_paterno    = '';
     this.datosGenerales.busca_c       = false;
     this.datosGenerales.busca_r       = false;
@@ -133,12 +132,11 @@ export class AgregarCompradoresPage {
 
   }
   //Carga antes de entrar a la página
-  ionViewCanEnter() {
+  ionViewCanEnter(){
     //Obtener lista de oficinas
     var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
       offices.subscribe(data=>{
         this.officesList = data.json().data.userOffice;
-        console.log(this.officesList);
      });
      //-------------------------------------------------------------------------
     //Obtener lista de Ciudades
@@ -146,7 +144,6 @@ export class AgregarCompradoresPage {
       var ciudad = this.formularioProvider.listaDeCiudad(data);
       ciudad.subscribe(data => {
         this.listaDeCiudades = data.json().data;
-        console.log(this.listaDeCiudades);
       });
     });
     //-------------------------------------------------------------------------
@@ -175,33 +172,29 @@ export class AgregarCompradoresPage {
     });
     //-------------------------------------------------------------------------
     //Obtiene lista de ciudades
-    var ciudades = this.formularioProvider.listaDeCiudad(this.idUsuario);
+    var ciudades = this.formularioProvider.listaDeCiudad(150);
     ciudades.subscribe(data => {
       this.listaDeCiudades = data.json().data;
+      console.log(this.listaDeCiudades)
     });
   }
   //----------------------------------------------------------------------------
   //Formulario de datos generales
   formularioGeneral(){
     this.error = true;
-    if(this.fGeneral.get('email1').hasError('required')){
+    if(/*this.enabler.addBuyer.nombre.required && */this.fGeneral.get('email1').hasError('required')){
       this.flag = false;
     }else{
       this.flag = true;
     }
-    console.log(this.fGeneral.value.email2);
 
     if(!this.fGeneral.get('nombre').hasError('required') && !this.fGeneral.get('apellidoP').hasError('required') && !this.fGeneral.get('email1').hasError('required') && !this.fGeneral.get('email1').hasError('email') && this.fGeneral.get('email1').valid){
-
       this.errorMail2 = true;
-
       if(this.fGeneral.value.email2 != ''){
         this.flagMail2 = true;
       }else{
         this.flagMail2 = false;
       }
-
-
 
       var contactoH = document.getElementById('contacto');
       var generalesH = document.getElementById('generales');
@@ -209,8 +202,7 @@ export class AgregarCompradoresPage {
       generalesH.style.display = "none";
       this.error = false;
     }
-
-
+    console.log(this.datosGenerales);
   }
   //----------------------------------------------------------------------------
   //Formulario datos de contacto
@@ -243,6 +235,7 @@ export class AgregarCompradoresPage {
       }
 
     }
+      console.log(this.datosGenerales);
 
   }
   //----------------------------------------------------------------------------
@@ -258,7 +251,7 @@ export class AgregarCompradoresPage {
     }else{
       var elemento = document.getElementById('operacionMensaje').innerHTML = '<div><p style="color: red;">este campo es obligatorio</p></div>';
     }
-
+      console.log(this.datosGenerales);
   }
   //----------------------------------------------------------------------------
   //Formulario de preferencias de Compra
@@ -270,7 +263,7 @@ export class AgregarCompradoresPage {
       contactoH.style.display = "none";
       financiera.style.display = "block";
     }
-
+      console.log(this.datosGenerales);
   }
   //----------------------------------------------------------------------------
   //Formulario de información financiera
@@ -280,7 +273,7 @@ export class AgregarCompradoresPage {
     var inmueble = document.getElementById('inmueble');
     financiera.style.display = "none";
     inmueble.style.display = "block";
-
+    console.log(this.datosGenerales);
   }
   //----------------------------------------------------------------------------
   //Formulario de preferencias de inmueble
@@ -290,7 +283,7 @@ export class AgregarCompradoresPage {
     var enlista = document.getElementById('enlista');
     inmueble.style.display = "none";
     enlista.style.display = "block";
-
+    console.log(this.datosGenerales);
   }
   //----------------------------------------------------------------------------
   //Actualiza la lista de agentes de la oficina seleccionada
@@ -299,6 +292,7 @@ export class AgregarCompradoresPage {
     officeAgents.subscribe(data=>{
       this.officeAgents = data.json().data;
       console.log(this.officeAgents);
+
     });
   }
   //----------------------------------------------------------------------------
@@ -336,20 +330,27 @@ export class AgregarCompradoresPage {
       this.datosGenerales.lookfor1 = 'R';
     }
 
-    if(this.datosGenerales.office != '' && this.datosGenerales.user != ''){
-
+    if(this.datosGenerales.office != '' && this.datosGenerales.agent != ''){
+      this.storage.get('dataUser').then(data=>{
+        var test = data;
+        console.log(data);
+        console.log(test);
+      });
+      this.datosGenerales.user = this.usuarioProvider.datos.id;
+      //console.log(this.datosGenerales.user);
 
       var UrlData = '';
       var datos = this.datosGenerales;
       Object.keys(datos).forEach(function(key){
         UrlData += '&' + key + '=' + datos[key];
       })
-
+console.log(datos);
       var loader = this.loadingCtrl.create({
         dismissOnPageChange: false
       });
-      loader.present();
-      /*var agregarContacto = this.contactoProvider.agergarContactosComp(UrlData);
+      console.log(datos);
+  loader.present();
+      var agregarContacto = this.contactoProvider.agergarContactosComp(UrlData,this.usuarioProvider.datos.userToken);
       agregarContacto.subscribe(data => {
         if(data.status == 200){
           loader.dismiss();
@@ -362,7 +363,7 @@ export class AgregarCompradoresPage {
           this.navCtrl.pop();
         }
 
-      })*/
+      })
 
 
 
@@ -389,6 +390,10 @@ export class AgregarCompradoresPage {
 
 
   actualizarCiudades(){
+    var ciudades = this.formularioProvider.listaDeCiudad(150);
+    ciudades.subscribe(data => {
+      this.listaDeCiudades = data.json().data;
+    });
 
   }
 

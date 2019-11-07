@@ -464,7 +464,7 @@
             </ion-item>
             <ion-item class="formulario fondo">
               <ion-label class="textoLabel">Asesor <sup>*</sup></ion-label>
-              <ion-select [(ngModel)]="datosGenerales.user" name="propiedad" formControlName="asesorA">
+              <ion-select [(ngModel)]="datosGenerales.agent" name="propiedad" formControlName="agent">
                 <ion-option *ngFor="let agente of officeAgents" value="{{agente.userid}}">{{agente.fullname}}</ion-option>
               </ion-select>
             </ion-item>

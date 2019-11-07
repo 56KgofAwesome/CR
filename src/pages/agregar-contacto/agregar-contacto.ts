@@ -40,7 +40,16 @@ export class AgregarContactoPage {
                 private storage: Storage, public usuarioProvider:UsuarioProvider,public contactoProvider: ContactosProvider,public loadingCtrl: LoadingController,
                 public alertCtrl: AlertController, public enabler: ElementEnablerProvider
   ) {
-    this.createFormGroup();
+    //this.createFormGroup();
+
+    this.generalForm = this.formBuilder.group({
+      nombre: ['', [Validators.required]],
+      ap_paterno: ['', [Validators.required]],
+      ap_materno: [''],
+      email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
+      cel: [''],
+      tel: ['']
+    });
     //Formulario Medio de Contacto
     this.contactForm = this.formBuilder.group({
       contacto: ['', Validators.required],
@@ -61,10 +70,6 @@ export class AgregarContactoPage {
   //----------------------------------------------------------------------------
   //Obtiene antes de entrar a la página
   ionViewCanEnter() {
-    this.loadActiveElements ();
-    this.createFormGroup();
-
-
 
     var offices = this.formularioProvider.listaDeOficinas(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
       offices.subscribe(data=>{
@@ -96,18 +101,19 @@ export class AgregarContactoPage {
   //Valida la sección "Datos Generales"
   generalDataForm(){
     this.error = true;
-      /*if(this.generalForm.get('email').hasError('required')){
+    if(this.generalForm.get('email').hasError('required')){
         this.flag = false;
     }else{
       this.flag = true;
-    }*/
+    }
 
-    if(!this.generalForm.get('nombre').hasError('required') /*&& !this.generalForm.get('ap_paterno').hasError('required') && this.generalForm.get('email').valid*/){
+    if(!this.generalForm.get('nombre').hasError('required') && !this.generalForm.get('ap_paterno').hasError('required') && this.generalForm.get('email').valid){
         var contactoH = document.getElementById('contacto');
         var generalesH = document.getElementById('generales');
         contactoH.style.display = "block";
         generalesH.style.display = "none";
         this.error = false;
+        console.log(this.generalData);
     }else{}
   }
   //----------------------------------------------------------------------------
@@ -320,33 +326,5 @@ export class AgregarContactoPage {
       buttons: ['ok']
     });
     alerta.present();
-  }
-  //Carga elementos activos
-  loadActiveElements(){
-    this.activeElements = this.enabler.addReferedEnabler();
-    console.log(this.activeElements);
-  }
-  //----------------------------------------------------------------------------
-  //
-  createFormGroup(){
-    this.generalForm = this.formBuilder.group({
-      /*nombre: ['', [Validators.required]],
-      ap_paterno: ['', [Validators.required]],
-      ap_materno: [''],
-      email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]],
-      cel: [''],
-      tel: ['']*/
-    });
-
-    var elementos = this.activeElements;
-      var $this = this;
-    Object.keys(elementos).forEach(function(key,value){
-      if(key){
-        $this.generalForm.addControl(key, new FormControl('', Validators.required));
-      }else{
-      }
-
-    })
-    console.log(this.generalForm);
   }
 }

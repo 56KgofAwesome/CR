@@ -59,7 +59,7 @@ export class FormulariosProvider {
   //----------------------------------------------------------------------------
   //Lista de ciudades
   listaDeCiudad(folio: any){
-    var body    :   string  =   'm=cities&folio=' + folio;
+    var body    :   string  =   'm=cities&state=' + folio;
     return this.apiProvider.post(body);
   }
   //----------------------------------------------------------------------------
