@@ -47356,6 +47356,10 @@ image-viewer.ion-page img {
   border-radius: 4px;
 }
 
+h1 {
+  font-size: 1.2rem;
+}
+
 .fondo {
   background-color: #fefefe;
 }

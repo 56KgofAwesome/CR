@@ -60,12 +60,12 @@ export class MyApp {
 
       // Offline event
       this.events.subscribe('network:offline', () => {
-        this.networkAlert();
+        //this.networkAlert();
       });
 
       // Online event
       this.events.subscribe('network:online', () => {
-          this.finishNetworkAlert();
+          //this.finishNetworkAlert();
       });
 
 
@@ -99,7 +99,7 @@ export class MyApp {
       spinner: 'hide',
       content: `
       <div style="background-color: black;">
-        <div style="background-color: black;">no hay conexion a internet. <br> Conecte a internet</div>
+        <div style="background-color: black;">No hay conexion a internet. <br> Conecte a internet</div>
       </div>`
     });
 

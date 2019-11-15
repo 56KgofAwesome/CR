@@ -143,18 +143,6 @@
             {
               "xml": "<feature name=\"Keyboard\"><param name=\"android-package\" onload=\"true\" value=\"io.ionic.keyboard.IonicKeyboard\" /></feature>",
               "count": 1
-            },
-            {
-              "xml": "<allow-navigation href=\"http://localhost:8080/*\" />",
-              "count": 1
-            },
-            {
-              "xml": "<preference name=\"webView\" value=\"com.ionicframework.cordova.webview.IonicWebViewEngine\" />",
-              "count": 1
-            },
-            {
-              "xml": "<feature name=\"IonicWebView\"><param name=\"android-package\" value=\"com.ionicframework.cordova.webview.IonicWebView\" /></feature>",
-              "count": 1
             }
           ]
         }
@@ -163,54 +151,50 @@
   },
   "installed_plugins": {
     "call-number": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-advanced-http": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-calendar": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-email": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-email-composer": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
-    },
-    "cordova-plugin-ionic-webview": {
-      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "es6-promise-plugin": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-x-socialsharing": {
       "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     }
   },
   "dependent_plugins": {},
@@ -511,14 +495,6 @@
       ]
     },
     {
-      "id": "cordova-plugin-ionic-webview.IonicWebView",
-      "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
-      "pluginId": "cordova-plugin-ionic-webview",
-      "clobbers": [
-        "Ionic.WebView"
-      ]
-    },
-    {
       "id": "cordova-plugin-network-information.network",
       "file": "plugins/cordova-plugin-network-information/www/network.js",
       "pluginId": "cordova-plugin-network-information",
@@ -576,7 +552,6 @@
     "cordova-plugin-email-composer": "0.8.15",
     "cordova-plugin-geolocation": "4.0.1",
     "cordova-plugin-ionic-keyboard": "2.1.3",
-    "cordova-plugin-ionic-webview": "2.4.1",
     "cordova-plugin-network-information": "2.0.1",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-statusbar": "2.4.2",

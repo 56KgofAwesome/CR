@@ -8,56 +8,52 @@
   },
   "installed_plugins": {
     "call-number": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-advanced-http": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-calendar": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-email": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-email-composer": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-geolocation": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-ionic-keyboard": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
-    },
-    "cordova-plugin-ionic-webview": {
-      "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-network-information": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-splashscreen": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-statusbar": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "cordova-plugin-x-socialsharing": {
       "ANDROID_SUPPORT_V4_VERSION": "24.1.1+",
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     }
   },
   "dependent_plugins": {
     "cordova-plugin-file": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     },
     "es6-promise-plugin": {
-      "PACKAGE_NAME": "mx.com.immosystem.santarita"
+      "PACKAGE_NAME": "mx.com.immosystem.template"
     }
   }
 }

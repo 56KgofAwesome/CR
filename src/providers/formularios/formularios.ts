@@ -4,7 +4,7 @@ import { UsuarioProvider } from '../usuario/usuario';
 import { ApiProvider } from '../api/api';
 @Injectable()
 export class FormulariosProvider {
-  url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
+  url:any = 'https://www.immosystem.com.mx/appImmov2/immoApp2.php';
   constructor(
     public http: Http,
     public apiProvider: ApiProvider,

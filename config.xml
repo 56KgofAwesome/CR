@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="mx.com.immosystem.santarita" version="001.000.010" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Santa Rita</name>
-    <description>Santa Rita</description>
+<widget id="mx.com.immosystem.template" version="001.000.010" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>TEMPLATE</name>
+    <description>TEMPLATE</description>
     <author email="hola@immosystem.com.mx" href="http://www.immosystem.com.mx/">Immo CRM 360</author>
     <content src="index.html" />
     <access origin="*" />

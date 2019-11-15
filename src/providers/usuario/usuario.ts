@@ -8,9 +8,9 @@ import { AlertController, Events,LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class UsuarioProvider {
-  url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
+  url:any = 'https://www.immosystem.com.mx/appImmov2/immoApp2.php';
   companyid = 227;
-  companyurl = 'http://crrivieramaya.com';
+  companyurl = 'https://crrivieramaya.com';
   companycontact;
   companyUser = 1671;
   companyOffice = 227;
@@ -112,7 +112,7 @@ export class UsuarioProvider {
     header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
     options :   any     =   new RequestOptions({headers: header});
     //OTRO URL
-    return this.http.post('http://www.immosystem.com.mx/appImmo/immoApp.php', body, options);
+    return this.http.post('https://www.immosystem.com.mx/appImmo/immoApp.php', body, options);
   }
 
 }

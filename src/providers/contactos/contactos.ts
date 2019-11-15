@@ -7,10 +7,7 @@ import { UsuarioProvider } from '../usuario/usuario';
 @Injectable()
 export class ContactosProvider {
   url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
-  constructor(
-    public http : Http,
-    public apiProvider: ApiProvider,
-    public usuarioProvider: UsuarioProvider
+  constructor(  public http : Http,public apiProvider: ApiProvider,public usuarioProvider: UsuarioProvider
   ){
   }
   //----------------------------------------------------------------------------

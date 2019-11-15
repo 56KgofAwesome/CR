@@ -142,24 +142,19 @@
       <ion-list *ngSwitchCase="'comentarios'">
         <ion-grid>
           <ion-row *ngFor="let comentario of comentarios,let i=index">
-            <ion-col col-2>
-              <div>
-                <p>
-                  <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>
-                </p>
-                <p *ngIf="comentario.lastcomment != 0">
-                  Hace {{comentarios[i].lastcomment}} días
-                </p>
-                <p *ngIf="comentario.lastcomment === '0'">
-                  Hoy
-                </p>
-              </div>
-            </ion-col>
-            <ion-col col-10>
+            <ion-col >
               <ion-card class="fecha">
                 <ion-card-header>
                   <p class="titulo">
                    DETALLES DE SEGUIMIENTO
+                   <p *ngIf="comentario.lastcomment != 0;else today">
+                    Hace {{comentarios[i].lastcomment}} días
+                    </p>
+                    <ng-template #today>
+                      <p>
+                        Hoy
+                        </p>
+                    </ng-template>
                   <br>
                 </ion-card-header>
                 <ion-card-content>
@@ -187,7 +182,7 @@
                     <ion-col col-2>
                       <ion-icon ios="ios-person" md="md-person"></ion-icon>
                     </ion-col>
-                    <ion-col col-10>
+                    <ion-col >
                       <p>
                          {{comentario.fullname}}
                       </p>

@@ -11,7 +11,7 @@ export enum ConnectionStatusEnum {
 
 @Injectable()
 export class NetworkProvider {
-    url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
+    url:any = 'https://www.immosystem.com.mx/appImmov2/immoApp2.php';
   previousStatus;
 
   constructor(

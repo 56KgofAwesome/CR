@@ -5,9 +5,8 @@ import { UsuarioProvider } from '../../providers/usuario/usuario';
 
 @Injectable()
 export class PropiedadesProvider {
-  url:any = 'http://www.immosystem.com.mx/appImmov2/immoApp2.php';
+  url:any = 'https://www.immosystem.com.mx/appImmov2/immoApp2.php';
   constructor(public http : Http, public usuarioProvider: UsuarioProvider) {
-    console.log('Hello PropiedadesProvider Provider');
   }
 
   cargarPorCiudad(idCiudad:any){
@@ -21,7 +20,7 @@ export class PropiedadesProvider {
   cargarPropiedad(folio:any){
     console.log("el folio es: ");
     console.log(folio);
-    
+
     let body    :   string  =   'm=property&folio=' + folio,
         header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
         options :   any     =   new RequestOptions({headers: header});
@@ -37,7 +36,7 @@ export class PropiedadesProvider {
   cargarDesarrollo(folio:any){
     console.log("el folio es: ");
     console.log(folio);
-    
+
     let body    :   string  =   'm=development&folio=' + folio,
         header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
         options :   any     =   new RequestOptions({headers: header});
@@ -56,7 +55,7 @@ export class PropiedadesProvider {
     let body    :   string  =   'm=findProperty&folio='+ this.usuarioProvider.companyid,
         header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
         options :   any     =   new RequestOptions({headers: header});
-    
+
         console.log('el url es: ' + body);
         return this.http.post(this.url, body, options);
   }
@@ -115,7 +114,7 @@ export class PropiedadesProvider {
 
     console.log(this.url +'?d=0&'+ body);
     return this.http.post(this.url, body, options);
-  }  
+  }
 
 
 
@@ -126,7 +125,7 @@ export class PropiedadesProvider {
 
     console.log(this.url +'?d=0&'+ body);
     return this.http.post(this.url, body, options);
-  }  
+  }
 
 
 
