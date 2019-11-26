@@ -14,10 +14,10 @@ import { ApiProvider } from '../providers/api/api';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any;
-  conexion:Boolean;
-  loading:any;
-  datos:any = {};
+  rootPage: any;
+  conexion: Boolean;
+  loading: any;
+  datos: any = {};
   constructor(
     public platform: Platform,
     statusBar: StatusBar,
@@ -31,30 +31,28 @@ export class MyApp {
     public usuario: UsuarioProvider,
     public apiProvider: ApiProvider
   ) {
-
     this.storage.get('userToken').then(token => {
-      if(token == null){
+      if (token == null) {
         this.rootPage = Tabs2Page;
-      }else{
+      } else {
         //this.usuario.loginToken(token);
         this.rootPage = TabsUsuarioPage;
       }
     });
 
     platform.ready().then(() => {
-
-      //statusBar.styleBlackOpaque();
-      //if (platform.is('android')) {
-          //statusBar.overlaysWebView(true);
-          //statusBar.backgroundColorByHexString('#000000');
-          //statusBar.styleLightContent();
-      //}
-
-      if (platform.is('ios')) {
-        statusBar.overlaysWebView(false);                 /**La barra de estado se establece en estado fixed*/
-        statusBar.styleBlackOpaque();                     /**Use la barra de estado blackOpaque (texto claro, para fondos oscuros). */
-        statusBar.backgroundColorByHexString('#1F2321');  /**Establece el color del status bar, SOLO IOS */
+      statusBar.styleBlackOpaque();
+      if (platform.is('android')) {
+        statusBar.overlaysWebView(true);
+        statusBar.backgroundColorByHexString('#bf0d2e');
+        statusBar.styleLightContent();
       }
+
+      //if (platform.is('ios')) {
+      //statusBar.overlaysWebView(false);                 /**La barra de estado se establece en estado fixed*/
+      //statusBar.styleBlackOpaque();                     /**Use la barra de estado blackOpaque (texto claro, para fondos oscuros). */
+      //statusBar.backgroundColorByHexString('#000000');  /**Establece el color del status bar, SOLO IOS */
+      //}
 
       this.networkProvider.initializeNetworkEvents();
 
@@ -65,36 +63,30 @@ export class MyApp {
 
       // Online event
       this.events.subscribe('network:online', () => {
-          //this.finishNetworkAlert();
+        //this.finishNetworkAlert();
       });
-
 
       statusBar.styleDefault();
       var $this = this;
-      setTimeout(function(){
+      setTimeout(function() {
         $this.splashScreen.hide();
-      },10000);
-
-
-
+      }, 10000);
     });
 
     var promise = this.networkProvider.ping();
-    promise.subscribe(data => {
-      if(data.status == 200){
-      }else{
+    promise.subscribe(
+      data => {
+        if (data.status == 200) {
+        } else {
+        }
+      },
+      error => {
+        this.networkAlert();
       }
-    }, error => {
-      this.networkAlert();
-    })
-
-
-
+    );
   }
 
-
-
-  networkAlert(){
+  networkAlert() {
     this.loading = this.loadingCtrl.create({
       spinner: 'hide',
       content: `
@@ -106,11 +98,7 @@ export class MyApp {
     this.loading.present();
   }
 
-  finishNetworkAlert(){
+  finishNetworkAlert() {
     this.loading.dismiss();
   }
-
-
-
-
 }

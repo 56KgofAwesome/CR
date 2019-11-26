@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { 
-  ResultadosPage,
-  FiltroResultadosPage
- } from '../index.paginas';
+import { ResultadosPage,FiltroResultadosPage} from '../index.paginas';
  import { Storage } from '@ionic/storage';
 
 @IonicPage()

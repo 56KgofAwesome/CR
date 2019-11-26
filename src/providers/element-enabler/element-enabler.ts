@@ -5,20 +5,18 @@ import { Injectable } from '@angular/core';
 export class ElementEnablerProvider {
   //Página principal del usuario
   // nombre_de_la_paginaPages: any = {}
-  public usuarioPages       : any = {};
-  public contactosPages     : any = {};
-  public verContactoPages   : any = {};
-  public addReferedPages    : any = {};
-  public addBuyer    : any = {};
+  public usuarioPages: any = {};
+  public contactosPages: any = {};
+  public verContactoPages: any = {};
+  public addReferedPages: any = {};
+  public addBuyer: any = {};
+  public tabsUsuarioPages: any = {};
 
-
-  constructor(){
-
-  }
+  constructor() {}
   //----------------------------------------------------------------------------
   //Una función por página
   //Página Usuario
-  usuarioEnabler(){
+  usuarioEnabler() {
     this.usuarioPages.imageUser = true;
     this.usuarioPages.nameTagEnabled = true;
     this.usuarioPages.cellPhoneTagEnabled = true;
@@ -29,7 +27,7 @@ export class ElementEnablerProvider {
   }
   //----------------------------------------------------------------------------
   //Página Contactos
-  contactosEnabler(){
+  contactosEnabler() {
     //Objetos Primarios
     this.contactosPages.botones = {};
     this.contactosPages.elementos = {};
@@ -43,7 +41,7 @@ export class ElementEnablerProvider {
   }
   //----------------------------------------------------------------------------
   //Página Ver Contacto
-  verContactoEnabler(){
+  verContactoEnabler() {
     //Objetos Primarios
     this.verContactoPages.buttons = {};
     this.verContactoPages.elements = {};
@@ -60,16 +58,26 @@ export class ElementEnablerProvider {
     this.verContactoPages.elements.cellphoneTag = true;
     this.verContactoPages.elements.nextelTag = true;
     this.verContactoPages.elements.mailTag = true;
-    this.verContactoPages.elements.commentTag =true;
+    this.verContactoPages.elements.commentTag = true;
     this.verContactoPages.elements.sendTag = true;
 
     return this.verContactoPages;
   }
   //----------------------------------------------------------------------------
   //Formulario Añadir visita
-  addReferedEnabler(){
-    this.addBuyer.elements.nombre = {required: false, enabled: true };
-
+  addReferedEnabler() {
+    this.addBuyer.elements.nombre = { required: false, enabled: true };
+  }
+  //----------------------------------------------------------------------------
+  //Tabs de la aplicación con sesión activa
+  tabsUsuarioEnabler() {
+    this.tabsUsuarioPages.userTab = true;
+    this.tabsUsuarioPages.inventoryTab = true;
+    this.tabsUsuarioPages.searchTab = false;//Página con la búsqueda de propiedades
+    this.tabsUsuarioPages.tasksTab = true;
+    this.tabsUsuarioPages.contactsTab = true;
+    
+    return this.tabsUsuarioPages;
   }
   //----------------------------------------------------------------------------
 }

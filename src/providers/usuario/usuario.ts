@@ -2,7 +2,7 @@ import { ApiProvider } from '../api/api';
 import { Http, Headers, RequestOptions, RequestMethod, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Header } from '../../../node_modules/ionic-angular/umd';
+//import { Header } from '../../../node_modules/ionic-angular/umd';
 import { companyid } from '../../interfaces/datosContacto';
 import { AlertController, Events,LoadingController } from 'ionic-angular';
 
@@ -62,9 +62,13 @@ export class UsuarioProvider {
             'mail': data['email'],
             'telefono': data['cellphone'],
             'celular': data['phone'],
-            'userToken': data['token']
+            'userToken': data['token'],
+            'properties': data['properties']
+          
           }
           console.log(data['token']);
+          console.log(data['properties']);
+          
       resolve(this.datos);
       })
     })

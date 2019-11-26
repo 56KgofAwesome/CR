@@ -1,20 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { 
-  LoginPage,
-  DestinosPage,
-  InfoPage,
-  ContactosPage,
-  FormularioPage,
-  ResultadosPage
- } from '../index.paginas';
-
-/**
- * Generated class for the BuscarPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { LoginPage,DestinosPage,InfoPage,ContactosPage,FormularioPage,ResultadosPage} from '../index.paginas';
 
 @IonicPage()
 @Component({
@@ -30,8 +16,7 @@ export class BuscarPage {
 
 
   irAresultado(destino){
-    this.navCtrl.push(FormularioPage, {'destino':destino});   //----- nav para llegar al buscador-----
-    //this.navCtrl.push(ResultadosPage, {'destino':null,'tipo':destino});
+    this.navCtrl.push(FormularioPage, {'destino':destino});   
   }
 
 

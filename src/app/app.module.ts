@@ -12,6 +12,7 @@ import { EmailComposer      } from '@ionic-native/email-composer';
 import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation';
 import {
+  InventoryPage,
   BuscarPage,
   DestinosPage,
   FormularioPage,
@@ -49,8 +50,6 @@ import { FormulariosProvider    } from '../providers/formularios/formularios';
 import { Network                } from '@ionic-native/network';
 import { NetworkProvider } from '../providers/network/network';
 import { ContactosProvider } from '../providers/contactos/contactos';
-
-
 import * as ionicGalleryModal from 'ionic-gallery-modal';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
@@ -61,6 +60,7 @@ import { ElementEnablerProvider } from '../providers/element-enabler/element-ena
 
 @NgModule({
   declarations: [
+    InventoryPage,
     MyApp,
     HomePage,
     BuscarPage,
@@ -101,6 +101,7 @@ import { ElementEnablerProvider } from '../providers/element-enabler/element-ena
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    InventoryPage,
     MyApp,
     HomePage,
     BuscarPage,

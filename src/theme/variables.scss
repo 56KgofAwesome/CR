@@ -1,21 +1,20 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
+:root{
+}
 
 // Font path is used to include ionicons,
 // roboto, and noto sans fonts
-$font-path: "../assets/fonts";
+$font-path: '../assets/fonts';
 
-$fa-font-patch: "../assets/webfonts";
-
+$fa-font-patch: '../assets/webfonts';
 
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
 
-
-@import "ionic.globals";
-
+@import 'ionic.globals';
 
 // Shared Variables
 // --------------------------------------------------
@@ -23,9 +22,6 @@ $app-direction: ltr;
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
-
-
-
 
 // Named Color Variables
 // --------------------------------------------------
@@ -36,47 +32,42 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:            #bf0d2e,
-  secondary:          #fede00,
-  tertiary:           #f58224,
-  danger:             #f53d3d,
-  light:              #f4f4f4,
-  dark:               #222,
-  tabs:               #eee,              //Color de la barra de Tabs(Datos,Buscar,Tarea,Contactos)
-  static-icons:       #686868,           //Color de los iconos estáticos
-  action-buttons:     #cbaa00,           //Color de los botones de acción
-  header:             #bf0d2e,          //Color de la barra de accion
-  botonMail:          #eee,
-  active:             green
+  primary: #bf0d2e,
+  secondary: #fede00,
+  tertiary: #f58224,
+  danger: #f53d3d,
+  light: #f4f4f4,
+  dark: #222,
+  tabs: #eee,               //Color de la barra de Tabs(Datos,Buscar,Tarea,Contactos)
+  static-icons: #686868,    //Color de los iconos estáticos
+  action-buttons: #bf0d2e,  //Color de los botones de acción  #cbaa00
+  header: #bf0d2e,          //Color de la barra de accion
+  botonMail: #eee,
+  active: green
 );
-
 
 html,
 body {
   position: fixed;
   overflow: hidden;
+  font-size: medium;
 }
-
 
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-
-
-
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here
-$button-md-background-color: color($colors, action-buttons) !default;    //Override del color de los botones de acción
-
+$button-md-background-color: color(
+  $colors,
+  action-buttons
+) !default; //Override del color de los botones de acción
 
 // App Windows Variables
 // --------------------------------------------------
 // Windows only Sass variables can go here
-
-
-
 
 // App Theme
 // --------------------------------------------------
@@ -85,22 +76,20 @@ $button-md-background-color: color($colors, action-buttons) !default;    //Overr
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
-
+@import 'ionic.theme.default';
 
 // Ionicons
 // --------------------------------------------------
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/ionicons/
 
-@import "ionic.ionicons";
-
+@import 'ionic.ionicons';
 
 // Fonts
 // --------------------------------------------------
 
-@import "roboto";
-@import "noto-sans";
+@import 'roboto';
+@import 'noto-sans';
 
 $popover-md-width: 320px;
 $popover-ios-width: 320px;

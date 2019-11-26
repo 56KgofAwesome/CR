@@ -87,6 +87,6 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="orientation" value="portrait" />
     <preference name="SplashScreenDelay" value="3000" />
-    <preference name="StatusBarBackgroundColor" value="#56895e" />
+    <preference name="StatusBarBackgroundColor" value="#bf0d2e" />
     <preference name="LoadUrlTimeoutValue" value="70000" />
 </widget>

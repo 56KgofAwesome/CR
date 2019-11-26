@@ -20,20 +20,20 @@ page-calendar {
       }
       .currentDate {
         font-weight: bold;
-        background-color: red;
+        background-color: color($colors,primary);
         color: white;
         border-radius: 30px;
       }
       .calendar-header {
         padding: 6px 0px;
-        background-color: #22552b;
-        color: #FFFFFF;
+        background-color: color($colors, static-icons);
+        color: color($colors,light);
       }
       .event-bullet {
         margin: 2px auto;
         height: 5px;
         width: 5px;
-        background-color: green;
+        background-color: color($colors, static-icons);
         border-radius: 30px;
       }
       .selected-date {
@@ -57,13 +57,14 @@ page-calendar {
         }
         .calendar-weekday {
           font-weight: bold;
-          border-bottom: solid 1px #44774d;
-          background-color: #44774d;
+          border-top: solid 1px #f4f4f4 ;
+          border-bottom: solid 1px #f4f4f4;
+          background-color: color($colors, static-icons);
           color: #fff;
         }
         .calendar-date {
-          border-top: solid 1px #44774d;
-          border-bottom: solid 1px #44774d;
+          border-top: solid 1px #f4f4f4;
+          border-bottom: solid 1px #686868;
         }
       }
 }

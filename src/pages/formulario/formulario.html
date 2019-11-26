@@ -8,6 +8,7 @@
 
 
 <ion-content class="fondo">
+<!--Modelos-->
   <div id="Fpropiedades" class="invisible">
     <form (ngSubmit)="logForm('propiedad')">
         <!--<ion-item class="formulario">
@@ -104,21 +105,11 @@
       </form>
       <button style="margin: 0px 5px" color="botones" ion-button style="margin: 5px 2px;" (click)="avanzado()" block>Avanzado</button>
     </div>
-
-
-
-
+<!--Privadas-->
     <div id="Fdesarrollos" class="invisible">
       <form (ngSubmit)="logForm('desarrollo')">
-          <!--<ion-item class="formulario">
-              <ion-label>tipo de operacion</ion-label>
-              <ion-select name="operacion" [(ngModel)]="datos.operacion">
-                <ion-option value="1">Venta</ion-option>
-                <ion-option value="2">Preventa</ion-option>
-              </ion-select>
-            </ion-item>-->
-            <ion-item class="formulario fondo">
-              <ion-label>Tipo de desarrollo</ion-label>
+        <ion-item class="formulario fondo">
+           <ion-label>Tipo de desarrollo</ion-label>
               <ion-select name="desarrollo" [(ngModel)]="datos.desarrollo">
                 <ion-option value="0">Corporativo</ion-option>
                 <ion-option value="0">Comercial</ion-option>

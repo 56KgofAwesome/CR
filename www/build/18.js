@@ -1,14 +1,14 @@
 webpackJsonp([18],{
 
-/***/ 596:
+/***/ 592:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DocumentsPageModule", function() { return DocumentsPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FiltroResultadosPageModule", function() { return FiltroResultadosPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__documents__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filtro_resultados__ = __webpack_require__(412);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var DocumentsPageModule = /** @class */ (function () {
-    function DocumentsPageModule() {
+var FiltroResultadosPageModule = /** @class */ (function () {
+    function FiltroResultadosPageModule() {
     }
-    DocumentsPageModule = __decorate([
+    FiltroResultadosPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__documents__["a" /* DocumentsPage */],
+                __WEBPACK_IMPORTED_MODULE_2__filtro_resultados__["a" /* FiltroResultadosPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__documents__["a" /* DocumentsPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__filtro_resultados__["a" /* FiltroResultadosPage */]),
             ],
         })
-    ], DocumentsPageModule);
-    return DocumentsPageModule;
+    ], FiltroResultadosPageModule);
+    return FiltroResultadosPageModule;
 }());
 
-//# sourceMappingURL=documents.module.js.map
+//# sourceMappingURL=filtro-resultados.module.js.map
 
 /***/ })
 

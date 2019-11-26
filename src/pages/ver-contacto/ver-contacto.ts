@@ -10,6 +10,7 @@ import { ContactosProvider } from '../../providers/contactos/contactos';
 import { ElementEnablerProvider } from '../../providers/element-enabler/element-enabler';
 import  moment  from 'moment';
 import 'moment/locale/es';
+import { stringify } from '@angular/core/src/util';
 
 @IonicPage()
 @Component({
@@ -41,12 +42,11 @@ export class VerContactoPage {
               public modalCtrl: ModalController,public contactosProvider: ContactosProvider,public alertCtrl: AlertController,private storage: Storage,
               public toastController: ToastController,public loadingCtrl: LoadingController,private enabler: ElementEnablerProvider
   ){
-
+    
   }
+  //--------------------------------------------------------------------------
   ionViewCanEnter(){
     this.showElements = this.enabler.verContactoEnabler();
-    console.log(this.showElements);
-
     this.contactId = this.navParams.get("id");
     this.tipo  = this.navParams.get("tipo");
     //Verifica si el usuario es visita o prospecto
@@ -56,6 +56,8 @@ export class VerContactoPage {
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
           this.dateAgo(this.datos.createdate);
+          var shortCreateDate = this.datos.createdate.substring(0,16);
+          console.log(shortCreateDate);
         })
       }else{
         var promise = this.contactosProvider.getReferedContactInfo(this.contactId,this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken);
@@ -63,6 +65,7 @@ export class VerContactoPage {
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
           this.dateAgo(this.datos.createdate);
+
         })
       }
   }
@@ -210,10 +213,6 @@ export class VerContactoPage {
     });
   }
   //----------------------------------------------------------------------------
-
-
-
-
   sharing(tipo:any){
     //if(tipo == 'propiedades'){
       this.navCtrl.push(SharingPage,{'tipo': tipo, 'nombre': this.datos.nombre + ' ' +this.datos.ap_paterno, 'mail': this.datos.email, 'folio': this.datos.visitid});
