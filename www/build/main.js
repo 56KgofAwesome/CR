@@ -699,7 +699,7 @@ var ContactosPage = /** @class */ (function () {
     };
     ContactosPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-contactos',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\contactos\contactos.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n    <div class="header">\n\n      <ion-searchbar *ngIf="showElements.elementos.searchBar" class="buscador" (keyup)="buscar($event)">\n\n      </ion-searchbar>\n\n      <ion-icon *ngIf="showElements.botones.addContactButton" name="add" class="agregar" (click)="agregarContacto()"></ion-icon>\n\n    </div>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content class="fondo">\n\n  <ion-refresher (ionRefresh)="refreshPage($event)">\n\n    <ion-refresher-content></ion-refresher-content>\n\n  </ion-refresher>\n\n  <ion-segment [(ngModel)]="tipo">\n\n    <ion-segment-button value="referidos">\n\n      Referidos\n\n    </ion-segment-button>\n\n    <ion-segment-button value="compradores">\n\n      Compradores\n\n    </ion-segment-button>\n\n  </ion-segment>\n\n\n\n  <div [(ngSwitch)]="tipo">\n\n    <ion-list *ngSwitchCase="\'compradores\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let contacto of contactos" class="contactos">\n\n        <ion-item class="fondo" (click)="verContacto(contacto.folio, \'c\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{contacto.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="contacto.email != 0">{{contacto.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="contacto.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{contacto.folio}} -\n\n            <span *ngIf="contacto.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{contacto.lastcomment}} días</span>\n\n            <span *ngIf="contacto.lastcomment >= 3 && contacto.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{contacto.lastcomment}} días</span>\n\n            <span *ngIf="contacto.lastcomment >= 0 && contacto.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{contacto.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n            <button *ngIf="contacto.cellphone != 0" ion-button color="secondary" (click)="callContact(contacto.cellphone)">\n\n              <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n            </button>\n\n            <button ion-button color="botones" (click)="verContacto(contacto.folio, \'c\')">\n\n              <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n            </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'referidos\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let referido of referidos" class="contactos fondo">\n\n        <ion-item class="fondo" (click)="verContacto(referido.folio, \'r\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">Nombre completo </h2>\n\n          <h2 style="font-size: 10px;" *ngIf="referido.email != 0">{{referido.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="referido.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{referido.folio}} -\n\n            <span *ngIf="referido.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{referido.lastcomment}} días</span>\n\n            <span *ngIf="referido.lastcomment >= 3 && referido.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{referido.lastcomment}} días</span>\n\n            <span *ngIf="referido.lastcomment >= 0 && referido.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{referido.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n          <button *ngIf="referido.cellphone != 0" ion-button color="secondary" (click)="callContact(referido.cellphone)">\n\n            <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n          </button>\n\n          <button ion-button color="botones" (click)="verContacto(referido.folio, \'r\')">\n\n            <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n          </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'potenciales\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let potencial of potenciales" class="contactos fondo">\n\n        <ion-item class="fondo" (click)="verContacto(potencial.folio, \'p\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{potencial.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="potencial.email != 0">{{potencial.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="potencial.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{potencial.folio}} -\n\n            <span *ngIf="potencial.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{potencial.lastcomment}} días</span>\n\n            <span *ngIf="potencial.lastcomment >= 3 && potencial.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{potencial.lastcomment}} días</span>\n\n            <span *ngIf="potencial.lastcomment >= 0 && potencial.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{potencial.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n          <button *ngIf="potencial.cellphone != 0" ion-button color="secondary" (click)="callContact(potencial.cellphone)">\n\n            <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n          </button>\n\n          <button ion-button color="botones" (click)="verContacto(potencial.folio, \'r\')">\n\n            <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n          </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n  </div>\n\n</ion-content>\n\n<!--Modal con las opciones para agrear un contacto-->\n\n<div id="modal" class="modal">\n\n  <div class="modal-content">\n\n    <span class="close" (click)="cerrarModal($event)">&times;</span>\n\n    <ion-list radio-group [(ngModel)]="agrC">\n\n      <ion-item *ngIf="showElements.botones.addReferedOption">\n\n        <ion-label>Agregar Referidos</ion-label>\n\n        <ion-radio (ionSelect)="agregarTipo()" value="1"></ion-radio>\n\n      </ion-item>\n\n      <ion-item  *ngIf="showElements.botones.addBuyerOption">\n\n        <ion-label>Agregar Compradores</ion-label>\n\n        <ion-radio (ionSelect)="agregarTipo()" value="2"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n  </div>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\contactos\contactos.html"*/,
+            selector: 'page-contactos',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\contactos\contactos.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n    <div class="header">\n\n      <ion-searchbar *ngIf="showElements.elementos.searchBar" class="buscador" (keyup)="buscar($event)">\n\n      </ion-searchbar>\n\n      <ion-icon *ngIf="showElements.botones.addContactButton" name="add" class="agregar" (click)="agregarContacto()"></ion-icon>\n\n    </div>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content class="fondo">\n\n  <ion-refresher (ionRefresh)="refreshPage($event)">\n\n    <ion-refresher-content></ion-refresher-content>\n\n  </ion-refresher>\n\n  <ion-segment [(ngModel)]="tipo">\n\n    <ion-segment-button value="referidos">\n\n      Referidos\n\n    </ion-segment-button>\n\n    <ion-segment-button value="compradores">\n\n      Compradores\n\n    </ion-segment-button>\n\n  </ion-segment>\n\n\n\n  <div [(ngSwitch)]="tipo">\n\n    <ion-list *ngSwitchCase="\'compradores\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let contacto of contactos" class="contactos">\n\n        <ion-item class="fondo" (click)="verContacto(contacto.folio, \'c\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{contacto.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="contacto.email != 0">{{contacto.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="contacto.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{contacto.folio}} -\n\n            <span *ngIf="contacto.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{contacto.lastcomment}} días</span>\n\n            <span *ngIf="contacto.lastcomment >= 3 && contacto.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{contacto.lastcomment}} días</span>\n\n            <span *ngIf="contacto.lastcomment >= 0 && contacto.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{contacto.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n            <button *ngIf="contacto.cellphone != 0" ion-button color="secondary" (click)="callContact(contacto.cellphone)">\n\n              <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n            </button>\n\n            <button ion-button color="botones" (click)="verContacto(contacto.folio, \'c\')">\n\n              <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n            </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'referidos\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let referido of referidos" class="contactos fondo">\n\n        <ion-item class="fondo" (click)="verContacto(referido.folio, \'r\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{referido.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="referido.email != 0">{{referido.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="referido.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{referido.folio}} -\n\n            <span *ngIf="referido.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{referido.lastcomment}} días</span>\n\n            <span *ngIf="referido.lastcomment >= 3 && referido.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{referido.lastcomment}} días</span>\n\n            <span *ngIf="referido.lastcomment >= 0 && referido.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{referido.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n          <button *ngIf="referido.cellphone != 0" ion-button color="secondary" (click)="callContact(referido.cellphone)">\n\n            <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n          </button>\n\n          <button ion-button color="botones" (click)="verContacto(referido.folio, \'r\')">\n\n            <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n          </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n    <ion-list *ngSwitchCase="\'potenciales\'" id="myUL">\n\n      <ion-item-sliding  *ngFor="let potencial of potenciales" class="contactos fondo">\n\n        <ion-item class="fondo" (click)="verContacto(potencial.folio, \'p\')">\n\n          <ion-avatar item-start>\n\n            <img src="assets/imgs/usuario.png">\n\n          </ion-avatar>\n\n          <h2 style="font-size: 10px;">{{potencial.fullname}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="potencial.email != 0">{{potencial.email}}</h2>\n\n          <h2 style="font-size: 10px;" *ngIf="potencial.email == 0">No Disponible</h2>\n\n          <h2 style="font-size: 8px;">folio: {{potencial.folio}} -\n\n            <span *ngIf="potencial.lastcomment > 7" style="background-color: red; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">vencido {{potencial.lastcomment}} días</span>\n\n            <span *ngIf="potencial.lastcomment >= 3 && potencial.lastcomment <= 6" style="background-color: #f84b00; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">por vencer {{potencial.lastcomment}} días</span>\n\n            <span *ngIf="potencial.lastcomment >= 0 && potencial.lastcomment <= 2" style="background-color:  green; border-radius: 5px 5px 5px 5px; padding: 2px 8px; color: white">a tiempo {{potencial.lastcomment}} días</span>\n\n          </h2>\n\n          <ion-avatar item-end>\n\n            <ion-icon style="padding-top: 12px; padding-left: 15px;" name="arrow-back"></ion-icon>\n\n          </ion-avatar>\n\n        </ion-item>\n\n        <ion-item-options class="fondo" side="right">\n\n          <button *ngIf="potencial.cellphone != 0" ion-button color="secondary" (click)="callContact(potencial.cellphone)">\n\n            <ion-icon style="font-size: 35px;" name="ios-call-outline"></ion-icon>\n\n          </button>\n\n          <button ion-button color="botones" (click)="verContacto(potencial.folio, \'r\')">\n\n            <ion-icon style="font-size: 35px;" name="ios-mail-outline"></ion-icon>\n\n          </button>\n\n        </ion-item-options>\n\n      </ion-item-sliding>\n\n    </ion-list>\n\n\n\n  </div>\n\n</ion-content>\n\n<!--Modal con las opciones para agrear un contacto-->\n\n<div id="modal" class="modal">\n\n  <div class="modal-content">\n\n    <span class="close" (click)="cerrarModal($event)">&times;</span>\n\n    <ion-list radio-group [(ngModel)]="agrC">\n\n      <ion-item *ngIf="showElements.botones.addReferedOption">\n\n        <ion-label>Agregar Referidos</ion-label>\n\n        <ion-radio (ionSelect)="agregarTipo()" value="1"></ion-radio>\n\n      </ion-item>\n\n      <ion-item  *ngIf="showElements.botones.addBuyerOption">\n\n        <ion-label>Agregar Compradores</ion-label>\n\n        <ion-radio (ionSelect)="agregarTipo()" value="2"></ion-radio>\n\n      </ion-item>\n\n    </ion-list>\n\n  </div>\n\n</div>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\contactos\contactos.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_call_number__["a" /* CallNumber */],
             __WEBPACK_IMPORTED_MODULE_5__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_6__providers_contactos_contactos__["a" /* ContactosProvider */], __WEBPACK_IMPORTED_MODULE_7__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]])
@@ -1209,10 +1209,9 @@ var TabsUsuarioPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
             selector: 'page-tabs-usuario',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\tabs-usuario\tabs-usuario.html"*/'<ion-tabs color="tabs">\n\n  <ion-tab *ngIf="showElement.userTab"      tabIcon="ios-person" tabTitle="Datos" [root]="tabDatos"></ion-tab>\n\n  <ion-tab *ngIf="showElement.searchTab"    tabIcon="ios-search" tabTitle="Buscar" [root]="tab6"></ion-tab>\n\n  <ion-tab *ngIf="showElement.tasksTab"     tabIcon="ios-calendar" tabTitle="Tareas" [root]="tab8"></ion-tab>\n\n  <ion-tab *ngIf="showElement.inventoryTab" tabIcon="ios-bookmarks" tabTitle="Inventario" [root]="tabInventory"></ion-tab>\n\n  <ion-tab *ngIf="showElement.contactsTab"  tabIcon="ios-contact" tabTitle="Contactos" [root]="tabContactos"></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\tabs-usuario\tabs-usuario.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */], __WEBPACK_IMPORTED_MODULE_0__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]])
     ], TabsUsuarioPage);
     return TabsUsuarioPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=tabs-usuario.js.map
@@ -1478,15 +1477,15 @@ var map = {
 		23
 	],
 	"../pages/calendar/calendar.module": [
-		588,
+		589,
 		22
 	],
 	"../pages/contactos/contactos.module": [
-		589,
+		590,
 		21
 	],
 	"../pages/destinos/destinos.module": [
-		590,
+		588,
 		20
 	],
 	"../pages/documents/documents.module": [
@@ -1494,11 +1493,11 @@ var map = {
 		19
 	],
 	"../pages/filtro-resultados/filtro-resultados.module": [
-		592,
+		593,
 		18
 	],
 	"../pages/formulario/formulario.module": [
-		593,
+		592,
 		17
 	],
 	"../pages/general-form/general-form.module": [
@@ -1506,15 +1505,15 @@ var map = {
 		16
 	],
 	"../pages/info/info.module": [
-		595,
+		596,
 		15
 	],
 	"../pages/inventory/inventory.module": [
-		597,
+		595,
 		14
 	],
 	"../pages/lead-pickead-pick/lead-pickead-pick.module": [
-		596,
+		597,
 		13
 	],
 	"../pages/login/login.module": [
@@ -1526,11 +1525,11 @@ var map = {
 		11
 	],
 	"../pages/registrar/registrar.module": [
-		601,
+		600,
 		10
 	],
 	"../pages/resultados/resultados.module": [
-		600,
+		601,
 		9
 	],
 	"../pages/seguimiento/seguimiento.module": [
@@ -1538,11 +1537,11 @@ var map = {
 		8
 	],
 	"../pages/sharing/sharing.module": [
-		603,
+		604,
 		7
 	],
 	"../pages/tabs-usuario/tabs-usuario.module": [
-		604,
+		603,
 		6
 	],
 	"../pages/tabs/tabs.module": [
@@ -1550,19 +1549,19 @@ var map = {
 		4
 	],
 	"../pages/tabs2/tabs2.module": [
-		606,
+		608,
 		5
 	],
 	"../pages/usuario/usuario.module": [
-		607,
+		610,
 		3
 	],
 	"../pages/ver-contacto/ver-contacto.module": [
-		610,
+		606,
 		2
 	],
 	"../pages/ver-desarrollo/ver-desarrollo.module": [
-		608,
+		607,
 		1
 	],
 	"../pages/ver-propiedad/ver-propiedad.module": [
@@ -1670,33 +1669,33 @@ var HomePage = /** @class */ (function () {
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__ = __webpack_require__(154);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__ = __webpack_require__(410);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__ = __webpack_require__(409);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__ = __webpack_require__(411);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__ = __webpack_require__(410);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__ = __webpack_require__(149);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__ = __webpack_require__(152);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__ = __webpack_require__(412);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__ = __webpack_require__(411);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__ = __webpack_require__(399);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__ = __webpack_require__(413);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__ = __webpack_require__(412);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__ = __webpack_require__(414);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__ = __webpack_require__(413);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__ = __webpack_require__(150);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__lead_pickead_pick_lead_pickead_pick__ = __webpack_require__(415);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__lead_pickead_pick_lead_pickead_pick__ = __webpack_require__(414);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return __WEBPACK_IMPORTED_MODULE_21__lead_pickead_pick_lead_pickead_pick__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__documents_documents__ = __webpack_require__(81);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_22__documents_documents__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__general_form_general_form__ = __webpack_require__(153);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_23__general_form_general_form__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__property_pickead_pick_property_pickead_pick__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__property_pickead_pick_property_pickead_pick__ = __webpack_require__(415);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return __WEBPACK_IMPORTED_MODULE_24__property_pickead_pick_property_pickead_pick__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__inventory_inventory__ = __webpack_require__(409);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__inventory_inventory__ = __webpack_require__(416);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return __WEBPACK_IMPORTED_MODULE_25__inventory_inventory__["a"]; });
 
 
@@ -3949,7 +3948,7 @@ var VerContactoPage = /** @class */ (function () {
     };
     VerContactoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-ver-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\ver-contacto\ver-contacto.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n    <ion-title> Detalles de contacto </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="fondo">\n\n  <div padding class="contenedor">\n\n    <div class="logo">\n\n      <img width="90" height="90" src="assets/imgs/usuario.png">\n\n    </div>\n\n\n\n    <div padding>\n\n      <ion-segment [(ngModel)]="seccion">\n\n        <ion-segment-button value="datos">\n\n          DATOS\n\n        </ion-segment-button>\n\n        <ion-segment-button value="comentarios">\n\n          SEGUIMIENTOS\n\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n\n    <div [ngSwitch]="seccion">\n\n    <!------------Sección de Datos--------------------------------------------->\n\n      <ion-list *ngSwitchCase="\'datos\'">\n\n        <ion-item *ngIf="showElements.elements.nameTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-contact" md="md-contact"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Nombre </p>\n\n          <p class="datos">{{datos.nombre}} {{datos.ap_paterno}}\n\n            <span *ngIf="datos.ap_materno">Apellido materno</span>\n\n          </p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.dateTag" class="fondo">\n\n          <ion-avatar item-start>\n\n              <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Fecha y Hora de Registro </p>\n\n          <p class="datos">{{registerTime}}</p>\n\n          <p class="datos">{{datos.createdate}}</p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.assignTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-git-compare" md="md-git-compare"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Asesor reasignado </p>\n\n          <!--Pendiente el cambio de nombre desde API-->\n\n          <p class="datos" *ngIf="datos.nameAssing != 0">{{datos.nameAssing}}</p>\n\n          <p class="datos" *ngIf="datos.nameAssing == 0">No Disponible</p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.cellphoneTag" class="fondo">\n\n          <ion-avatar item-start>\n\n              <ion-icon ios="ios-call" md="md-call"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Celular</p>\n\n          <p *ngIf="datos.cellphone != 0; else notCellphone" class="datos">{{datos.cellphone}}</p>\n\n          <ng-template #notCellphone>\n\n            <p class="datos"> No Registrado </p>\n\n          </ng-template>\n\n          <button *ngIf="datos.cellphone != 0 && showElements.buttons.callButton" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Llamar\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.nextelTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-radio" md="md-radio"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Nextel</p>\n\n          <p *ngIf="datos.nextel != 0; else notNextel" class="datos">{{datos.nextel}}</p>\n\n          <ng-template #notNextel>\n\n            <p class="datos"> No registrado </p>\n\n          </ng-template>\n\n          <button *ngIf="datos.nextel != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Llamar\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.mailTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-mail" md="md-mail"></ion-icon>\n\n          </ion-avatar>\n\n          <ion-list>\n\n              <p class="titulo">Correo electrónico</p>\n\n              <ion-item *ngIf="datos.email !== 0">\n\n                <p class="titulo">Principal</p>\n\n                <p *ngIf="datos.email !== 0, else notEmail" class="datos"> {{datos.email}} </p>\n\n                <ng-template #notEmail>\n\n                    <p *ngIf="datos.email === 0" class="datos">No registrado</p>\n\n                </ng-template>\n\n                <button (click)="mensajear(datos.email)" *ngIf="datos.email != 0 && showElements.buttons.sendMailButton" class="apply" color="greenImmo" clear ion-button icon-only\n\n                  item-end small>\n\n                  <ion-icon class="icon-button" name="send"></ion-icon>\n\n                </button>\n\n              </ion-item>\n\n              <ion-item *ngIf="tipo === \'c\'">\n\n                <p class="titulo">Secundario</p>\n\n                <p *ngIf="datos.email2 != 0; else notSecondaryEmail" class="datos">{{datos.email2}}</p>\n\n                <ng-template #notSecondaryEmail>\n\n                  <p class="datos">No registrado</p>\n\n                </ng-template>\n\n                <button (click)="mensajear(datos.email_2)" *ngIf="datos.email2 != 0" class="apply" color="greenImmo" clear ion-button icon-only\n\n                  item-end small>\n\n                  <ion-icon class="icon-button" name="send"></ion-icon>\n\n                </button>\n\n              </ion-item>\n\n            </ion-list>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.commentTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-book" md="md-book"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Ultimo Seguimiento</p>\n\n          <p *ngIf="datos.comment != 0" class="datos" text-wrap>{{datos.comment}}</p>\n\n          <p *ngIf="datos.comment === 0" class="datos">No registrado</p>\n\n          <button (click)="newCommentModal()" *ngIf="showElements.buttons.newComentButton" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Nuevo Seguimiento\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.sendTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-copy" md="md-copy"></ion-icon>\n\n          </ion-avatar>\n\n          <ion-list>\n\n            <ion-item>\n\n              <p class="titulo">Enviar Flyer de propiedad</p>\n\n              <p class="datos" text-wrap>Envia por correo información de alguna propiedad</p>\n\n              <button *ngIf="showElements.buttons.sendFlyerButton" (click)="sharing(\'propiedades\')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n                <ion-icon class="icon-button" name="map"></ion-icon>\n\n              </button>\n\n            </ion-item>\n\n            <ion-item class="fondo">\n\n              <p class="titulo">Enviar Broshure de Desarrollo</p>\n\n              <p class="datos" text-wrap>Envia por correo información de algún desarrollo</p>\n\n              <button *ngIf="showElements.buttons.sendBroshureButton" (click)="sharing(\'desarrollos\')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n                <ion-icon class="icon-button" name="map"></ion-icon>\n\n              </button>\n\n            </ion-item>\n\n          </ion-list>\n\n        </ion-item>\n\n      </ion-list>\n\n    <!-------------Sección de Comentarios-------------------------------------->\n\n      <ion-list *ngSwitchCase="\'comentarios\'">\n\n        <ion-grid>\n\n          <ion-row *ngFor="let comentario of comentarios,let i=index">\n\n            <ion-col >\n\n              <ion-card class="fecha">\n\n                <ion-card-header>\n\n                  <p class="titulo">\n\n                   DETALLES DE SEGUIMIENTO\n\n                   <p *ngIf="comentario.lastcomment != 0;else today">\n\n                    Hace {{comentarios[i].lastcomment}} días\n\n                    </p>\n\n                    <ng-template #today>\n\n                      <p>\n\n                        Hoy\n\n                        </p>\n\n                    </ng-template>\n\n                  <br>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-book" md="md-book"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                        {{comentario.comment}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-home" md="md-home"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                        {{comentario.officename}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-person" md="md-person"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col >\n\n                      <p>\n\n                         {{comentario.fullname}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            </ion-col>\n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-list>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\ver-contacto\ver-contacto.html"*/,
+            selector: 'page-ver-contacto',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\ver-contacto\ver-contacto.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n\n    <ion-title> Detalles de contacto </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="fondo">\n\n  <div padding class="contenedor">\n\n    <div class="logo">\n\n      <img width="90" height="90" src="assets/imgs/usuario.png">\n\n    </div>\n\n\n\n    <div padding>\n\n      <ion-segment [(ngModel)]="seccion">\n\n        <ion-segment-button value="datos">\n\n          DATOS\n\n        </ion-segment-button>\n\n        <ion-segment-button value="comentarios">\n\n          SEGUIMIENTOS\n\n        </ion-segment-button>\n\n      </ion-segment>\n\n    </div>\n\n    <div [ngSwitch]="seccion">\n\n    <!------------Sección de Datos--------------------------------------------->\n\n      <ion-list *ngSwitchCase="\'datos\'">\n\n        <ion-item *ngIf="showElements.elements.nameTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-contact" md="md-contact"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Nombre </p>\n\n          <p class="datos">{{datos.nombre}} {{datos.ap_paterno}}\n\n            <span *ngIf="datos.ap_materno">{{ datos.ap_materno }}</span>\n\n          </p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.dateTag" class="fondo">\n\n          <ion-avatar item-start>\n\n              <ion-icon ios="ios-calendar" md="md-calendar"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Fecha y Hora de Registro </p>\n\n          <p class="datos">{{registerTime}}</p>\n\n          <p class="datos">{{datos.createdate}}</p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.assignTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-git-compare" md="md-git-compare"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo"> Asesor reasignado </p>\n\n          <!--Pendiente el cambio de nombre desde API-->\n\n          <p class="datos" *ngIf="datos.nameAssing != 0">{{datos.nameAssing}}</p>\n\n          <p class="datos" *ngIf="datos.nameAssing == 0">No Disponible</p>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.cellphoneTag" class="fondo">\n\n          <ion-avatar item-start>\n\n              <ion-icon ios="ios-call" md="md-call"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Celular</p>\n\n          <p *ngIf="datos.cellphone != 0; else notCellphone" class="datos">{{datos.cellphone}}</p>\n\n          <ng-template #notCellphone>\n\n            <p class="datos"> No Registrado </p>\n\n          </ng-template>\n\n          <button *ngIf="datos.cellphone != 0 && showElements.buttons.callButton" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Llamar\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.nextelTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-radio" md="md-radio"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Nextel</p>\n\n          <p *ngIf="datos.nextel != 0; else notNextel" class="datos">{{datos.nextel}}</p>\n\n          <ng-template #notNextel>\n\n            <p class="datos"> No registrado </p>\n\n          </ng-template>\n\n          <button *ngIf="datos.nextel != 0" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Llamar\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.mailTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-mail" md="md-mail"></ion-icon>\n\n          </ion-avatar>\n\n          <ion-list>\n\n              <p class="titulo">Correo electrónico</p>\n\n              <ion-item *ngIf="datos.email !== 0">\n\n                <p class="titulo">Principal</p>\n\n                <p *ngIf="datos.email !== 0, else notEmail" class="datos"> {{datos.email}} </p>\n\n                <ng-template #notEmail>\n\n                    <p *ngIf="datos.email === 0" class="datos">No registrado</p>\n\n                </ng-template>\n\n                <button (click)="mensajear(datos.email)" *ngIf="datos.email != 0 && showElements.buttons.sendMailButton" class="apply" color="greenImmo" clear ion-button icon-only\n\n                  item-end small>\n\n                  <ion-icon class="icon-button" name="send"></ion-icon>\n\n                </button>\n\n              </ion-item>\n\n              <ion-item *ngIf="tipo === \'c\'">\n\n                <p class="titulo">Secundario</p>\n\n                <p *ngIf="datos.email2 != 0; else notSecondaryEmail" class="datos">{{datos.email2}}</p>\n\n                <ng-template #notSecondaryEmail>\n\n                  <p class="datos">No registrado</p>\n\n                </ng-template>\n\n                <button (click)="mensajear(datos.email_2)" *ngIf="datos.email2 != 0" class="apply" color="greenImmo" clear ion-button icon-only\n\n                  item-end small>\n\n                  <ion-icon class="icon-button" name="send"></ion-icon>\n\n                </button>\n\n              </ion-item>\n\n            </ion-list>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.commentTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-book" md="md-book"></ion-icon>\n\n          </ion-avatar>\n\n          <p class="titulo">Ultimo Seguimiento</p>\n\n          <p *ngIf="datos.comment != 0" class="datos" text-wrap>{{datos.comment}}</p>\n\n          <p *ngIf="datos.comment === 0" class="datos">No registrado</p>\n\n          <button (click)="newCommentModal()" *ngIf="showElements.buttons.newComentButton" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n            Nuevo Seguimiento\n\n          </button>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElements.elements.sendTag" class="fondo">\n\n          <ion-avatar item-start>\n\n            <ion-icon ios="ios-copy" md="md-copy"></ion-icon>\n\n          </ion-avatar>\n\n          <ion-list>\n\n            <ion-item>\n\n              <p class="titulo">Enviar Flyer de propiedad</p>\n\n              <p class="datos" text-wrap>Envia por correo información de alguna propiedad</p>\n\n              <button *ngIf="showElements.buttons.sendFlyerButton" (click)="sharing(\'propiedades\')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n                <ion-icon class="icon-button" name="map"></ion-icon>\n\n              </button>\n\n            </ion-item>\n\n            <ion-item class="fondo">\n\n              <p class="titulo">Enviar Broshure de Desarrollo</p>\n\n              <p class="datos" text-wrap>Envia por correo información de algún desarrollo</p>\n\n              <button *ngIf="showElements.buttons.sendBroshureButton" (click)="sharing(\'desarrollos\')" class="apply" color="greenImmo" clear ion-button icon-only item-end small>\n\n                <ion-icon class="icon-button" name="map"></ion-icon>\n\n              </button>\n\n            </ion-item>\n\n          </ion-list>\n\n        </ion-item>\n\n      </ion-list>\n\n    <!-------------Sección de Comentarios-------------------------------------->\n\n      <ion-list *ngSwitchCase="\'comentarios\'">\n\n        <ion-grid>\n\n          <ion-row *ngFor="let comentario of comentarios,let i=index">\n\n            <ion-col >\n\n              <ion-card class="fecha">\n\n                <ion-card-header>\n\n                  <p class="titulo">\n\n                   DETALLES DE SEGUIMIENTO\n\n                   <p *ngIf="comentario.lastcomment != 0;else today">\n\n                    Hace {{comentarios[i].lastcomment}} días\n\n                    </p>\n\n                    <ng-template #today>\n\n                      <p>\n\n                        Hoy\n\n                        </p>\n\n                    </ng-template>\n\n                  <br>\n\n                </ion-card-header>\n\n                <ion-card-content>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-book" md="md-book"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                        {{comentario.comment}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-home" md="md-home"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col col-10>\n\n                      <p>\n\n                        {{comentario.officename}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                  <ion-row>\n\n                    <ion-col col-2>\n\n                      <ion-icon ios="ios-person" md="md-person"></ion-icon>\n\n                    </ion-col>\n\n                    <ion-col >\n\n                      <p>\n\n                         {{comentario.fullname}}\n\n                      </p>\n\n                    </ion-col>\n\n                  </ion-row>\n\n                </ion-card-content>\n\n              </ion-card>\n\n            </ion-col>\n\n          </ion-row>\n\n        </ion-grid>\n\n      </ion-list>\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\ver-contacto\ver-contacto.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_3__node_modules_ionic_native_email_composer__["a" /* EmailComposer */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* ModalController */], __WEBPACK_IMPORTED_MODULE_8__providers_contactos_contactos__["a" /* ContactosProvider */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_7__ionic_storage__["b" /* Storage */],
@@ -3963,51 +3962,6 @@ var VerContactoPage = /** @class */ (function () {
 /***/ }),
 
 /***/ 409:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InventoryPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/**
- * Generated class for the InventoryPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var InventoryPage = /** @class */ (function () {
-    function InventoryPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-    }
-    InventoryPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad InventoryPage');
-    };
-    InventoryPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-inventory',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\inventory\inventory.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n    <ion-title> Inventario </ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\inventory\inventory.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* NavParams */]])
-    ], InventoryPage);
-    return InventoryPage;
-}());
-
-//# sourceMappingURL=inventory.js.map
-
-/***/ }),
-
-/***/ 410:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4134,7 +4088,7 @@ var UsuarioPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 411:
+/***/ 410:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4180,7 +4134,7 @@ var RegistrarPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 412:
+/***/ 411:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4235,7 +4189,7 @@ var FiltroResultadosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 413:
+/***/ 412:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4419,7 +4373,7 @@ var SharingPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 414:
+/***/ 413:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4587,7 +4541,7 @@ var CalendarPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 415:
+/***/ 414:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4735,7 +4689,7 @@ var LeadPickeadPickPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 416:
+/***/ 415:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4774,6 +4728,61 @@ var PropertyPickeadPickPage = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=property-pickead-pick.js.map
+
+/***/ }),
+
+/***/ 416:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InventoryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__providers_usuario_usuario__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_propiedades_propiedades__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var InventoryPage = /** @class */ (function () {
+    function InventoryPage(navCtrl, navParams, propiedadesProvider, usuarioProvider) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.propiedadesProvider = propiedadesProvider;
+        this.usuarioProvider = usuarioProvider;
+        this.properties = [];
+        this.loadUserInventory();
+    }
+    //-----------------------------------------
+    //Obtiene el inventario del usuario
+    InventoryPage.prototype.loadUserInventory = function () {
+        var _this = this;
+        var promise = this.propiedadesProvider.getUserProperties(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken, this.usuarioProvider.datos.properties);
+        promise.subscribe(function (data) {
+            _this.properties = data.json();
+            console.log(_this.properties.data);
+        });
+    };
+    InventoryPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
+            selector: 'page-inventory',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\inventory\inventory.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n    <ion-title> Inventario </ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <div class="properties">\n      <ion-list>\n        <ion-grid>\n          <ion-row *ngFor="let property of properties">\n            <ion-col>\n              <ion-card>\n                <ion-card-header>\n                  <p>Propiedad: {{ property.namePropertyEs }}</p>\n                </ion-card-header>\n              </ion-card>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-list>\n    </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\inventory\inventory.html"*/,
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__providers_propiedades_propiedades__["a" /* PropiedadesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__providers_propiedades_propiedades__["a" /* PropiedadesProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _d || Object])
+    ], InventoryPage);
+    return InventoryPage;
+    var _a, _b, _c, _d;
+}());
+
+//# sourceMappingURL=inventory.js.map
 
 /***/ }),
 
@@ -4907,29 +4916,29 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/agregar-contacto/agregar-contacto.module#AgregarContactoPageModule', name: 'AgregarContactoPage', segment: 'agregar-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/agregar-tarea/agregar-tarea.module#AgregarTareaPageModule', name: 'AgregarTareaPage', segment: 'agregar-tarea', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/buscar/buscar.module#BuscarPageModule', name: 'BuscarPage', segment: 'buscar', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/destinos/destinos.module#DestinosPageModule', name: 'DestinosPage', segment: 'destinos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/calendar/calendar.module#CalendarPageModule', name: 'CalendarPage', segment: 'calendar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/contactos/contactos.module#ContactosPageModule', name: 'ContactosPage', segment: 'contactos', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/destinos/destinos.module#DestinosPageModule', name: 'DestinosPage', segment: 'destinos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/documents/documents.module#DocumentsPageModule', name: 'DocumentsPage', segment: 'documents', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/filtro-resultados/filtro-resultados.module#FiltroResultadosPageModule', name: 'FiltroResultadosPage', segment: 'filtro-resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/formulario/formulario.module#FormularioPageModule', name: 'FormularioPage', segment: 'formulario', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/filtro-resultados/filtro-resultados.module#FiltroResultadosPageModule', name: 'FiltroResultadosPage', segment: 'filtro-resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/general-form/general-form.module#GeneralFormPageModule', name: 'GeneralFormPage', segment: 'general-form', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/inventory/inventory.module#InventoryPageModule', name: 'InventoryPage', segment: 'inventory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/info/info.module#InfoPageModule', name: 'InfoPage', segment: 'info', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/lead-pickead-pick/lead-pickead-pick.module#LeadPickeadPickPageModule', name: 'LeadPickeadPickPage', segment: 'lead-pickead-pick', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/inventory/inventory.module#InventoryPageModule', name: 'InventoryPage', segment: 'inventory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/property-pickead-pick/property-pickead-pick.module#PropertyPickeadPickPageModule', name: 'PropertyPickeadPickPage', segment: 'property-pickead-pick', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/registrar/registrar.module#RegistrarPageModule', name: 'RegistrarPage', segment: 'registrar', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/seguimiento/seguimiento.module#SeguimientoPageModule', name: 'SeguimientoPage', segment: 'seguimiento', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/sharing/sharing.module#SharingPageModule', name: 'SharingPage', segment: 'sharing', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs-usuario/tabs-usuario.module#TabsUsuarioPageModule', name: 'TabsUsuarioPage', segment: 'tabs-usuario', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/sharing/sharing.module#SharingPageModule', name: 'SharingPage', segment: 'sharing', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/tabs/tabs.module#TabsPageModule', name: 'TabsPage', segment: 'tabs', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/tabs2/tabs2.module#Tabs2PageModule', name: 'Tabs2Page', segment: 'tabs2', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-desarrollo/ver-desarrollo.module#VerDesarrolloPageModule', name: 'VerDesarrolloPage', segment: 'ver-desarrollo', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/tabs2/tabs2.module#Tabs2PageModule', name: 'Tabs2Page', segment: 'tabs2', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_11__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
@@ -5635,9 +5644,10 @@ var ElementEnablerProvider = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropiedadesProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_http__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__api_api__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__ = __webpack_require__(18);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5650,21 +5660,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var PropiedadesProvider = /** @class */ (function () {
-    function PropiedadesProvider(http, usuarioProvider) {
+    function PropiedadesProvider(http, usuarioProvider, apiProvider) {
         this.http = http;
         this.usuarioProvider = usuarioProvider;
+        this.apiProvider = apiProvider;
         this.url = 'https://www.immosystem.com.mx/appImmov2/immoApp2.php';
     }
+    //Cargar propiedades del usuario
+    PropiedadesProvider.prototype.getUserProperties = function (userid, token, properties) {
+        var userId = this.usuarioProvider.datos.id;
+        console.log(userId);
+        var body = 'm=userProperties&user=' + userid + '&token=' + token + '&folios=' + properties;
+        return this.apiProvider.post(body);
+    };
+    //-----------------------------------------------------------------
     PropiedadesProvider.prototype.cargarPorCiudad = function (idCiudad) {
-        var body = 'm=developments&folio=' + this.usuarioProvider.companyid + '&state=' + idCiudad + '&app=1', header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=developments&folio=' + this.usuarioProvider.companyid + '&state=' + idCiudad + '&app=1', header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log(this.url + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider.prototype.cargarPropiedad = function (folio) {
         console.log("el folio es: ");
         console.log(folio);
-        var body = 'm=property&folio=' + folio, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=property&folio=' + folio, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         /*if(id != null){
           body += '&user=' + id;
           console.log('el usuario contioene informacion jiji: ' + id);
@@ -5676,7 +5696,7 @@ var PropiedadesProvider = /** @class */ (function () {
     PropiedadesProvider.prototype.cargarDesarrollo = function (folio) {
         console.log("el folio es: ");
         console.log(folio);
-        var body = 'm=development&folio=' + folio, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=development&folio=' + folio, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         /*if(id != null){
           body += '&user=' + id;
           console.log('el usuario contioene informacion jiji: ' + id);
@@ -5687,51 +5707,52 @@ var PropiedadesProvider = /** @class */ (function () {
     };
     // http://www.immosystem.com.mx/appImmov2/immoApp2.php?d=0&m=findProperty&folio=135&bedrooms=1&bathrooms=1&priceFrom=1&priceTo=1000000&m2From=1&m2To=371.540
     PropiedadesProvider.prototype.filtrarPropiedad = function (datos, metros, metroslot) {
-        var body = 'm=findProperty&folio=' + this.usuarioProvider.companyid, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=findProperty&folio=' + this.usuarioProvider.companyid, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log('el url es: ' + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider.prototype.filtrarDesarrollo = function (datos) {
-        var body = 'm=findDevelopment&folio=' + this.usuarioProvider.companyid, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=findDevelopment&folio=' + this.usuarioProvider.companyid, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log(this.url + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider.prototype.verInventario = function (dev, status, keyword) {
-        var body = 'm=findProperty&folio=' + this.usuarioProvider.companyid + '&num_desarrollo=' + dev + '&statusId=' + status + '&kwEsp=' + keyword, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=findProperty&folio=' + this.usuarioProvider.companyid + '&num_desarrollo=' + dev + '&statusId=' + status + '&kwEsp=' + keyword, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log(this.url + '?d=0&' + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider.prototype.sharingPropiedad = function () {
-        var body = 'm=findProperty&folio=' + this.usuarioProvider.companyid, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=findProperty&folio=' + this.usuarioProvider.companyid, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log("la respuesta");
         console.log(this.url + '?d=0&' + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider.prototype.sharingDesarrollo = function () {
-        var body = 'm=findDevelopment&folio=' + this.usuarioProvider.companyid, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=findDevelopment&folio=' + this.usuarioProvider.companyid, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log(this.url + '?d=0&' + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider.prototype.compartirDesarrollo = function (idDeveloment, idUser, idContact, nombreC, mailC) {
-        var body = 'm=sharingInfo&folio=' + idDeveloment + '&idAgent=' + idUser + '&idContact=' + idContact + '&type=development&nombreC=' + nombreC + '&mailC=' + mailC, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=sharingInfo&folio=' + idDeveloment + '&idAgent=' + idUser + '&idContact=' + idContact + '&type=development&nombreC=' + nombreC + '&mailC=' + mailC, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log(this.url + '?d=0&' + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider.prototype.compartirPropiedad = function (idProperty, idUser, idContact, nombreC, mailC) {
-        var body = 'm=sharingInfo&folio=' + idProperty + '&idAgent=' + idUser + '&idContact=' + idContact + '&type=property&nombreC=' + nombreC + '&mailC=' + mailC, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=sharingInfo&folio=' + idProperty + '&idAgent=' + idUser + '&idContact=' + idContact + '&type=property&nombreC=' + nombreC + '&mailC=' + mailC, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log(this.url + '?d=0&' + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider.prototype.getDocuments = function (idDevelopment, idUser) {
-        var body = 'm=directory&folio=' + idDevelopment + '&user=' + idUser, header = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_0__angular_http__["d" /* RequestOptions */]({ headers: header });
+        var body = 'm=directory&folio=' + idDevelopment + '&user=' + idUser, header = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]({ 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }), options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* RequestOptions */]({ headers: header });
         console.log(this.url + '?d=0&' + body);
         return this.http.post(this.url, body, options);
     };
     PropiedadesProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__providers_usuario_usuario__["a" /* UsuarioProvider */]])
+        Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__api_api__["a" /* ApiProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__api_api__["a" /* ApiProvider */]) === "function" && _c || Object])
     ], PropiedadesProvider);
     return PropiedadesProvider;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=propiedades.js.map

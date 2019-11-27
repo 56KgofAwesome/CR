@@ -1,14 +1,22 @@
+import { ApiProvider } from './../api/api';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { UsuarioProvider } from '../../providers/usuario/usuario';
 
-
 @Injectable()
 export class PropiedadesProvider {
   url:any = 'https://www.immosystem.com.mx/appImmov2/immoApp2.php';
-  constructor(public http : Http, public usuarioProvider: UsuarioProvider) {
+  constructor(public http : Http, public usuarioProvider: UsuarioProvider,public apiProvider: ApiProvider) {
+  }
+  //Cargar propiedades del usuario
+  getUserProperties(userid: any,token:any,properties: any){
+    var userId = this.usuarioProvider.datos.id;
+    console.log(userId);
+    var body = 'm=userProperties&user='+userid+'&token='+token+'&folios='+properties;
+    return this.apiProvider.post(body);
   }
 
+  //-----------------------------------------------------------------
   cargarPorCiudad(idCiudad:any){
     let body    :   string  =   'm=developments&folio='+ this.usuarioProvider.companyid +'&state=' + idCiudad + '&app=1',
         header  :   any     =   new Headers({'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'}),
