@@ -65,6 +65,7 @@ export class VerContactoPage {
           this.datos  = data.json().data.visit;
           this.comentarios = data.json().data.comments;
           this.dateAgo(this.datos.createdate);
+          console.log(this.comentarios);
 
         })
       }

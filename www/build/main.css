@@ -53670,6 +53670,10 @@ page-inventory .navbar {
   color: var(--primary-color);
 }
 
+.card-content {
+  border-top: 1px solid red;
+}
+
 page-login ion-content {
   position: absolute;
 }

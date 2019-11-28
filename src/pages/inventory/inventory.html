@@ -11,12 +11,19 @@
     <div class="properties">
       <ion-list>
         <ion-grid>
-          <ion-row *ngFor="let property of properties">
+          <ion-row *ngFor="let property of properties, let i = index">
             <ion-col>
               <ion-card>
-                <ion-card-header>
-                  <p>Propiedad: {{ property.namePropertyEs }}</p>
-                </ion-card-header>
+                <img *ngIf="property.smallphoto == 0" [src]="'/../assets/imgs/noimage.png'">
+                <img *ngIf="property.smallphoto != 0" src= "{{ property.smallphoto }}">
+                <ion-card-content class="card-content">
+                  <p><ion-icon name="pin"></ion-icon> {{property.state}},{{property.municipality}},{{property.colony}}</p>
+                  <p *ngIf="property.operation != '';else notOperation"><ion-icon name="pricetag"></ion-icon> {{property.operation}}</p>
+                  <ng-template #notOperation>
+                      <p><ion-icon name="pricetag"></ion-icon> No Disponible </p>
+                  </ng-template>
+                  <p><ion-icon name="ios-cash"></ion-icon> {{property.bestPrice}}</p>
+                </ion-card-content>
               </ion-card>
             </ion-col>
           </ion-row>

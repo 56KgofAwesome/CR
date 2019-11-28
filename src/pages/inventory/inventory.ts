@@ -15,6 +15,10 @@ export class InventoryPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public propiedadesProvider: PropiedadesProvider,
               public usuarioProvider: UsuarioProvider
   ) {
+    
+  }
+  //Carga antes de entrar a la vista
+  ionViewCanEnter(){
     this.loadUserInventory();
   }
   //-----------------------------------------
@@ -22,9 +26,8 @@ export class InventoryPage {
   loadUserInventory(){
     var promise = this.propiedadesProvider.getUserProperties(this.usuarioProvider.datos.id,this.usuarioProvider.datos.userToken,this.usuarioProvider.datos.properties);
     promise.subscribe(data=>{
-      this.properties  = data.json();
-      console.log(this.properties.data);
-
+      this.properties  = data.json().data;
+      console.log(this.properties);
     })
 
   }
