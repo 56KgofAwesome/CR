@@ -1,7 +1,7 @@
 import { ElementEnablerProvider } from './../../providers/element-enabler/element-enabler';
 import { Component } from '@angular/core';
 import { IonicPage,NavController,NavParams,Events,UrlSerializer} from 'ionic-angular';
-import { InventoryPage, BuscarPage,DestinosPage,InfoPage,ContactosPage,LoginPage,UsuarioPage,CalendarPage} from '../index.paginas';
+import { PropertiesPage, InventoryPage, BuscarPage,DestinosPage,InfoPage,ContactosPage,LoginPage,UsuarioPage,CalendarPage} from '../index.paginas';
 import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
@@ -17,6 +17,7 @@ export class TabsUsuarioPage {
   tab8;
   tabContactos;
   log = false;
+  tabProperties;
 
   showElement: any = {};
 
@@ -31,6 +32,7 @@ export class TabsUsuarioPage {
     this.tab7 = DestinosPage;
     this.tab8 = CalendarPage;
     this.tabContactos = ContactosPage;
+    this.tabProperties = PropertiesPage;
   }
   //--------------------------------------------------------------
   ionViewCanEnter() {

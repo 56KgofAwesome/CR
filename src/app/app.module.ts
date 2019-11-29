@@ -12,6 +12,7 @@ import { EmailComposer      } from '@ionic-native/email-composer';
 import { IonicStorageModule } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation';
 import {
+  PropertiesPage,
   InventoryPage,
   BuscarPage,
   DestinosPage,
@@ -60,6 +61,7 @@ import { ElementEnablerProvider } from '../providers/element-enabler/element-ena
 
 @NgModule({
   declarations: [
+    PropertiesPage,
     InventoryPage,
     MyApp,
     HomePage,
@@ -101,6 +103,7 @@ import { ElementEnablerProvider } from '../providers/element-enabler/element-ena
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+    PropertiesPage,
     InventoryPage,
     MyApp,
     HomePage,

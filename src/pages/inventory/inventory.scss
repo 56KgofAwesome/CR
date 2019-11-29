@@ -3,6 +3,37 @@ page-inventory {
        color: var(--primary-color);
     }
 }
-.card-content{
-    border-top: 1px solid red;
+.card-contentProperties{
+    border-top: 2px solid color($colors,primary);
+
+    ion-icon{
+        color: #666;
+        font-size: 2em;
+    }
+    
+}
+.customRibbon{
+    padding: 0;
+    .col{
+        &:first-child {
+            position: relative;
+            background-color: #f5f5f5;
+            padding: 0;
+            .corner-ribbon {
+                width: 250px;
+                background: color($colors, active);
+                position: absolute;
+                top: 12px;
+                left: -95px;
+                text-align: center;
+                line-height: 35px;
+                color:color($colors,light);
+                transform: rotate(-45deg);
+                -webkit-transform: rotate(-45deg);
+              }
+            
+        }
+    } 
+    
+
 }

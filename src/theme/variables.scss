@@ -45,6 +45,12 @@ $colors: (
   botonMail: #eee,
   active: green
 );
+.static-icons{
+        color: #666;
+        float: none;
+        position: static;
+        font-size: 2em;
+    }
 
 html,
 body {

@@ -1,14 +1,14 @@
 webpackJsonp([24],{
 
-/***/ 586:
+/***/ 588:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AgregarTareaPageModule", function() { return AgregarTareaPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BuscarPageModule", function() { return BuscarPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__agregar_tarea__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__buscar__ = __webpack_require__(400);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AgregarTareaPageModule = /** @class */ (function () {
-    function AgregarTareaPageModule() {
+var BuscarPageModule = /** @class */ (function () {
+    function BuscarPageModule() {
     }
-    AgregarTareaPageModule = __decorate([
+    BuscarPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__agregar_tarea__["a" /* AgregarTareaPage */],
+                __WEBPACK_IMPORTED_MODULE_2__buscar__["a" /* BuscarPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__agregar_tarea__["a" /* AgregarTareaPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__buscar__["a" /* BuscarPage */]),
             ],
         })
-    ], AgregarTareaPageModule);
-    return AgregarTareaPageModule;
+    ], BuscarPageModule);
+    return BuscarPageModule;
 }());
 
-//# sourceMappingURL=agregar-tarea.module.js.map
+//# sourceMappingURL=buscar.module.js.map
 
 /***/ })
 

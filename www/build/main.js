@@ -1,4 +1,4 @@
-webpackJsonp([27],{
+webpackJsonp([28],{
 
 /***/ 149:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -603,7 +603,7 @@ var ContactosPage = /** @class */ (function () {
     //----------------------------------------------------------------------------
     //Abre vista con información detallada del contacto
     ContactosPage.prototype.verContacto = function (id, tipo) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__index_paginas__["x" /* VerContactoPage */], { 'id': id,
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__index_paginas__["y" /* VerContactoPage */], { 'id': id,
             'tipo': tipo });
     };
     //----------------------------------------------------------------------------
@@ -1193,12 +1193,13 @@ var TabsUsuarioPage = /** @class */ (function () {
         events.subscribe('user:logOut', function (user, time) {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__tabs_tabs__["a" /* TabsPage */]);
         });
-        this.tabDatos = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["w" /* UsuarioPage */];
+        this.tabDatos = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["x" /* UsuarioPage */];
         this.tabInventory = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["n" /* InventoryPage */];
         this.tab6 = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["d" /* BuscarPage */];
         this.tab7 = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["g" /* DestinosPage */];
         this.tab8 = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["e" /* CalendarPage */];
         this.tabContactos = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["f" /* ContactosPage */];
+        this.tabProperties = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["q" /* PropertiesPage */];
     }
     //--------------------------------------------------------------
     TabsUsuarioPage.prototype.ionViewCanEnter = function () {
@@ -1207,7 +1208,7 @@ var TabsUsuarioPage = /** @class */ (function () {
     };
     TabsUsuarioPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-tabs-usuario',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\tabs-usuario\tabs-usuario.html"*/'<ion-tabs color="tabs">\n\n  <ion-tab *ngIf="showElement.userTab"      tabIcon="ios-person" tabTitle="Datos" [root]="tabDatos"></ion-tab>\n\n  <ion-tab *ngIf="showElement.searchTab"    tabIcon="ios-search" tabTitle="Buscar" [root]="tab6"></ion-tab>\n\n  <ion-tab *ngIf="showElement.tasksTab"     tabIcon="ios-calendar" tabTitle="Tareas" [root]="tab8"></ion-tab>\n\n  <ion-tab *ngIf="showElement.inventoryTab" tabIcon="ios-bookmarks" tabTitle="Inventario" [root]="tabInventory"></ion-tab>\n\n  <ion-tab *ngIf="showElement.contactsTab"  tabIcon="ios-contact" tabTitle="Contactos" [root]="tabContactos"></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\tabs-usuario\tabs-usuario.html"*/
+            selector: 'page-tabs-usuario',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\tabs-usuario\tabs-usuario.html"*/'<ion-tabs color="tabs">\n\n  <ion-tab *ngIf="showElement.userTab"      tabIcon="ios-person" tabTitle="Datos" [root]="tabDatos"></ion-tab>\n\n  <ion-tab *ngIf="showElement.searchTab"    tabIcon="ios-search" tabTitle="Buscar" [root]="tab6"></ion-tab>\n\n  <ion-tab *ngIf="showElement.tasksTab"     tabIcon="ios-calendar" tabTitle="Tareas" [root]="tab8"></ion-tab>\n\n  <ion-tab *ngIf="showElement.inventoryTab" tabIcon="ios-bookmarks" tabTitle="Inventario" [root]="tabInventory"></ion-tab>\n\n  <ion-tab *ngIf="showElement.propertiesTab"  tabIcon="ios-bookmarks" tabTitle="Propiedades" [root]="tabProperties"></ion-tab>\n\n  <ion-tab *ngIf="showElement.contactsTab"  tabIcon="ios-contact" tabTitle="Contactos" [root]="tabContactos"></ion-tab>\n\n</ion-tabs>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\tabs-usuario\tabs-usuario.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */], __WEBPACK_IMPORTED_MODULE_0__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]])
     ], TabsUsuarioPage);
@@ -1259,7 +1260,7 @@ var Tabs2Page = /** @class */ (function () {
             if (data == null) {
             }
             else {
-                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__index_paginas__["v" /* TabsUsuarioPage */]);
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__index_paginas__["w" /* TabsUsuarioPage */]);
             }
         });
         this.tab1 = __WEBPACK_IMPORTED_MODULE_3__index_paginas__["l" /* HomePage */];
@@ -1313,7 +1314,7 @@ webpackEmptyAsyncContext.id = 165;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_storage__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__interfaces_datosContacto__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__interfaces_datosContacto__ = __webpack_require__(449);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1461,111 +1462,115 @@ var UsuarioProvider = /** @class */ (function () {
 
 var map = {
 	"../pages/agregar-compradores/agregar-compradores.module": [
-		584,
-		26
+		585,
+		27
 	],
 	"../pages/agregar-contacto/agregar-contacto.module": [
-		585,
-		25
+		586,
+		26
 	],
 	"../pages/agregar-tarea/agregar-tarea.module": [
-		586,
-		24
+		587,
+		25
 	],
 	"../pages/buscar/buscar.module": [
-		587,
-		23
+		588,
+		24
 	],
 	"../pages/calendar/calendar.module": [
-		588,
-		22
+		589,
+		23
 	],
 	"../pages/contactos/contactos.module": [
-		589,
-		21
+		590,
+		22
 	],
 	"../pages/destinos/destinos.module": [
-		590,
-		20
+		591,
+		21
 	],
 	"../pages/documents/documents.module": [
-		591,
-		19
+		592,
+		20
 	],
 	"../pages/filtro-resultados/filtro-resultados.module": [
-		592,
-		18
+		593,
+		19
 	],
 	"../pages/formulario/formulario.module": [
 		594,
-		17
+		18
 	],
 	"../pages/general-form/general-form.module": [
-		593,
-		16
+		595,
+		17
 	],
 	"../pages/info/info.module": [
-		610,
-		15
+		596,
+		16
 	],
 	"../pages/inventory/inventory.module": [
-		595,
-		14
+		597,
+		15
 	],
 	"../pages/lead-pickead-pick/lead-pickead-pick.module": [
-		596,
-		13
+		598,
+		14
 	],
 	"../pages/login/login.module": [
-		597,
+		599,
+		13
+	],
+	"../pages/properties/properties.module": [
+		600,
 		12
 	],
 	"../pages/property-pickead-pick/property-pickead-pick.module": [
-		598,
+		601,
 		11
 	],
 	"../pages/registrar/registrar.module": [
-		599,
+		602,
 		10
 	],
 	"../pages/resultados/resultados.module": [
-		600,
+		603,
 		9
 	],
 	"../pages/seguimiento/seguimiento.module": [
-		601,
+		604,
 		8
 	],
 	"../pages/sharing/sharing.module": [
-		602,
+		605,
 		7
 	],
 	"../pages/tabs-usuario/tabs-usuario.module": [
-		603,
+		606,
 		6
 	],
 	"../pages/tabs/tabs.module": [
-		604,
+		607,
 		4
 	],
 	"../pages/tabs2/tabs2.module": [
-		605,
+		608,
 		5
 	],
 	"../pages/usuario/usuario.module": [
-		606,
+		609,
 		3
 	],
 	"../pages/ver-contacto/ver-contacto.module": [
-		607,
+		610,
 		2
 	],
 	"../pages/ver-desarrollo/ver-desarrollo.module": [
-		608,
+		611,
 		1
 	],
 	"../pages/ver-propiedad/ver-propiedad.module": [
-		609,
+		612,
 		0
 	]
 };
@@ -1658,31 +1663,31 @@ var HomePage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(404);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return __WEBPACK_IMPORTED_MODULE_5__login_login__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__ = __webpack_require__(405);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return __WEBPACK_IMPORTED_MODULE_6__resultados_resultados__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__ = __webpack_require__(151);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_7__contactos_contactos__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__ = __webpack_require__(406);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return __WEBPACK_IMPORTED_MODULE_8__ver_desarrollo_ver_desarrollo__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__ = __webpack_require__(407);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return __WEBPACK_IMPORTED_MODULE_9__ver_propiedad_ver_propiedad__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__ = __webpack_require__(408);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return __WEBPACK_IMPORTED_MODULE_10__ver_contacto_ver_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__ = __webpack_require__(154);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return __WEBPACK_IMPORTED_MODULE_11__tabs_usuario_tabs_usuario__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__ = __webpack_require__(409);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return __WEBPACK_IMPORTED_MODULE_12__usuario_usuario__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__ = __webpack_require__(410);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return __WEBPACK_IMPORTED_MODULE_13__registrar_registrar__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__ = __webpack_require__(149);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_14__agregar_contacto_agregar_contacto__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__ = __webpack_require__(152);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return __WEBPACK_IMPORTED_MODULE_15__seguimiento_seguimiento__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__ = __webpack_require__(411);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return __WEBPACK_IMPORTED_MODULE_16__filtro_resultados_filtro_resultados__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__ = __webpack_require__(399);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_17__agregar_compradores_agregar_compradores__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__ = __webpack_require__(412);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return __WEBPACK_IMPORTED_MODULE_18__sharing_sharing__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__ = __webpack_require__(413);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_19__calendar_calendar__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__agregar_tarea_agregar_tarea__ = __webpack_require__(150);
@@ -1694,9 +1699,12 @@ var HomePage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__general_form_general_form__ = __webpack_require__(153);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return __WEBPACK_IMPORTED_MODULE_23__general_form_general_form__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__property_pickead_pick_property_pickead_pick__ = __webpack_require__(415);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return __WEBPACK_IMPORTED_MODULE_24__property_pickead_pick_property_pickead_pick__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return __WEBPACK_IMPORTED_MODULE_24__property_pickead_pick_property_pickead_pick__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__inventory_inventory__ = __webpack_require__(416);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return __WEBPACK_IMPORTED_MODULE_25__inventory_inventory__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__properties_properties__ = __webpack_require__(417);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return __WEBPACK_IMPORTED_MODULE_26__properties_properties__["a"]; });
+
 
 
 
@@ -2391,7 +2399,7 @@ var DestinosPage = /** @class */ (function () {
         }
     };
     DestinosPage.prototype.irApagina = function (destino) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["s" /* ResultadosPage */], { destino: destino, 'tipo': 'desarrollo' });
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["t" /* ResultadosPage */], { destino: destino, 'tipo': 'desarrollo' });
     };
     DestinosPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -2470,10 +2478,10 @@ var FormularioPage = /** @class */ (function () {
     };
     FormularioPage.prototype.logForm = function (tipo) {
         if (tipo == 'propiedad') {
-            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["s" /* ResultadosPage */], { 'datos': this.datos, tipo: tipo, 'metros': this.metros, 'metroslot': this.metroslot });
+            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["t" /* ResultadosPage */], { 'datos': this.datos, tipo: tipo, 'metros': this.metros, 'metroslot': this.metroslot });
         }
         else {
-            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["s" /* ResultadosPage */], { 'datos': this.datos, tipo: tipo });
+            this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["t" /* ResultadosPage */], { 'datos': this.datos, tipo: tipo });
         }
     };
     FormularioPage.prototype.avanzado = function () {
@@ -2751,10 +2759,10 @@ var ResultadosPage = /** @class */ (function () {
         }
     };
     ResultadosPage.prototype.irAPropiedad = function (index) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["z" /* VerPropiedadPage */], { index: index });
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["A" /* VerPropiedadPage */], { index: index });
     };
     ResultadosPage.prototype.irADesarrollo = function (index) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["y" /* VerDesarrolloPage */], { index: index });
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["z" /* VerDesarrolloPage */], { index: index });
         //this.navCtrl.push(VerPropiedadPage, {index});
     };
     ResultadosPage.prototype.obtenerSlider = function (slider) {
@@ -3759,6 +3767,7 @@ var VerContactoPage = /** @class */ (function () {
                 _this.datos = data.json().data.visit;
                 _this.comentarios = data.json().data.comments;
                 _this.dateAgo(_this.datos.createdate);
+                console.log(_this.comentarios);
             });
         }
     };
@@ -3931,7 +3940,7 @@ var VerContactoPage = /** @class */ (function () {
     //----------------------------------------------------------------------------
     VerContactoPage.prototype.sharing = function (tipo) {
         //if(tipo == 'propiedades'){
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__index_paginas__["u" /* SharingPage */], { 'tipo': tipo, 'nombre': this.datos.nombre + ' ' + this.datos.ap_paterno, 'mail': this.datos.email, 'folio': this.datos.visitid });
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_5__index_paginas__["v" /* SharingPage */], { 'tipo': tipo, 'nombre': this.datos.nombre + ' ' + this.datos.ap_paterno, 'mail': this.datos.email, 'folio': this.datos.visitid });
         /*}else{
           this.navCtrl.push(SharingPage,{'tipo': tipo, 'nombre': this.datos.nombre, 'mail': this.datos.email, 'folio': this.datos.visitid});
         }*/
@@ -4076,7 +4085,7 @@ var UsuarioPage = /** @class */ (function () {
     };
     UsuarioPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-usuario',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\usuario\usuario.html"*/'<ion-content padding>\n\n  <ion-fab top right fixed >\n\n    <button ion-fab mini color="action-buttons"><ion-icon name="settings"></ion-icon></button>\n\n    <ion-fab-list>\n\n      <button ion-fab (click)="cerrarSesion()"><ion-icon name="log-out"></ion-icon></button>\n\n    </ion-fab-list>\n\n  </ion-fab>\n\n  <div class="contenedor">\n\n    <div style="margin-bottom: 10%">\n\n      <div *ngIf="showElement.imageUser" class="logo alinear">\n\n        <img *ngIf="datosUsuario.imagen == \'\' || datosUsuario.imagen == 0; imageUser" class="logo-img" src="assets/imgs/user.png">\n\n        <ng-template #imageUser>\n\n          <img class="logo-img" src="{{datosUsuario.imagen}}">\n\n        </ng-template>\n\n      </div>\n\n    </div>\n\n    <div>\n\n      <ion-list>\n\n        <ion-item *ngIf="showElement.nameTagEnabled">\n\n          <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>\n\n          <p *ngIf="datosUsuario.nombre != \'\'; else noRegistrado">{{datosUsuario.nombre}}</p>\n\n          <ng-template #noRegistrado>\n\n            <p> No Registrado </p>\n\n          </ng-template>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElement.cellPhoneTagEnabled">\n\n          <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>\n\n          <p *ngIf="datosUsuario.celular != 0; else noCellphone"> Celular: {{datosUsuario.celular}}</p>\n\n          <ng-template #noCellphone>\n\n            <p> Celular: No registrado </p>\n\n          </ng-template>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElement.telephoneTagEnabled">\n\n          <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>\n\n          <p *ngIf="datosUsuario.telefono != \'\' || datosUsuario.telefono == 0; else noTelephone">Telefono: {{datosUsuario.telefono}}</p>\n\n          <ng-template #noTelephone>\n\n              <p>Telefono: No registrado </p>\n\n          </ng-template>\n\n        </ion-item>\n\n      </ion-list>\n\n      <div *ngIf="showElement.logoEnabled">\n\n        <div class="logo-img alinear logo">\n\n          <img src="{{datosUsuario.logo}}">\n\n        </div>\n\n      </div>\n\n    </div>\n\n  </div>\n\n  <!--button ion-button class="logoutButton" full (click)="cerrarSesion()">Cerrar Sesion</button-->\n\n  <div *ngIf="showElement.animatedFooter" text-center class="animated fadeInDown">\n\n    <div class="logo">\n\n      <img class="animatedFooter" src="assets/imgs/web.gif">\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\usuario\usuario.html"*/,
+            selector: 'page-usuario',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\usuario\usuario.html"*/'<ion-content padding >\n\n  <ion-fab top right fixed >\n\n    <button ion-fab mini color="action-buttons"><ion-icon name="settings"></ion-icon></button>\n\n    <ion-fab-list>\n\n      <button ion-fab (click)="cerrarSesion()"><ion-icon name="log-out"></ion-icon></button>\n\n    </ion-fab-list>\n\n  </ion-fab>\n\n  <div class="contenedor">\n\n    <div style="margin-bottom: 10%">\n\n      <div *ngIf="showElement.imageUser" class="logo alinear">\n\n        <img *ngIf="datosUsuario.imagen == \'\' || datosUsuario.imagen == 0; imageUser" class="logo-img" src="assets/imgs/user.png">\n\n        <ng-template #imageUser>\n\n          <img class="logo-img" src="{{datosUsuario.imagen}}">\n\n        </ng-template>\n\n      </div>\n\n    </div>\n\n    <div>\n\n      <ion-list>\n\n        <ion-item *ngIf="showElement.nameTagEnabled">\n\n          <ion-icon  class="static-icons" item-start ios="ios-person" md="ios-person"></ion-icon>\n\n          <p *ngIf="datosUsuario.nombre != \'\'; else noRegistrado">{{datosUsuario.nombre}}</p>\n\n          <ng-template #noRegistrado>\n\n            <p> No Registrado </p>\n\n          </ng-template>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElement.cellPhoneTagEnabled">\n\n          <ion-icon  class="static-icons" item-start ios="ios-phone-portrait" md="ios-phone-portrait"></ion-icon>\n\n          <p *ngIf="datosUsuario.celular != 0; else noCellphone"> Celular: {{datosUsuario.celular}}</p>\n\n          <ng-template #noCellphone>\n\n            <p> Celular: No registrado </p>\n\n          </ng-template>\n\n        </ion-item>\n\n        <ion-item *ngIf="showElement.telephoneTagEnabled">\n\n          <ion-icon  class="static-icons" item-start ios="ios-call" md="ios-call"></ion-icon>\n\n          <p *ngIf="datosUsuario.telefono != \'\' || datosUsuario.telefono == 0; else noTelephone">Telefono: {{datosUsuario.telefono}}</p>\n\n          <ng-template #noTelephone>\n\n              <p>Telefono: No registrado </p>\n\n          </ng-template>\n\n        </ion-item>\n\n      </ion-list>\n\n      <div *ngIf="showElement.logoEnabled">\n\n        <div class="logo-img alinear logo">\n\n          <img src="{{datosUsuario.logo}}">\n\n        </div>\n\n      </div>\n\n    </div>\n\n  </div>\n\n  <!--button ion-button class="logoutButton" full (click)="cerrarSesion()">Cerrar Sesion</button-->\n\n  <div *ngIf="showElement.animatedFooter" text-center class="animated fadeInDown">\n\n    <div class="logo">\n\n      <img class="animatedFooter" src="assets/imgs/web.gif">\n\n    </div>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\usuario\usuario.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* Events */], __WEBPACK_IMPORTED_MODULE_1__ionic_storage__["b" /* Storage */],
             __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_4__providers_element_enabler_element_enabler__["a" /* ElementEnablerProvider */]])
@@ -4760,21 +4769,24 @@ var InventoryPage = /** @class */ (function () {
         this.propiedadesProvider = propiedadesProvider;
         this.usuarioProvider = usuarioProvider;
         this.properties = [];
-        this.loadUserInventory();
     }
+    //Carga antes de entrar a la vista
+    InventoryPage.prototype.ionViewCanEnter = function () {
+        this.loadUserInventory();
+    };
     //-----------------------------------------
     //Obtiene el inventario del usuario
     InventoryPage.prototype.loadUserInventory = function () {
         var _this = this;
         var promise = this.propiedadesProvider.getUserProperties(this.usuarioProvider.datos.id, this.usuarioProvider.datos.userToken, this.usuarioProvider.datos.properties);
         promise.subscribe(function (data) {
-            _this.properties = data.json();
-            console.log(_this.properties.data);
+            _this.properties = data.json().data;
+            console.log(_this.properties);
         });
     };
     InventoryPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
-            selector: 'page-inventory',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\inventory\inventory.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n    <ion-title> Inventario </ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <div class="properties">\n      <ion-list>\n        <ion-grid>\n          <ion-row *ngFor="let property of properties, let i = index">\n            <ion-col>\n              <ion-card>\n                <img *ngIf="property.smallphoto == 0" [src]="\'/../assets/imgs/noimage.png\'">\n                <img *ngIf="property.smallphoto != 0" src= "{{ property.smallphoto }}">\n                <ion-card-content class="card-content">\n                  <p><ion-icon name="pin"></ion-icon> {{property.state}},{{property.municipality}},{{property.colony}}</p>\n                  <p *ngIf="property.operation != \'\';else notOperation"><ion-icon name="pricetag"></ion-icon> {{property.operation}}</p>\n                  <ng-template #notOperation>\n                      <p><ion-icon name="pricetag"></ion-icon> No Disponible </p>\n                  </ng-template>\n                  <p><ion-icon name="ios-cash"></ion-icon> {{property.bestPrice}}</p>\n                </ion-card-content>\n              </ion-card>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-list>\n    </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\inventory\inventory.html"*/,
+            selector: 'page-inventory',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\inventory\inventory.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n    <ion-title> Inventario </ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <div class="properties">\n      <ion-list>\n        <ion-grid>\n          <ion-row *ngFor="let property of properties, let i = index">\n            <ion-col>\n              <ion-card>\n                <img *ngIf="property.smallphoto == 0" [src]="\'/../assets/imgs/noimage.png\'">\n                <img *ngIf="property.smallphoto != 0" src= "{{ property.smallphoto }}">\n                <ion-card-content class="card-contentProperties">\n                <ion-item no-padding no-margin>\n                  <p icon-start><ion-icon ios="ios-pin" md="md-pin"></ion-icon>\n                    {{property.state}},{{property.municipality}},{{property.colony}} \n                  </p>\n                  <p *ngIf="property.operation != \'\';else notOperation"><ion-icon name="pricetag"></ion-icon> {{property.operation}}</p>\n                    <ng-template #notOperation>\n                        <p><ion-icon name="pricetag"></ion-icon> No Disponible </p>\n                    </ng-template>\n                  <p><ion-icon name="ios-cash"></ion-icon> {{property.bestPrice}}</p>\n                  \n                </ion-item>\n                </ion-card-content>\n              </ion-card>\n            </ion-col>\n          </ion-row>\n        </ion-grid>\n      </ion-list>\n    </div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\inventory\inventory.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["q" /* NavController */], __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["r" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1__providers_propiedades_propiedades__["a" /* PropiedadesProvider */],
             __WEBPACK_IMPORTED_MODULE_0__providers_usuario_usuario__["a" /* UsuarioProvider */]])
@@ -4790,9 +4802,63 @@ var InventoryPage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PropertiesPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__providers_propiedades_propiedades__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var PropertiesPage = /** @class */ (function () {
+    function PropertiesPage(navCtrl, navParams, propiedadesProvider) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.propiedadesProvider = propiedadesProvider;
+        this.properties = [];
+    }
+    //---------------------------------------------
+    PropertiesPage.prototype.ionViewCanEnter = function () {
+        this.loadUserProperties();
+    };
+    //---------------------------------------------
+    PropertiesPage.prototype.loadUserProperties = function () {
+        var _this = this;
+        var promise = this.propiedadesProvider.getProperties();
+        promise.subscribe(function (data) {
+            _this.properties = data.json().data;
+            console.log(_this.properties);
+        });
+    };
+    PropertiesPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
+            selector: 'page-properties',template:/*ion-inline-start:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\properties\properties.html"*/'<ion-header>\n\n  <ion-navbar color="header">\n    <ion-title>Propiedades</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"C:\Users\Sistemas IMMO\Desktop\APP_TEMPLATE\src\pages\properties\properties.html"*/,
+        }),
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["q" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["r" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__providers_propiedades_propiedades__["a" /* PropiedadesProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__providers_propiedades_propiedades__["a" /* PropiedadesProvider */]) === "function" && _c || Object])
+    ], PropertiesPage);
+    return PropertiesPage;
+    var _a, _b, _c;
+}());
+
+//# sourceMappingURL=properties.js.map
+
+/***/ }),
+
+/***/ 418:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(418);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(419);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(426);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -4829,11 +4895,17 @@ var PropiedadesProvider = /** @class */ (function () {
         this.apiProvider = apiProvider;
         this.url = 'https://www.immosystem.com.mx/appImmov2/immoApp2.php';
     }
-    //Cargar propiedades del usuario
+    //Cargar propiedades de Inventario del usuario --Editables
     PropiedadesProvider.prototype.getUserProperties = function (userid, token, properties) {
         var userId = this.usuarioProvider.datos.id;
         console.log(userId);
         var body = 'm=userProperties&user=' + userid + '&token=' + token + '&folios=' + properties;
+        return this.apiProvider.post(body);
+    };
+    //-----------------------------------------------------------------
+    //Cargar propiedades activas del usuario
+    PropiedadesProvider.prototype.getProperties = function () {
+        var body = 'm=properties&app=true&share=true';
         return this.apiProvider.post(body);
     };
     //-----------------------------------------------------------------
@@ -4910,16 +4982,17 @@ var PropiedadesProvider = /** @class */ (function () {
     };
     PropiedadesProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */], __WEBPACK_IMPORTED_MODULE_0__api_api__["a" /* ApiProvider */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_usuario_usuario__["a" /* UsuarioProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__api_api__["a" /* ApiProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__api_api__["a" /* ApiProvider */]) === "function" && _c || Object])
     ], PropiedadesProvider);
     return PropiedadesProvider;
+    var _a, _b, _c;
 }());
 
 //# sourceMappingURL=propiedades.js.map
 
 /***/ }),
 
-/***/ 425:
+/***/ 426:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4930,7 +5003,7 @@ var PropiedadesProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(377);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__ = __webpack_require__(378);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_contactos_contactos__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(474);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(475);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_home_home__ = __webpack_require__(210);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_tabs2_tabs2__ = __webpack_require__(155);
@@ -4943,13 +5016,13 @@ var PropiedadesProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_usuario_usuario__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__angular_http__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_propiedades_propiedades__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_common_http__ = __webpack_require__(475);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__angular_common_http__ = __webpack_require__(476);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_formularios_formularios__ = __webpack_require__(71);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_network__ = __webpack_require__(140);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_network_network__ = __webpack_require__(379);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_contactos_contactos__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_ionic_gallery_modal__ = __webpack_require__(478);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_ionic_img_viewer__ = __webpack_require__(479);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24_ionic_gallery_modal__ = __webpack_require__(479);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25_ionic_img_viewer__ = __webpack_require__(480);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_calendar__ = __webpack_require__(114);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__providers_api_api__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__providers_element_enabler_element_enabler__ = __webpack_require__(50);
@@ -4996,6 +5069,7 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["I" /* NgModule */])({
             declarations: [
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["q" /* PropertiesPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["n" /* InventoryPage */],
                 __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
@@ -5004,27 +5078,27 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["j" /* FormularioPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["m" /* InfoPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["p" /* LoginPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["s" /* ResultadosPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["t" /* ResultadosPage */],
                 __WEBPACK_IMPORTED_MODULE_5__pages_contactos_contactos__["a" /* ContactosPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["y" /* VerDesarrolloPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["z" /* VerPropiedadPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["z" /* VerDesarrolloPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["A" /* VerPropiedadPage */],
                 __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
                 __WEBPACK_IMPORTED_MODULE_9__pages_tabs2_tabs2__["a" /* Tabs2Page */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["x" /* VerContactoPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["v" /* TabsUsuarioPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["w" /* UsuarioPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["r" /* RegistrarPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["y" /* VerContactoPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["w" /* TabsUsuarioPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["x" /* UsuarioPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["s" /* RegistrarPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["b" /* AgregarContactoPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["t" /* SeguimientoPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["u" /* SeguimientoPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["i" /* FiltroResultadosPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["a" /* AgregarCompradoresPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["u" /* SharingPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["v" /* SharingPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["e" /* CalendarPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["c" /* AgregarTareaPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["o" /* LeadPickeadPickPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["h" /* DocumentsPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["k" /* GeneralFormPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["q" /* PropertyPickeadPickPage */]
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["r" /* PropertyPickeadPickPage */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_24_ionic_gallery_modal__["a" /* GalleryModalModule */],
@@ -5040,11 +5114,13 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/destinos/destinos.module#DestinosPageModule', name: 'DestinosPage', segment: 'destinos', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/documents/documents.module#DocumentsPageModule', name: 'DocumentsPage', segment: 'documents', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/filtro-resultados/filtro-resultados.module#FiltroResultadosPageModule', name: 'FiltroResultadosPage', segment: 'filtro-resultados', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/general-form/general-form.module#GeneralFormPageModule', name: 'GeneralFormPage', segment: 'general-form', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/formulario/formulario.module#FormularioPageModule', name: 'FormularioPage', segment: 'formulario', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/general-form/general-form.module#GeneralFormPageModule', name: 'GeneralFormPage', segment: 'general-form', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/info/info.module#InfoPageModule', name: 'InfoPage', segment: 'info', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/inventory/inventory.module#InventoryPageModule', name: 'InventoryPage', segment: 'inventory', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/lead-pickead-pick/lead-pickead-pick.module#LeadPickeadPickPageModule', name: 'LeadPickeadPickPage', segment: 'lead-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'LoginPage', segment: 'login', priority: 'low', defaultHistory: [] },
+                        { loadChildren: '../pages/properties/properties.module#PropertiesPageModule', name: 'PropertiesPage', segment: 'properties', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/property-pickead-pick/property-pickead-pick.module#PropertyPickeadPickPageModule', name: 'PropertyPickeadPickPage', segment: 'property-pickead-pick', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/registrar/registrar.module#RegistrarPageModule', name: 'RegistrarPage', segment: 'registrar', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/resultados/resultados.module#ResultadosPageModule', name: 'ResultadosPage', segment: 'resultados', priority: 'low', defaultHistory: [] },
@@ -5056,8 +5132,7 @@ var AppModule = /** @class */ (function () {
                         { loadChildren: '../pages/usuario/usuario.module#UsuarioPageModule', name: 'UsuarioPage', segment: 'usuario', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-contacto/ver-contacto.module#VerContactoPageModule', name: 'VerContactoPage', segment: 'ver-contacto', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/ver-desarrollo/ver-desarrollo.module#VerDesarrolloPageModule', name: 'VerDesarrolloPage', segment: 'ver-desarrollo', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/info/info.module#InfoPageModule', name: 'InfoPage', segment: 'info', priority: 'low', defaultHistory: [] }
+                        { loadChildren: '../pages/ver-propiedad/ver-propiedad.module#VerPropiedadPageModule', name: 'VerPropiedadPage', segment: 'ver-propiedad', priority: 'low', defaultHistory: [] }
                     ]
                 }),
                 __WEBPACK_IMPORTED_MODULE_11__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
@@ -5067,6 +5142,7 @@ var AppModule = /** @class */ (function () {
             ],
             bootstrap: [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* IonicApp */]],
             entryComponents: [
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["q" /* PropertiesPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["n" /* InventoryPage */],
                 __WEBPACK_IMPORTED_MODULE_6__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_7__pages_home_home__["a" /* HomePage */],
@@ -5075,27 +5151,27 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["j" /* FormularioPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["m" /* InfoPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["p" /* LoginPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["s" /* ResultadosPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["t" /* ResultadosPage */],
                 __WEBPACK_IMPORTED_MODULE_5__pages_contactos_contactos__["a" /* ContactosPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["y" /* VerDesarrolloPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["z" /* VerPropiedadPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["z" /* VerDesarrolloPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["A" /* VerPropiedadPage */],
                 __WEBPACK_IMPORTED_MODULE_8__pages_tabs_tabs__["a" /* TabsPage */],
                 __WEBPACK_IMPORTED_MODULE_9__pages_tabs2_tabs2__["a" /* Tabs2Page */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["x" /* VerContactoPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["v" /* TabsUsuarioPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["w" /* UsuarioPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["r" /* RegistrarPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["y" /* VerContactoPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["w" /* TabsUsuarioPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["x" /* UsuarioPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["s" /* RegistrarPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["b" /* AgregarContactoPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["t" /* SeguimientoPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["u" /* SeguimientoPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["i" /* FiltroResultadosPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["a" /* AgregarCompradoresPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["u" /* SharingPage */],
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["v" /* SharingPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["e" /* CalendarPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["c" /* AgregarTareaPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["o" /* LeadPickeadPickPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["h" /* DocumentsPage */],
                 __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["k" /* GeneralFormPage */],
-                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["q" /* PropertyPickeadPickPage */]
+                __WEBPACK_IMPORTED_MODULE_13__pages_index_paginas__["r" /* PropertyPickeadPickPage */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_4__ionic_native_status_bar__["a" /* StatusBar */],
@@ -5124,7 +5200,7 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 448:
+/***/ 449:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5134,7 +5210,7 @@ var companyid = 126;
 
 /***/ }),
 
-/***/ 457:
+/***/ 458:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -5407,11 +5483,11 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 457;
+webpackContext.id = 458;
 
 /***/ }),
 
-/***/ 474:
+/***/ 475:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5741,10 +5817,11 @@ var ElementEnablerProvider = /** @class */ (function () {
     //Tabs de la aplicación con sesión activa
     ElementEnablerProvider.prototype.tabsUsuarioEnabler = function () {
         this.tabsUsuarioPages.userTab = true;
-        this.tabsUsuarioPages.inventoryTab = true;
-        this.tabsUsuarioPages.searchTab = false; //Página con la búsqueda de propiedades
+        this.tabsUsuarioPages.inventoryTab = false; //Página con la búsqueda de propiedades de Inventario editables
+        this.tabsUsuarioPages.searchTab = false; //Página con la búsqueda de propiedades 
         this.tabsUsuarioPages.tasksTab = true;
         this.tabsUsuarioPages.contactsTab = true;
+        this.tabsUsuarioPages.propertiesTab = true;
         return this.tabsUsuarioPages;
     };
     ElementEnablerProvider = __decorate([
@@ -6023,7 +6100,7 @@ var TabsPage = /** @class */ (function () {
         this.tab4 = __WEBPACK_IMPORTED_MODULE_2__index_paginas__["g" /* DestinosPage */];
         this.tab5 = __WEBPACK_IMPORTED_MODULE_2__index_paginas__["m" /* InfoPage */];
         events.subscribe('user:created', function (user, time) {
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["v" /* TabsUsuarioPage */]);
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_2__index_paginas__["w" /* TabsUsuarioPage */]);
         });
     }
     TabsPage.prototype.ionViewDidLoad = function () {
@@ -6041,5 +6118,5 @@ var TabsPage = /** @class */ (function () {
 
 /***/ })
 
-},[417]);
+},[418]);
 //# sourceMappingURL=main.js.map

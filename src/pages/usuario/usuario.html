@@ -1,4 +1,4 @@
-<ion-content padding>
+<ion-content padding >
   <ion-fab top right fixed >
     <button ion-fab mini color="action-buttons"><ion-icon name="settings"></ion-icon></button>
     <ion-fab-list>
@@ -17,21 +17,21 @@
     <div>
       <ion-list>
         <ion-item *ngIf="showElement.nameTagEnabled">
-          <ion-icon item-start ios="ios-person-outline" md="ios-person-outline"></ion-icon>
+          <ion-icon  class="static-icons" item-start ios="ios-person" md="ios-person"></ion-icon>
           <p *ngIf="datosUsuario.nombre != ''; else noRegistrado">{{datosUsuario.nombre}}</p>
           <ng-template #noRegistrado>
             <p> No Registrado </p>
           </ng-template>
         </ion-item>
         <ion-item *ngIf="showElement.cellPhoneTagEnabled">
-          <ion-icon item-start ios="ios-phone-portrait-outline" md="ios-phone-portrait-outline"></ion-icon>
+          <ion-icon  class="static-icons" item-start ios="ios-phone-portrait" md="ios-phone-portrait"></ion-icon>
           <p *ngIf="datosUsuario.celular != 0; else noCellphone"> Celular: {{datosUsuario.celular}}</p>
           <ng-template #noCellphone>
             <p> Celular: No registrado </p>
           </ng-template>
         </ion-item>
         <ion-item *ngIf="showElement.telephoneTagEnabled">
-          <ion-icon item-start ios="ios-call-outline" md="ios-call-outline"></ion-icon>
+          <ion-icon  class="static-icons" item-start ios="ios-call" md="ios-call"></ion-icon>
           <p *ngIf="datosUsuario.telefono != '' || datosUsuario.telefono == 0; else noTelephone">Telefono: {{datosUsuario.telefono}}</p>
           <ng-template #noTelephone>
               <p>Telefono: No registrado </p>

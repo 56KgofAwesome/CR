@@ -8,14 +8,19 @@ export class PropiedadesProvider {
   url:any = 'https://www.immosystem.com.mx/appImmov2/immoApp2.php';
   constructor(public http : Http, public usuarioProvider: UsuarioProvider,public apiProvider: ApiProvider) {
   }
-  //Cargar propiedades del usuario
+  //Cargar propiedades de Inventario del usuario --Editables
   getUserProperties(userid: any,token:any,properties: any){
     var userId = this.usuarioProvider.datos.id;
     console.log(userId);
     var body = 'm=userProperties&user='+userid+'&token='+token+'&folios='+properties;
     return this.apiProvider.post(body);
   }
-
+  //-----------------------------------------------------------------
+  //Cargar propiedades activas del usuario
+  getProperties(){
+    var body = 'm=properties&app=true&share=true';
+    return this.apiProvider.post(body);
+  }
   //-----------------------------------------------------------------
   cargarPorCiudad(idCiudad:any){
     let body    :   string  =   'm=developments&folio='+ this.usuarioProvider.companyid +'&state=' + idCiudad + '&app=1',

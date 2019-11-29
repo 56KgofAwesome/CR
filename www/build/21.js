@@ -1,14 +1,14 @@
 webpackJsonp([21],{
 
-/***/ 589:
+/***/ 591:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContactosPageModule", function() { return ContactosPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DestinosPageModule", function() { return DestinosPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__contactos__ = __webpack_require__(151);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__destinos__ = __webpack_require__(401);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ContactosPageModule = /** @class */ (function () {
-    function ContactosPageModule() {
+var DestinosPageModule = /** @class */ (function () {
+    function DestinosPageModule() {
     }
-    ContactosPageModule = __decorate([
+    DestinosPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__contactos__["a" /* ContactosPage */],
+                __WEBPACK_IMPORTED_MODULE_2__destinos__["a" /* DestinosPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__contactos__["a" /* ContactosPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__destinos__["a" /* DestinosPage */]),
             ],
         })
-    ], ContactosPageModule);
-    return ContactosPageModule;
+    ], DestinosPageModule);
+    return DestinosPageModule;
 }());
 
-//# sourceMappingURL=contactos.module.js.map
+//# sourceMappingURL=destinos.module.js.map
 
 /***/ })
 

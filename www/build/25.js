@@ -1,14 +1,14 @@
 webpackJsonp([25],{
 
-/***/ 585:
+/***/ 587:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AgregarContactoPageModule", function() { return AgregarContactoPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AgregarTareaPageModule", function() { return AgregarTareaPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__agregar_contacto__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__agregar_tarea__ = __webpack_require__(150);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var AgregarContactoPageModule = /** @class */ (function () {
-    function AgregarContactoPageModule() {
+var AgregarTareaPageModule = /** @class */ (function () {
+    function AgregarTareaPageModule() {
     }
-    AgregarContactoPageModule = __decorate([
+    AgregarTareaPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__agregar_contacto__["a" /* AgregarContactoPage */],
+                __WEBPACK_IMPORTED_MODULE_2__agregar_tarea__["a" /* AgregarTareaPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__agregar_contacto__["a" /* AgregarContactoPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__agregar_tarea__["a" /* AgregarTareaPage */]),
             ],
         })
-    ], AgregarContactoPageModule);
-    return AgregarContactoPageModule;
+    ], AgregarTareaPageModule);
+    return AgregarTareaPageModule;
 }());
 
-//# sourceMappingURL=agregar-contacto.module.js.map
+//# sourceMappingURL=agregar-tarea.module.js.map
 
 /***/ })
 

@@ -1,3 +1,10 @@
+.static-icons {
+  color: #666;
+  float: none;
+  position: static;
+  font-size: 2em;
+}
+
 html,
 body {
   position: fixed;
@@ -53670,8 +53677,36 @@ page-inventory .navbar {
   color: var(--primary-color);
 }
 
-.card-content {
-  border-top: 1px solid red;
+.card-contentProperties {
+  border-top: 2px solid #bf0d2e;
+}
+
+.card-contentProperties ion-icon {
+  color: #666;
+  font-size: 2em;
+}
+
+.customRibbon {
+  padding: 0;
+}
+
+.customRibbon .col:first-child {
+  position: relative;
+  background-color: #f5f5f5;
+  padding: 0;
+}
+
+.customRibbon .col:first-child .corner-ribbon {
+  width: 250px;
+  background: green;
+  position: absolute;
+  top: 12px;
+  left: -95px;
+  text-align: center;
+  line-height: 35px;
+  color: #f4f4f4;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
 }
 
 page-login ion-content {
@@ -53785,6 +53820,42 @@ page-login .contenido {
 
 page-login .scroll-content {
   padding-bottom: 0 !important;
+}
+
+page-inventory .navbar {
+  color: var(--primary-color);
+}
+
+.card-contentProperties {
+  border-top: 2px solid #bf0d2e;
+}
+
+.card-contentProperties ion-icon {
+  color: #666;
+  font-size: 2em;
+}
+
+.customRibbon {
+  padding: 0;
+}
+
+.customRibbon .col:first-child {
+  position: relative;
+  background-color: #f5f5f5;
+  padding: 0;
+}
+
+.customRibbon .col:first-child .corner-ribbon {
+  width: 250px;
+  background: green;
+  position: absolute;
+  top: 12px;
+  left: -95px;
+  text-align: center;
+  line-height: 35px;
+  color: #f4f4f4;
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
 }
 
 page-resultados ion-content {

@@ -1,4 +1,3 @@
-import { InventoryPage } from './inventory/inventory';
 export { BuscarPage } from "./buscar/buscar";
 export { DestinosPage } from "./destinos/destinos";
 export { FormularioPage } from "./formulario/formulario";
@@ -25,3 +24,4 @@ export { DocumentsPage } from './documents/documents';
 export { GeneralFormPage } from './general-form/general-form';
 export { PropertyPickeadPickPage } from './property-pickead-pick/property-pickead-pick';
 export { InventoryPage } from './inventory/inventory';
+export { PropertiesPage } from './properties/properties';

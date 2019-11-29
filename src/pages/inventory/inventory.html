@@ -16,13 +16,18 @@
               <ion-card>
                 <img *ngIf="property.smallphoto == 0" [src]="'/../assets/imgs/noimage.png'">
                 <img *ngIf="property.smallphoto != 0" src= "{{ property.smallphoto }}">
-                <ion-card-content class="card-content">
-                  <p><ion-icon name="pin"></ion-icon> {{property.state}},{{property.municipality}},{{property.colony}}</p>
+                <ion-card-content class="card-contentProperties">
+                <ion-item no-padding no-margin>
+                  <p icon-start><ion-icon ios="ios-pin" md="md-pin"></ion-icon>
+                    {{property.state}},{{property.municipality}},{{property.colony}} 
+                  </p>
                   <p *ngIf="property.operation != '';else notOperation"><ion-icon name="pricetag"></ion-icon> {{property.operation}}</p>
-                  <ng-template #notOperation>
-                      <p><ion-icon name="pricetag"></ion-icon> No Disponible </p>
-                  </ng-template>
+                    <ng-template #notOperation>
+                        <p><ion-icon name="pricetag"></ion-icon> No Disponible </p>
+                    </ng-template>
                   <p><ion-icon name="ios-cash"></ion-icon> {{property.bestPrice}}</p>
+                  
+                </ion-item>
                 </ion-card-content>
               </ion-card>
             </ion-col>

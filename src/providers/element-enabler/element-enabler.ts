@@ -72,10 +72,11 @@ export class ElementEnablerProvider {
   //Tabs de la aplicación con sesión activa
   tabsUsuarioEnabler() {
     this.tabsUsuarioPages.userTab = true;
-    this.tabsUsuarioPages.inventoryTab = true;
-    this.tabsUsuarioPages.searchTab = false;//Página con la búsqueda de propiedades
+    this.tabsUsuarioPages.inventoryTab = false;//Página con la búsqueda de propiedades de Inventario editables
+    this.tabsUsuarioPages.searchTab = false;//Página con la búsqueda de propiedades 
     this.tabsUsuarioPages.tasksTab = true;
     this.tabsUsuarioPages.contactsTab = true;
+    this.tabsUsuarioPages.propertiesTab = true;
     
     return this.tabsUsuarioPages;
   }
